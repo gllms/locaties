@@ -4,58 +4,80 @@
     dndzone,
     TRIGGERS,
     SHADOW_ITEM_MARKER_PROPERTY_NAME,
+    type DndEvent,
   } from "svelte-dnd-action";
   import Button from "./Button.svelte";
 
   const flipDurationMs = 300;
 
-  interface PaletteItem {
+  interface CanvasItem {
     id: number;
-    name: string;
-    icon: string;
+    paletteType: string;
   }
 
-  let paletteItems: PaletteItem[] = [
-    {
-      id: 0,
+  let idx = 0;
+
+  const paletteTypes: Record<string, { name: string, icon: string }> = {
+    "date": {
       name: "Datum",
       icon: "date_range",
     },
-    {
-      id: 1,
+    "place": {
       name: "Plaats",
       icon: "place",
     },
+  };
+
+  let paletteItems: CanvasItem[] = [
+    {
+      id: idx++,
+      paletteType: "date",
+    },
+    {
+      id: idx++,
+      paletteType: "place",
+    },
   ];
 
-  let canvasItems: PaletteItem[] = [];
+  let canvasItems: CanvasItem[] = [
+    {
+      id: idx++,
+      paletteType: "date",
+    },
+  ];
 
-  function handlePaletteConsider(e) {
+  type Ev = { detail: DndEvent<CanvasItem> } & {
+    detail: { info: { id: number } };
+  };
+
+  function handlePaletteConsider(e: Ev) {
     const { trigger, id } = e.detail.info;
 
     if (trigger === TRIGGERS.DRAG_STARTED) {
-      const idx = paletteItems.findIndex((item) => item.id === id);
-      const newId = `${id}_copy_${Math.round(Math.random() * 100000)}`;
       // the line below was added in order to be compatible with version svelte-dnd-action 0.7.4 and above
       e.detail.items = e.detail.items.filter(
+        // @ts-ignore
         (item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]
       );
-      e.detail.items.splice(idx, 0, { ...paletteItems[idx], id: newId });
+      const index = paletteItems.findIndex((item) => item.id === id);
+
+      e.detail.items.splice(index, 0, { ...paletteItems[index], id: idx++ });
+
       paletteItems = e.detail.items;
     } else {
       paletteItems = [...paletteItems];
     }
   }
 
-  function handlePaletteFinalize(e) {
+  function handlePaletteFinalize(e: Ev) {
     paletteItems = [...paletteItems];
   }
 
-  function handleCanvasConsider(e) {
+  function handleCanvasConsider(e: Ev) {
     canvasItems = e.detail.items;
   }
 
-  function handleCanvasFinalize(e) {
+  function handleCanvasFinalize(e: Ev) {
     canvasItems = e.detail.items;
   }
 </script>
@@ -76,11 +98,12 @@
     on:consider={handlePaletteConsider}
     on:finalize={handlePaletteFinalize}>
     {#each paletteItems as item (item.id)}
+      {@const paletteType = paletteTypes[item.paletteType]}
       <div class="paletteItem" animate:flip={{ duration: flipDurationMs }}>
         <span class="material-icons">drag_indicator</span>
         <div>
-          <span class="material-icons">{item.icon}</span>
-          <span class="name">{item.name}</span>
+          <span class="material-icons">{paletteType.icon}</span>
+          <span class="name">{paletteType.name}</span>
         </div>
       </div>
     {/each}
@@ -99,22 +122,19 @@
         dropTargetStyle: {
           outline: "2px dashed var(--color-grey-500)",
         },
-        transformDraggedElement: element => {
-          if (element) {
-            const dragIndicator = element.querySelector(".material-icons");
-            if (dragIndicator && dragIndicator.innerText === "drag_indicator")
-              dragIndicator.remove();
-          }
-        },
+        morphDisabled: true,
       }}
       on:consider={handleCanvasConsider}
       on:finalize={handleCanvasFinalize}>
       {#each canvasItems as item (item.id)}
+        {@const paletteType = paletteTypes[item.paletteType]}
         <div class="canvasItem" animate:flip={{ duration: flipDurationMs }}>
           <div class="canvasItemHeader">
-            <span class="material-icons">{item.icon}</span>
-            <span class="name">{item.name}</span>
-            <button on:click={() => (canvasItems = canvasItems.filter((e) => e !== item))}>
+            <span class="material-icons">{paletteType.icon}</span>
+            <span class="name">{paletteType.name}</span>
+            <button
+              on:click={() =>
+                (canvasItems = canvasItems.filter((e) => e !== item))}>
               <span class="material-icons">highlight_off</span>
             </button>
           </div>
@@ -207,6 +227,7 @@
     color: var(--color-grey-500);
     border: none;
     outline: none;
+    resize: vertical;
   }
 
   .header textarea::placeholder {
