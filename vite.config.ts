@@ -20,7 +20,7 @@ function userScriptPlugin(): Plugin {
       const script = bundle[scriptName] as OutputChunk;
       const style = bundle[styleName] as OutputAsset;
 
-      const styleText = style?.source ?? "";
+      const styleText = style.source;
 
       script.code = `
 // ==UserScript==
@@ -50,9 +50,11 @@ ${script.code}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     ${styleText}
   </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 
 <body>
@@ -86,6 +88,7 @@ export default defineConfig({
   ],
   build: {
     minify: false,
+    emptyOutDir: false,
     rollupOptions: {
       input: "src/main.ts",
       output: {

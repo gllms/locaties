@@ -1,22 +1,60 @@
-import "./app.css"
-import Button from "./lib/Button.svelte";
-import MyListButton from "./lib/MyListButton.svelte"
+import type { SvelteComponent } from "svelte";
+import "./app.css";
+import MyListButton from "./lib/MyListButton.svelte";
+import FormBuilder from "./lib/FormBuilder.svelte";
 
-const myList = document.querySelector("div[data-testid=drawerMyList]");
+const components: SvelteComponent[] = [];
 
-if (myList) {
-  const element = document.createElement("div");
-  myList.appendChild(element);
+const originalPushState = history.pushState;
 
-  new MyListButton({
-    target: element,
-  });
+history.pushState = function () {
+  originalPushState.apply(this, arguments as any);
+
+  for (const component of components)
+    component.$destroy();
+
+  components.length = 0;
+
+  setTimeout(apply, 500);
+};
+
+apply();
+
+function apply() {
+  const testElement = document.querySelector(".locaties-test");
+
+  if (!testElement) {
+    if (
+      !document.querySelector(".main > div")?.hasChildNodes() ||
+      (document.querySelector("meta[property='og:url']") as HTMLMetaElement)?.content !== location.pathname
+    ) {
+      setTimeout(apply, 500);
+      return;
+    }
+  }
+
+  addComponent(
+    MyListButton,
+    document.querySelector("div[data-testid=drawerMyList]")
+  );
+
+  addComponent(
+    FormBuilder,
+    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    "/form"
+  );
+
+  addComponent(FormBuilder, testElement);
 }
 
-const test = document.querySelector(".locaties-test");
+function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string) {
+  if (!target)
+    return;
 
-if (test) {
-  new Button({
-    target: test,
-  });
+  if (path && !location.pathname.startsWith(path))
+    return;
+
+  components.push(new component({
+    target,
+  }));
 }
