@@ -2,17 +2,20 @@
   import { createEventDispatcher } from "svelte";
 
   export let icon: string | undefined = undefined;
+  export let text = "";
   export let secondary: boolean = false;
-  export let style: string | object | undefined = undefined;
+  export let style: string | undefined = undefined;
 
   const dispatch = createEventDispatcher();
 </script>
 
-<button class:secondary on:click={() => dispatch("click")} style={style}>
+<button class:secondary on:click={() => dispatch("click")} style={style} style:padding-inline={text ? "1.8rem" : "0.8rem"}>
   {#if icon}
-    <span class="material-icons">{icon}</span>
+    <span class="material-icons" style:margin-right={text ? "var(--spacing-2x)" : "0"}>{icon}</span>
   {/if}
-  <span><slot /></span>
+  {#if text}
+    <span>{text}</span>
+  {/if}
 </button>
 
 <style>
@@ -57,9 +60,5 @@
 
   button.secondary:active {
     background-color: #FCFCF7;
-  }
-
-  .material-icons {
-    margin-right: var(--spacing-2x);
   }
 </style>

@@ -7,44 +7,46 @@
     type DndEvent,
   } from "svelte-dnd-action";
   import Button from "./Button.svelte";
+  import type { SvelteComponent } from "svelte";
+
+  import Date from "./palette/Date.svelte";
+  import Long from "./palette/Long.svelte";
+  import Short from "./palette/Short.svelte";
 
   const flipDurationMs = 300;
+  let idx = 0;
 
   interface CanvasItem {
     id: number;
     paletteType: string;
+    data: object;
   }
 
-  let idx = 0;
-
-  const paletteTypes: Record<string, { name: string, icon: string }> = {
-    "date": {
+  const paletteTypes: Record<string, { name: string; icon: string, component: new (...args: any[]) => SvelteComponent }> = {
+    date: {
       name: "Datum",
       icon: "date_range",
+      component: Date,
     },
-    "place": {
-      name: "Plaats",
-      icon: "place",
+    shortText: {
+      name: "Korte tekst",
+      icon: "short_text",
+      component: Short,
+    },
+    longText: {
+      name: "Lange tekst",
+      icon: "notes",
+      component: Long,
     },
   };
 
-  let paletteItems: CanvasItem[] = [
-    {
-      id: idx++,
-      paletteType: "date",
-    },
-    {
-      id: idx++,
-      paletteType: "place",
-    },
-  ];
+  let paletteItems: CanvasItem[] = Object.keys(paletteTypes).map(key => ({
+    id: idx++,
+    paletteType: key,
+    data: {},
+  }));
 
-  let canvasItems: CanvasItem[] = [
-    {
-      id: idx++,
-      paletteType: "date",
-    },
-  ];
+  let canvasItems: CanvasItem[] = [];
 
   type Ev = { detail: DndEvent<CanvasItem> } & {
     detail: { info: { id: number } };
@@ -87,8 +89,8 @@
 </svelte:head>
 
 <div class="toolbar">
-  <Button secondary icon="visibility" style="border: none">Voorbeeld</Button>
-  <Button icon="send">Verzenden</Button>
+  <Button secondary icon="visibility" style="border: none" text="Voorbeeld" />
+  <Button icon="send" on:click={() => console.log(canvasItems)} text="Verzenden" />
 </div>
 
 <div class="formWrapper">
@@ -120,7 +122,8 @@
         flipDurationMs,
         dragDisabled: canvasItems.length === 0,
         dropTargetStyle: {
-          outline: "2px dashed var(--color-grey-500)",
+          outline: "1px dashed var(--color-primary-900)",
+          outlineOffset: "var(--spacing-2x)",
         },
         morphDisabled: true,
       }}
@@ -138,12 +141,12 @@
               <span class="material-icons">highlight_off</span>
             </button>
           </div>
-          <input type="text" />
+          <svelte:component this={paletteType.component} bind:data={item.data} />
         </div>
       {:else}
         <div class="emptyCanvasItem">
-          <span class="name">Sleep hier een item naartoe</span>
-          <span class="material-icons">mouse</span>
+          <span class="name" style:font-weight="bold">Sleep hier een item naartoe</span>
+          <span class="material-icons" style:font-size="3rem">mouse</span>
         </div>
       {/each}
     </div>
@@ -159,6 +162,14 @@
       div[class^="styles_bannerInner"] div[class^="styles_contentWrapper"]
     ) {
     display: block;
+  }
+
+  :global(div[class^="styles_pageWrapper"]:has(.formWrapper) + footer) {
+    display: none;
+  }
+
+  :global(div[class^="styles_pageWrapper"]) {
+    justify-content: start;
   }
 
   .toolbar {
@@ -189,9 +200,10 @@
     display: flex;
     gap: var(--spacing-3x);
     padding: var(--spacing-4x) var(--spacing-4x);
-    background-color: var(--color-primary-400);
+    background-color: var(--color-grey-100);
+    color: var(--color-primary-900);
+    border: 2px solid var(--color-grey-300);
     border-radius: var(--border-radius-3x);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .paletteItem > div {
@@ -246,14 +258,18 @@
     flex-direction: column;
     gap: var(--spacing-6x);
     border-radius: var(--border-radius-3x);
+    margin-bottom: var(--spacing-6x);
   }
 
   .emptyCanvasItem {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--spacing-4x) var(--spacing-6x);
-    outline: 2px dashed var(--color-grey-500);
+    gap: var(--spacing-3x);
+    padding: var(--spacing-6x) var(--spacing-6x);
+    color: var(--color-primary-900);
+    outline: 1px dashed var(--color-primary-900);
+    outline-offset: var(--spacing-2x);
     border-radius: var(--border-radius-3x);
   }
 

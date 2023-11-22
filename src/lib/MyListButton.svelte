@@ -7,7 +7,7 @@
     <span>NIEUW</span>
     <p>Deel je favorieten met anderen en beslis samen!</p>
   </div>
-  <Button on:click={() => location.href = "/form"} icon="speaker_notes">Start deelformulier</Button>
+  <Button on:click={() => location.href = "/form"} icon="speaker_notes" text="Start deelformulier" />
 </div>
 
 <style>
