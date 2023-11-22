@@ -48,11 +48,7 @@
 
   let canvasItems: CanvasItem[] = [];
 
-  type Ev = { detail: DndEvent<CanvasItem> } & {
-    detail: { info: { id: number } };
-  };
-
-  function handlePaletteConsider(e: Ev) {
+  function handlePaletteConsider(e: DndEventParameter) {
     const { trigger, id } = e.detail.info;
 
     if (trigger === TRIGGERS.DRAG_STARTED) {
@@ -61,7 +57,7 @@
         // @ts-ignore
         (item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]
       );
-      const index = paletteItems.findIndex((item) => item.id === id);
+      const index = paletteItems.findIndex((item) => item.id.toString() === id.toString());
 
       e.detail.items.splice(index, 0, { ...paletteItems[index], id: idx++ });
 
@@ -71,15 +67,15 @@
     }
   }
 
-  function handlePaletteFinalize(e: Ev) {
+  function handlePaletteFinalize(e: DndEventParameter) {
     paletteItems = [...paletteItems];
   }
 
-  function handleCanvasConsider(e: Ev) {
+  function handleCanvasConsider(e: DndEventParameter) {
     canvasItems = e.detail.items;
   }
 
-  function handleCanvasFinalize(e: Ev) {
+  function handleCanvasFinalize(e: DndEventParameter) {
     canvasItems = e.detail.items;
   }
 </script>
