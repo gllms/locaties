@@ -4,7 +4,6 @@
     dndzone,
     TRIGGERS,
     SHADOW_ITEM_MARKER_PROPERTY_NAME,
-    type DndEvent,
   } from "svelte-dnd-action";
   import Button from "./Button.svelte";
   import type { SvelteComponent } from "svelte";
@@ -13,7 +12,7 @@
   import Long from "./palette/Long.svelte";
   import Short from "./palette/Short.svelte";
 
-  const flipDurationMs = 300;
+  const flipDurationMs = 200;
   let idx = 0;
 
   interface CanvasItem {
@@ -46,7 +45,13 @@
     data: {},
   }));
 
-  let canvasItems: CanvasItem[] = [];
+  let canvasItems: CanvasItem[] = [
+    // {
+    //   id: idx++,
+    //   paletteType: "date",
+    //   data: {},
+    // },
+  ];
 
   function handlePaletteConsider(e: DndEventParameter) {
     const { trigger, id } = e.detail.info;
@@ -118,8 +123,7 @@
         flipDurationMs,
         dragDisabled: canvasItems.length === 0,
         dropTargetStyle: {
-          outline: "1px dashed var(--color-primary-900)",
-          outlineOffset: "var(--spacing-2x)",
+          outline: "2px dashed var(--color-grey-300)",
         },
         morphDisabled: true,
       }}
@@ -226,15 +230,13 @@
     font-weight: bold;
     background-color: transparent;
     border: none;
-    outline: none;
   }
 
   .header textarea {
-    padding: var(--spacing-4x) 0;
+    margin-block-start: var(--spacing-4x);
     background-color: transparent;
     color: var(--color-grey-500);
     border: none;
-    outline: none;
     resize: vertical;
   }
 
@@ -252,7 +254,6 @@
   .canvasItems {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-6x);
     border-radius: var(--border-radius-3x);
     margin-bottom: var(--spacing-6x);
   }
@@ -264,8 +265,7 @@
     gap: var(--spacing-3x);
     padding: var(--spacing-6x) var(--spacing-6x);
     color: var(--color-primary-900);
-    outline: 1px dashed var(--color-primary-900);
-    outline-offset: var(--spacing-2x);
+    outline: 2px dashed var(--color-grey-300);
     border-radius: var(--border-radius-3x);
   }
 
@@ -277,6 +277,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-3x);
+    margin: var(--spacing-3x);
     padding: var(--spacing-4x) var(--spacing-6x);
     background-color: white;
     border: 1px solid var(--color-grey-900);

@@ -20,21 +20,25 @@
   }
 </script>
 
-<div>
 <ul>
   {#each data.dates ?? [] as date, i}
     <li>
       <input type="date" bind:value={date} />
       {#if i > 0}
-        <button on:click={() => data.dates = data.dates.filter((_, j) => j !== i)}>
+        <button
+          on:click={() => (data.dates = data.dates.filter((_, j) => j !== i))}>
           <span class="material-icons">delete</span>
         </button>
       {/if}
     </li>
   {/each}
 </ul>
-<Button secondary on:click={addDate} icon="add" style="width: fit-content; border: none" text="Meer" />
-</div> 
+<Button
+  secondary
+  on:click={addDate}
+  icon="add"
+  style="width: fit-content; border: none"
+  text="Meer" />
 
 <style>
   ul {
@@ -46,9 +50,15 @@
     padding: 0;
     list-style: none;
   }
-  
+
   li {
     display: flex;
+  }
+
+  input[type="date"] {
+    padding: var(--spacing-2x);
+    border: 1px solid var(--color-grey-500);
+    border-radius: var(--border-radius-2x);
   }
 
   button {
