@@ -7,7 +7,10 @@
     <span>NIEUW</span>
     <p>Deel je favorieten met anderen en beslis samen!</p>
   </div>
-  <Button on:click={() => location.href = "/form"} icon="speaker_notes" text="Start deelformulier" />
+  <Button
+    on:click={() => (location.href = "/form")}
+    icon="speaker_notes"
+    text="Start deelformulier" />
 </div>
 
 <style>
@@ -27,12 +30,12 @@
     background-color: var(--color-primary-400);
     gap: var(--spacing-2x);
     z-index: 4;
-  }
 
-  div > div {
-    display: flex;
-    gap: var(--spacing-2x);
-    flex-shrink: 1;
+    & > div {
+      display: flex;
+      gap: var(--spacing-2x);
+      flex-shrink: 1;
+    }
   }
 
   span {

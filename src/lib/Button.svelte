@@ -1,17 +1,19 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-
   export let icon: string | undefined = undefined;
   export let text = "";
   export let secondary: boolean = false;
   export let style: string | undefined = undefined;
-
-  const dispatch = createEventDispatcher();
 </script>
 
-<button class:secondary on:click={() => dispatch("click")} style={style} style:padding-inline={text ? "1.8rem" : "0.8rem"}>
+<button
+  class:secondary
+  on:click
+  {style}
+  style:padding-inline={text ? "1.8rem" : "0.8rem"}>
   {#if icon}
-    <span class="material-icons" style:margin-right={text ? "var(--spacing-2x)" : "0"}>{icon}</span>
+    <span
+      class="material-icons"
+      style:margin-right={text ? "var(--spacing-2x)" : "0"}>{icon}</span>
   {/if}
   {#if text}
     <span>{text}</span>
@@ -36,29 +38,33 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    transition: background-color .2s cubic-bezier(.2,0,0,1),box-shadow .2s cubic-bezier(.2,0,0,1),border-color .2s cubic-bezier(.2,0,0,1),-webkit-box-shadow .2s cubic-bezier(.2,0,0,1);
+    transition: background-color 0.2s cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1),
+      border-color 0.2s cubic-bezier(0.2, 0, 0, 1),
+      -webkit-box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
     white-space: nowrap;
-  }
+    border-style: solid;
 
-  button:hover {
-    background-color: var(--color-primary-800);
-  }
+    &:hover {
+      background-color: var(--color-primary-800);
+    }
 
-  button:active {
-    background-color: var(--color-primary-900);
-  }
+    &:active {
+      background-color: var(--color-primary-900);
+    }
 
-  button.secondary {
-    background-color: transparent;
-    border-color: var(--color-grey-900);
-    color: var(--color-black);
-  }
+    &.secondary {
+      background-color: transparent;
+      border-color: var(--color-grey-900);
+      color: var(--color-black);
 
-  button.secondary:hover {
-    background-color: var(--color-grey-400);
-  }
+      &:hover {
+        background-color: var(--color-grey-400);
+      }
 
-  button.secondary:active {
-    background-color: #FCFCF7;
+      &:active {
+        background-color: #fcfcf7;
+      }
+    }
   }
 </style>

@@ -6,6 +6,8 @@
     dates: [] as string[],
   };
 
+  export let viewMode = false;
+
   onMount(() => {
     if (!data.dates)
       data = {
@@ -20,28 +22,43 @@
   }
 </script>
 
-<ul>
-  {#each data.dates ?? [] as date, i}
-    <li>
-      <input type="date" bind:value={date} />
-      {#if i > 0}
-        <button
-          on:click={() => (data.dates = data.dates.filter((_, j) => j !== i))}>
-          <span class="material-icons">delete</span>
-        </button>
-      {/if}
-    </li>
-  {/each}
-</ul>
-<Button
-  secondary
-  on:click={addDate}
-  icon="add"
-  style="width: fit-content; border: none"
-  text="Meer" />
+{#if viewMode}
+  <ol class="viewMode">
+    {#each data.dates ?? [] as date}
+      <li>
+        {date}
+        <span>
+          <Button secondary icon="check" />
+          <Button secondary icon="close" />
+        </span>
+      </li>
+    {/each}
+  </ol>
+{:else}
+  <ol>
+    {#each data.dates ?? [] as date, i}
+      <li>
+        <input type="date" bind:value={date} />
+        {#if i > 0}
+          <button
+            on:click={() =>
+              (data.dates = data.dates.filter((_, j) => j !== i))}>
+            <span class="material-icons">delete</span>
+          </button>
+        {/if}
+      </li>
+    {/each}
+  </ol>
+  <Button
+    secondary
+    on:click={addDate}
+    icon="add"
+    style="width: fit-content; border: none"
+    text="Meer" />
+{/if}
 
 <style>
-  ul {
+  ol {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-2x);
@@ -53,6 +70,12 @@
 
   li {
     display: flex;
+  }
+
+  .viewMode li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2x);
   }
 
   input[type="date"] {
