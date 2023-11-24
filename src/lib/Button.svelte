@@ -21,7 +21,11 @@
   {#if icon}
     <span
       class="material-icons"
-      style:margin-right={text ? "var(--spacing-2x)" : "0"}>{icon}</span>
+      style:margin-right={text ? "var(--spacing-2x)" : "0"}
+      style:color={secondary
+        ? "var(--color-grey-900)"
+        : "var(--color-primary-400"}>
+      {icon}</span>
   {/if}
   {#if text}
     <span>{text}</span>
