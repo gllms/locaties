@@ -1,5 +1,7 @@
 import { Plugin, defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import UnoCSS from "unocss/vite";
+import extractorSvelte from '@unocss/extractor-svelte'
 import { OutputChunk, OutputAsset } from "rollup";
 
 const scriptName = "locaties.user.js";
@@ -80,6 +82,11 @@ ${script.code}
 
 export default defineConfig({
   plugins: [
+    UnoCSS({
+      extractors: [
+        extractorSvelte(),
+      ],
+    }),
     svelte(),
     userScriptPlugin(),
   ],

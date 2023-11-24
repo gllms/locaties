@@ -2,6 +2,7 @@ import type { SvelteComponent } from "svelte";
 import "./app.css";
 import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
+import "uno.css";
 
 const components: SvelteComponent[] = [];
 

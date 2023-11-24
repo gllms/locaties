@@ -25,7 +25,7 @@
 {#if viewMode}
   <ol class="viewMode">
     {#each data.dates ?? [] as date}
-      <li>
+      <li class="flex items-center gap-2">
         {date}
         <span>
           <Button secondary icon="check" />
@@ -38,9 +38,10 @@
   <ol>
     {#each data.dates ?? [] as date, i}
       <li>
-        <input type="date" bind:value={date} />
+        <input type="date" bind:value={date} class="p-2 b b-grey-500 rd-2" />
         {#if i > 0}
           <button
+            class="flex items-center bg-transparent c-grey-700 b-none cursor-pointer"
             on:click={() =>
               (data.dates = data.dates.filter((_, j) => j !== i))}>
             <span class="material-icons">delete</span>
@@ -53,7 +54,7 @@
     secondary
     on:click={addDate}
     icon="add"
-    style="width: fit-content; border: none"
+    class="w-fit b-none"
     text="Meer" />
 {/if}
 
@@ -70,26 +71,5 @@
 
   li {
     display: flex;
-  }
-
-  .viewMode li {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2x);
-  }
-
-  input[type="date"] {
-    padding: var(--spacing-2x);
-    border: 1px solid var(--color-grey-500);
-    border-radius: var(--border-radius-2x);
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--color-grey-700);
   }
 </style>

@@ -106,45 +106,45 @@
 </svelte:head>
 
 <div class="wrapper">
-  <div class="toolbar">
+  <div class="flex gap-6 w-full mt-12 mb-6 px-6">
     {#if viewMode}
       <Button
         secondary
         icon="chevron_left"
         on:click={() => (viewMode = false)}
-        style="border: none"
+        class="b-none"
         text="Terug" />
     {:else}
       <Button
         secondary
-        icon="edit"
+        icon="visibility"
         on:click={() => (viewMode = true)}
-        style="border: none; margin-left: auto"
+        class="b-none ml-auto"
         text="Voorbeeld" />
       <Button icon="share" on:click={() => dialog.showModal()} text="Delen" />
     {/if}
   </div>
 
-  <div class="formWrapper">
+  <div class="flex gap-3 w-full">
     <div
-      class="palette"
+      class="flex flex-col gap-6 w-42rem"
       style:display={viewMode ? "none" : undefined}
       use:dndzone={{ items: paletteItems, flipDurationMs, dropTargetStyle: {} }}
       on:consider={handlePaletteConsider}
       on:finalize={handlePaletteFinalize}>
       {#each paletteItems as item (item.id)}
         {@const paletteType = paletteTypes[item.paletteType]}
-        <div class="paletteItem" animate:flip={{ duration: flipDurationMs }}>
+        <div class="flex gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3" animate:flip={{ duration: flipDurationMs }}>
           <span class="material-icons">drag_indicator</span>
-          <div>
+          <div class="flex items-center gap-2">
             <span class="material-icons">{paletteType.icon}</span>
-            <span class="name">{paletteType.name}</span>
+            <span class="font-bold">{paletteType.name}</span>
           </div>
         </div>
       {/each}
     </div>
-    <div class="canvas">
-      <div class="header">
+    <div class="flex flex-col w-full">
+      <div class="header flex flex-col mx-6 px-6 py-4 bg-primary-200 b-(2 solid primary-400) rd-3 placeholder:c-grey-400">
         {#if viewMode}
           <h1>{title || "Naamloos"}</h1>
           {#if description}
@@ -159,7 +159,7 @@
         {/if}
       </div>
       <div
-        class="canvasItems"
+        class="flex flex-col rd-3 m-3 mb-6"
         style:outline={canvasItems.length === 0 && !viewMode
           ? "2px dashed var(--color-grey-300)"
           : undefined}
@@ -174,15 +174,16 @@
         on:finalize={handleCanvasFinalize}>
         {#each canvasItems as item (item.id)}
           {@const paletteType = paletteTypes[item.paletteType]}
-          <div class="canvasItem" animate:flip={{ duration: flipDurationMs }}>
-            <div class="canvasItemHeader">
+          <div class="flex flex-col gap-3 m-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3" animate:flip={{ duration: flipDurationMs }}>
+            <div class="flex items-center gap-2">
               <span class="material-icons">{paletteType.icon}</span>
               <span class="name">{paletteType.name}</span>
               <button
+                class="material-icons bg-transparent b-none ml-auto cursor-pointer"
                 on:click={() =>
                   (canvasItems = canvasItems.filter((e) => e !== item))}
                 style:display={viewMode ? "none" : undefined}>
-                <span class="material-icons">highlight_off</span>
+                highlight_off
               </button>
             </div>
             <svelte:component
@@ -192,8 +193,8 @@
           </div>
         {:else}
           {#if !viewMode}
-            <div class="emptyCanvasItem">
-              <span class="name" style:font-weight="bold"
+            <div class="flex flex-col items-center gap-3 m-3 p-6 c-primary-900 rd-3">
+              <span class="font-bold"
                 >Sleep hier een item naartoe</span>
               <span class="material-icons" style:font-size="3rem">mouse</span>
             </div>
@@ -204,24 +205,27 @@
         <Button
           icon="send"
           text="Verzenden"
-          style="margin-left: auto; margin-right: var(--spacing-6x)" />
+          class="ml-auto mr-6" />
       {/if}
     </div>
   </div>
 </div>
 
-<dialog bind:this={dialog}>
+<dialog class="w-[60.8rem] b-none rd-4" bind:this={dialog}>
   <button
-    class="material-icons close"
+    class="material-icons absolute top-8 right-8 bg-transparent b-none cursor-pointer backdrop:bg-[rgba(0,0,0,0.44)]"
     style:margin-left="auto"
     on:click={() => dialog.close()}>
     close
   </button>
   <br />
-  <input type="text" value="https://locaties.nl/form/dQw4w9WgXcQ" />
+  <div>
+    https://locaties.nl/form/dQw4w9WgXcQ
+    <Button icon="content_copy" />
+  </div>
 </dialog>
 
-<style>
+<style lang="postcss">
   :global(div[class^="styles_contentWrapper"]) {
     display: none;
   }
@@ -256,64 +260,10 @@
     }
   }
 
-  .toolbar {
-    display: flex;
-    gap: var(--spacing-6x);
-    width: 100%;
-    margin-top: var(--spacing-12x);
-    margin-bottom: var(--spacing-6x);
-    padding-inline: var(--spacing-6x);
-  }
-
-  .formWrapper {
-    display: flex;
-    gap: var(--spacing-3x);
-    width: 100%;
-  }
-
-  .palette {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-6x);
-    width: 42rem;
-  }
-
-  .paletteItem {
-    display: flex;
-    gap: var(--spacing-3x);
-    padding: var(--spacing-4x);
-    background-color: var(--color-grey-100);
-    color: var(--color-primary-900);
-    border: 2px solid var(--color-grey-300);
-    border-radius: var(--border-radius-3x);
-
-    & > div {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-2x);
-    }
-  }
-
-  .paletteItem .name {
-    font-weight: bold;
-  }
-
   .header {
-    display: flex;
-    flex-direction: column;
-    margin-inline: var(--spacing-6x);
-    padding: var(--spacing-4x) var(--spacing-6x);
-    background-color: var(--color-primary-200);
-    border: 2px solid var(--color-primary-400);
-    border-radius: var(--border-radius-3x);
-
     & input,
     & h1 {
-      font-size: 1.8rem;
-      font-weight: bold;
-      line-height: unset;
-      background-color: transparent;
-      border: none;
+      @apply font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none;
     }
 
     & textarea,
@@ -324,85 +274,9 @@
       border: none;
       resize: vertical;
     }
-
-    & textarea::placeholder {
-      color: var(--color-grey-400);
-    }
-  }
-
-  .canvas {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .canvasItems {
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--border-radius-3x);
-    margin: var(--spacing-3x);
-    margin-bottom: var(--spacing-6x);
   }
 
   :global(.dropTarget) {
     outline: 2px dashed var(--color-grey-300) !important;
-  }
-
-  .emptyCanvasItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-3x);
-    margin: var(--spacing-3x);
-    padding: var(--spacing-6x) var(--spacing-6x);
-    color: var(--color-primary-900);
-    border-radius: var(--border-radius-3x);
-
-    & span {
-      width: fit-content;
-    }
-  }
-
-  .canvasItem {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-3x);
-    margin: var(--spacing-3x);
-    padding: var(--spacing-4x) var(--spacing-6x);
-    background-color: white;
-    border: 2px solid var(--color-grey-300);
-    border-radius: var(--border-radius-3x);
-  }
-
-  .canvasItemHeader {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2x);
-
-    & button {
-      background-color: transparent;
-      border: none;
-      margin-left: auto;
-      cursor: pointer;
-    }
-  }
-
-  dialog {
-    width: 60.8rem;
-    border: none;
-    border-radius: 1.6rem;
-
-    & .close {
-      position: absolute;
-      top: var(--spacing-8x);
-      right: var(--spacing-8x);
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-    }
-
-    &::backdrop {
-      background-color: rgba(0, 0, 0, 0.44);
-    }
   }
 </style>
