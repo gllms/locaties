@@ -11,6 +11,7 @@
   import Date from "./palette/Date.svelte";
   import Long from "./palette/Long.svelte";
   import Short from "./palette/Short.svelte";
+  import ShareDialog from "./ShareDialog.svelte";
 
   let viewMode = false;
 
@@ -105,7 +106,7 @@
   <title>Deelformulier</title>
 </svelte:head>
 
-<div class="wrapper">
+<div class="w-full px-2 lg:px-20 xl:px-[16rem] xxl:px-[32rem]">
   <div class="flex gap-6 w-full mt-12 mb-6 px-6">
     {#if viewMode}
       <Button
@@ -211,19 +212,7 @@
   </div>
 </div>
 
-<dialog class="w-[60.8rem] b-none rd-4 p-8 pt-12" bind:this={dialog}>
-  <button
-    class="material-icons absolute top-8 right-8 bg-transparent b-none cursor-pointer backdrop:bg-[rgba(0,0,0,0.44)]"
-    style:margin-left="auto"
-    on:click={() => dialog.close()}>
-    close
-  </button>
-  <br />
-  <div class="relative">
-    <input type="text" value="https://locaties.nl/form/dQw4w9WgXcQ" class="p-4 pr-16 b-(2 solid grey-300) rd-2 select-all" readonly />
-    <Button icon="content_copy" class="absolute right-2 top-2" on:click={() => navigator.clipboard.writeText("https://locaties.nl/form/dQw4w9WgXcQ")} />
-  </div>
-</dialog>
+<ShareDialog bind:element={dialog} />
 
 <style lang="postcss">
   :global(div[class^="styles_contentWrapper"]) {
