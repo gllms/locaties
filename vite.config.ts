@@ -35,7 +35,7 @@ function userScriptPlugin(): Plugin {
 // @run-at       document-idle
 // ==/UserScript==
 
-GM_addStyle(\`${styleText}\`);
+GM_addStyle(\`${styleText.toString().replace(/\\/g, "\\\\")}\`);
 
 ${script.code}
       `.trim();
