@@ -130,12 +130,14 @@
     <div
       class="flex flex-col gap-6 w-42rem"
       style:display={viewMode ? "none" : undefined}
-      use:dndzone={{ items: paletteItems, flipDurationMs, dropTargetStyle: {} }}
+      use:dndzone={{ items: paletteItems, flipDurationMs }}
       on:consider={handlePaletteConsider}
       on:finalize={handlePaletteFinalize}>
       {#each paletteItems as item (item.id)}
         {@const paletteType = paletteTypes[item.paletteType]}
-        <div class="flex gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3" animate:flip={{ duration: flipDurationMs }}>
+        <div
+          class="flex gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3"
+          animate:flip={{ duration: flipDurationMs }}>
           <span class="material-icons">drag_indicator</span>
           <div class="flex items-center gap-2">
             <span class="material-icons">{paletteType.icon}</span>
@@ -145,7 +147,10 @@
       {/each}
     </div>
     <div class="flex flex-col w-full">
-      <div class="header flex flex-col mx-6 px-6 py-4 bg-primary-200 b-(2 solid primary-400) rd-3 placeholder:c-grey-400">
+      <div
+        class="flex flex-col mx-6 px-6 py-4 bg-primary-200 b-(2 solid primary-400) rd-3 placeholder:c-grey-400
+               [&>input,&>h1]:(font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none)
+               [&>textarea,&>p]:(mt-4 bg-transparent c-grey-500 b-none resize-y)">
         {#if viewMode}
           <h1>{title || "Naamloos"}</h1>
           {#if description}
@@ -160,27 +165,30 @@
         {/if}
       </div>
       <div
-        class="flex flex-col rd-3 m-3 mb-6"
-        style:outline={canvasItems.length === 0 && !viewMode
-          ? "2px dashed var(--color-grey-300)"
+        class="flex flex-col rd-3 m-3 mb-6 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
+        style:outline-width={canvasItems.length === 0 && !viewMode
+          ? "2px"
           : undefined}
         use:dndzone={{
           items: canvasItems,
           flipDurationMs,
           dragDisabled: canvasItems.length === 0 || viewMode,
           dropTargetClasses: ["dropTarget"],
+          dropTargetStyle: {},
           morphDisabled: true,
         }}
         on:consider={handleCanvasConsider}
         on:finalize={handleCanvasFinalize}>
         {#each canvasItems as item (item.id)}
           {@const paletteType = paletteTypes[item.paletteType]}
-          <div class="flex flex-col gap-3 m-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3" animate:flip={{ duration: flipDurationMs }}>
+          <div
+            class="flex flex-col gap-3 m-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3"
+            animate:flip={{ duration: flipDurationMs }}>
             <div class="flex items-center gap-2">
               <span class="material-icons">{paletteType.icon}</span>
               <span class="name">{paletteType.name}</span>
               <button
-                class="material-icons bg-transparent b-none ml-auto cursor-pointer"
+                class="icon-button ml-auto"
                 on:click={() =>
                   (canvasItems = canvasItems.filter((e) => e !== item))}
                 style:display={viewMode ? "none" : undefined}>
@@ -194,19 +202,16 @@
           </div>
         {:else}
           {#if !viewMode}
-            <div class="flex flex-col items-center gap-3 m-3 p-6 c-primary-900 rd-3">
-              <span class="font-bold"
-                >Sleep hier een item naartoe</span>
+            <div
+              class="flex flex-col items-center gap-3 m-3 p-6 c-primary-900 rd-3">
+              <span class="font-bold">Sleep hier een item naartoe</span>
               <span class="material-icons" style:font-size="3rem">mouse</span>
             </div>
           {/if}
         {/each}
       </div>
       {#if viewMode}
-        <Button
-          icon="send"
-          text="Verzenden"
-          class="ml-auto mr-6" />
+        <Button icon="send" text="Verzenden" class="ml-auto mr-6" />
       {/if}
     </div>
   </div>
@@ -214,7 +219,7 @@
 
 <ShareDialog bind:element={dialog} />
 
-<style lang="postcss">
+<style>
   :global(div[class^="styles_contentWrapper"]) {
     display: none;
   }
@@ -225,47 +230,11 @@
     display: block;
   }
 
-  :global(div[class^="styles_pageWrapper"]:has(.formWrapper) + footer) {
+  :global(head:has(meta[property="og:url"][content="/form"]) + body div[class^="styles_pageWrapper"] + footer) {
     display: none;
   }
 
   :global(div[class^="styles_pageWrapper"]) {
     justify-content: start;
-  }
-
-  .wrapper {
-    padding-inline: var(--spacing-2x);
-
-    @media (min-width: 1024.02px) {
-      padding-inline: var(--spacing-20x);
-    }
-
-    @media (min-width: 1400.02px) {
-      padding-inline: 16rem;
-    }
-
-    @media (min-width: 1600.02px) {
-      padding-inline: 32rem;
-    }
-  }
-
-  .header {
-    & input,
-    & h1 {
-      @apply font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none;
-    }
-
-    & textarea,
-    & p {
-      margin-block-start: var(--spacing-4x);
-      background-color: transparent;
-      color: var(--color-grey-500);
-      border: none;
-      resize: vertical;
-    }
-  }
-
-  :global(.dropTarget) {
-    outline: 2px dashed var(--color-grey-300) !important;
   }
 </style>

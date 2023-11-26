@@ -1,4 +1,12 @@
-.material-icons {
+.material-icons, .icon-button {
   font-family: var(--font-family-material-outlined);
   font-size: 2rem;
+}
+
+dialog {
+  @apply w-[60.8rem] b-none rd-4 p-8 pt-12;
+}
+
+.icon-button {
+  @apply bg-transparent b-none cursor-pointer;
 }
