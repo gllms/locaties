@@ -130,7 +130,7 @@
     <div
       class="flex flex-col gap-6 w-42rem"
       style:display={viewMode ? "none" : undefined}
-      use:dndzone={{ items: paletteItems, flipDurationMs }}
+      use:dndzone={{ items: paletteItems, flipDurationMs, dropTargetStyle: {} }}
       on:consider={handlePaletteConsider}
       on:finalize={handlePaletteFinalize}>
       {#each paletteItems as item (item.id)}
