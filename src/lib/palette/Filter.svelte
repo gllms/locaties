@@ -77,7 +77,7 @@
             class="w-8 h-8 hidden"
             style="accent-color: var(--color-primary-900)" />
           <span
-            class="font-material-filled font-size-12"
+            class="font-material-filled font-size-10"
             class:c-grey-400={!selected}
             class:c-primary-900={selected}
             >{selected ? "visibility" : "visibility_off"}</span>

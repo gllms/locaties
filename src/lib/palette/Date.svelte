@@ -9,37 +9,50 @@
     values: [],
   };
 
-  $: console.log(data.values);
-
   export let viewMode = false;
+
+  const buttons = [
+    {
+      value: true,
+      icon: "mood",
+      text: "Ik kan er bij zijn!",
+    },
+    {
+      value: false,
+      icon: "mood_bad",
+      text: "Helaas niet",
+    },
+  ]
 
   function addDate() {
     data.dates = [...data.dates, new Date().toISOString().slice(0, 10)];
   }
 </script>
 
-<div
-  class="[&>ol]:(flex flex-col gap-2 w-fit m-0 mb-2 p-0 list-none) [&_li]:flex">
+<div>
   {#if viewMode}
-    <ol class="viewMode">
+    <ol class="flex flex-col gap-2 m-0 mb-2 p-0 list-none">
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
-        <li class="flex items-center gap-2">
-          {date}
-          <span class="flex gap-2 [&>button]:(min-h-16 b-(1 solid black rd-1))">
+        <li
+          class="flex items-center gap-2 w-full font-500
+                 [&>button]:(flex-1 flex items-center gap-2 min-h-16 bg-white b-(1 solid grey-300 rd-1) cursor-pointer rd-2)">
+          {new Date(date).toLocaleDateString("nl-NL", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+          {#each buttons as button}
             <button
-              class={"icon-button" +
-                (val === true ? " bg-black c-white" : "")}
-              on:click={() => (data.values[i] = val === true ? undefined : true)}>
-              check
+              class="[&[data-active]]:(bg-primary-200)"
+              data-active={val === button.value || undefined}
+              on:click={() => (data.values[i] = val === button.value ? undefined : button.value)}>
+              <span class="material-icons">{button.icon}</span>
+              {button.text}
+
+              <span class="material-icons ml-auto">{`radio_button_${val === button.value ? "" : "un"}checked`}</span>
             </button>
-            <button
-              class={"icon-button" +
-                (val === false ? " bg-black c-white" : "")}
-              on:click={() => (data.values[i] = val === false ? undefined : false)}>
-              close
-            </button>
-          </span>
+          {/each}
         </li>
       {/each}
     </ol>
