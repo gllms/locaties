@@ -9,9 +9,11 @@
   import type { SvelteComponent } from "svelte";
 
   import Date from "./palette/Date.svelte";
+  import Filter from "./palette/Filter.svelte";
   import Long from "./palette/Long.svelte";
   import Short from "./palette/Short.svelte";
   import ShareDialog from "./ShareDialog.svelte";
+  import filters from "../filters";
 
   let viewMode = false;
 
@@ -22,6 +24,14 @@
   let description = "";
 
   let dialog: HTMLDialogElement;
+  let dragDisabled = false;
+
+  interface PaletteItem {
+    name: string;
+    icon: string;
+    component: new (...args: any[]) => SvelteComponent;
+    args?: object;
+  }
 
   interface CanvasItem {
     id: number;
@@ -29,14 +39,19 @@
     data: object;
   }
 
-  const paletteTypes: Record<
-    string,
-    {
-      name: string;
-      icon: string;
-      component: new (...args: any[]) => SvelteComponent;
-    }
-  > = {
+  let filterTypes: Record<string, PaletteItem> = {};
+
+  for (const [key, filter] of Object.entries(filters)) {
+    filterTypes[key] = {
+      name: filter.name,
+      icon: filter.icon,
+      component: Filter,
+      args: { filter: key },
+    };
+  }
+
+  const paletteTypes: Record<string, PaletteItem> = {
+    ...filterTypes,
     date: {
       name: "Datum",
       icon: "date_range",
@@ -57,15 +72,15 @@
   let paletteItems: CanvasItem[] = Object.keys(paletteTypes).map((key) => ({
     id: idx++,
     paletteType: key,
-    data: {},
+    data: undefined!,
   }));
 
   let canvasItems: CanvasItem[] = [
-    {
-      id: idx++,
-      paletteType: "date",
-      data: {},
-    },
+    // {
+    //   id: idx++,
+    //   paletteType: "date",
+    //   data: undefined!,
+    // },
   ];
 
   function handlePaletteConsider(e: DndEventParameter) {
@@ -100,6 +115,13 @@
   function handleCanvasFinalize(e: DndEventParameter) {
     canvasItems = e.detail.items;
   }
+
+  function handlePointerdown(e: MouseEvent) {
+    if ((e.target as HTMLElement)?.closest("dialog")) {
+      dragDisabled = true;
+      setTimeout(() => dragDisabled = false, 100);
+    }
+  }
 </script>
 
 <svelte:head>
@@ -107,7 +129,7 @@
 </svelte:head>
 
 <div class="w-full px-2 lg:px-20 xl:px-[16rem] xxl:px-[32rem]">
-  <div class="flex gap-6 w-full mt-12 mb-6 px-6">
+  <div class="flex gap-6 w-full pt-12 mb-6 px-6">
     {#if viewMode}
       <Button
         secondary
@@ -130,13 +152,18 @@
     <div
       class="flex flex-col gap-6 w-42rem"
       style:display={viewMode ? "none" : undefined}
-      use:dndzone={{ items: paletteItems, flipDurationMs, dropTargetStyle: {} }}
+      use:dndzone={{
+        items: paletteItems,
+        flipDurationMs,
+        dropTargetStyle: {},
+        dropFromOthersDisabled: true,
+      }}
       on:consider={handlePaletteConsider}
       on:finalize={handlePaletteFinalize}>
       {#each paletteItems as item (item.id)}
         {@const paletteType = paletteTypes[item.paletteType]}
         <div
-          class="flex gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3"
+          class="flex items-center gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3"
           animate:flip={{ duration: flipDurationMs }}>
           <span class="material-icons">drag_indicator</span>
           <div class="flex items-center gap-2">
@@ -164,6 +191,7 @@
             placeholder="Formulierbeschrijving" />
         {/if}
       </div>
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="flex flex-col rd-3 m-3 mb-6 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
         style:outline-width={canvasItems.length === 0 && !viewMode
@@ -172,13 +200,14 @@
         use:dndzone={{
           items: canvasItems,
           flipDurationMs,
-          dragDisabled: canvasItems.length === 0 || viewMode,
+          dragDisabled: canvasItems.length === 0 || viewMode || dragDisabled,
           dropTargetClasses: ["dropTarget"],
           dropTargetStyle: {},
           morphDisabled: true,
         }}
         on:consider={handleCanvasConsider}
-        on:finalize={handleCanvasFinalize}>
+        on:finalize={handleCanvasFinalize}
+        on:pointerdown={handlePointerdown}>
         {#each canvasItems as item (item.id)}
           {@const paletteType = paletteTypes[item.paletteType]}
           <div
@@ -198,6 +227,7 @@
             <svelte:component
               this={paletteType.component}
               {viewMode}
+              {...paletteType.args}
               bind:data={item.data} />
           </div>
         {:else}
@@ -230,7 +260,12 @@
     display: block;
   }
 
-  :global(head:has(meta[property="og:url"][content="/form"]) + body div[class^="styles_pageWrapper"] + footer) {
+  :global(
+      head:has(meta[property="og:url"][content="/form"])
+        + body
+        div[class^="styles_pageWrapper"]
+        + footer
+    ) {
     display: none;
   }
 

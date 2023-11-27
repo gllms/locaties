@@ -10,7 +10,7 @@
 
 <dialog bind:this={element}>
   <button
-    class="icon-button absolute top-8 right-8 backdrop:bg-[rgba(0,0,0,0.44)]"
+    class="icon-button absolute top-8 right-8"
     style:margin-left="auto"
     on:click={() => element.close()}>
     close
@@ -38,10 +38,7 @@
     <a class="icon-button" target="_blank" href="mailto:?subject=Locaties.nl%20formulier&body=https://locaties.nl/form/dQw4w9WgXcQ">
       email
     </a>
-    <a class="icon-button" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://locaties.nl/form/dQw4w9WgXcQ">
-      facebook
-    </a>
-    <a class="icon-button" target="_blank" href={"javascript:navigator.share({url: 'https://locaties.nl/form/dQw4w9WgXcQ'}); void"}>
+    <a class="icon-button" href={"javascript:navigator.share({url: 'https://locaties.nl/form/dQw4w9WgXcQ'})"}>
       share
     </a>
   </div>

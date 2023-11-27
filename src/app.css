@@ -1,4 +1,7 @@
-.material-icons, .icon-button {
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons");
+
+.material-icons,
+.icon-button {
   font-family: var(--font-family-material-outlined);
   font-size: 2rem;
 }
@@ -7,6 +10,10 @@ dialog {
   @apply w-[60.8rem] b-none rd-4 p-8 pt-12;
 }
 
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.44);
+}
+
 .icon-button {
-  @apply bg-transparent b-none cursor-pointer;
+  @apply bg-transparent b-none cursor-pointer select-none;
 }
