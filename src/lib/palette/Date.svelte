@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { secretOptions } from "../../stores";
   import Button from "../Button.svelte";
 
   export let data: {
@@ -22,44 +23,50 @@
       icon: "mood_bad",
       text: "Helaas niet",
     },
-  ]
+  ];
 
   function addDate() {
     data.dates = [...data.dates, new Date().toISOString().slice(0, 10)];
   }
 </script>
 
-<div>
+<div class="[&>ol]:(flex flex-col gap-2 m-0 mb-2 p-0 list-none)">
   {#if viewMode}
-    <ol class="flex flex-col gap-2 m-0 mb-2 p-0 list-none">
+    <ol>
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
         <li
           class="flex items-center gap-2 w-full font-500
                  [&>button]:(flex-1 flex items-center gap-2 min-h-16 bg-white b-(1 solid grey-300 rd-1) cursor-pointer rd-2)">
-          {new Date(date).toLocaleDateString("nl-NL", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-          {#each buttons as button}
+          <span class="mr-2"
+            >{new Date(date).toLocaleDateString("nl-NL", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}</span>
+          {#each buttons as { value, icon, text }}
             <button
-              class="[&[data-active]]:(bg-primary-200)"
-              data-active={val === button.value || undefined}
-              on:click={() => (data.values[i] = val === button.value ? undefined : button.value)}>
-              <span class="material-icons">{button.icon}</span>
-              {button.text}
+              class="[&[data-active]]:(bg-primary-200 b-primary-200)"
+              data-active={val === value || undefined}
+              style:max-width={$secretOptions.date_buttons === "fixed"
+                ? "23rem"
+                : undefined}
+              on:click={() =>
+                (data.values[i] = val === value ? undefined : value)}>
+              <span class="material-icons">{icon}</span>
+              {text}
 
-              <span class="material-icons ml-auto">{`radio_button_${val === button.value ? "" : "un"}checked`}</span>
+              <span class="material-icons ml-auto"
+                >{`radio_button_${val === value ? "" : "un"}checked`}</span>
             </button>
           {/each}
         </li>
       {/each}
     </ol>
   {:else}
-    <ol>
+    <ol class="w-fit">
       {#each data.dates ?? [] as date, i}
-        <li>
+        <li class="flex">
           <input type="date" bind:value={date} class="p-2 b b-grey-500 rd-2" />
           {#if i > 0}
             <button

@@ -3,6 +3,7 @@ import "./app.css";
 import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
 import "uno.css";
+import SecretMenu from "./lib/SecretMenu.svelte";
 
 const components: SvelteComponent[] = [];
 
@@ -44,6 +45,8 @@ function apply() {
     document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
     "/form"
   );
+
+  addComponent(SecretMenu, document.body);
 
   addComponent(FormBuilder, testElement);
 }

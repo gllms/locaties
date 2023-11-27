@@ -17,32 +17,53 @@
 
   $: data.filter = filter;
 
+  const icons = filters[filter].icons;
+
   let dialog: HTMLDialogElement;
   let dialogSelection: string[] = [];
 </script>
 
-<ol
-  class:pointer-events-none={!viewMode}
-  class="flex flex-col gap-2 p-0 list-none">
-  {#each data.options as option}
-    <li>
-      <label class="flex items-center gap-2 cursor-pointer select-none">
-        <input
-          type="checkbox"
-          bind:group={data.selected}
-          value={option}
-          class="w-8 h-8 cursor-pointer"
-          style="accent-color: var(--color-primary-900)"
-          disabled={!viewMode} />
-        <p class="m-0">{option}</p>
+{#if viewMode}
+  <div
+    class:pointer-events-none={!viewMode}
+    class="grid grid-cols-4 grid-items-stretch gap-2 p-0">
+    {#each data.options as option}
+      <label
+        class="flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) cursor-pointer select-none">
+        <div class="flex justify-between w-full">
+          {#if icons}
+            <span class="material-icons"
+              >{icons[filters[filter].options.indexOf(option)]}</span>
+          {:else}
+            <p class="m-0">{option}</p>
+          {/if}
+          <input
+            type="checkbox"
+            bind:group={data.selected}
+            value={option}
+            class="flex-shrink w-8 h-8 cursor-pointer"
+            style="accent-color: var(--color-primary-900)"
+            disabled={!viewMode} />
+        </div>
+        {#if icons}
+          <p class="m-0">{option}</p>
+        {/if}
       </label>
-    </li>
+    {/each}
+  </div>
+{:else}
+  {#if data.options.length}
+  <ul class:pointer-events-none={!viewMode} class="flex flex-col gap-2 list-circle">
+    {#each data.options as option}
+      <li class="">
+        {option}
+      </li>
+    {/each}
+  </ul>
   {:else}
-    {#if !viewMode}
-      <li>Geen opties geselecteerd</li>
-    {/if}
-  {/each}
-</ol>
+    <p>Geen opties geselecteerd</p>
+  {/if}
+{/if}
 
 {#if !viewMode}
   <Button

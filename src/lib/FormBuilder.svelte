@@ -15,7 +15,7 @@
   import filters from "../filters";
   import ViewMode from "./ViewMode.svelte";
 
-  let viewMode = true;
+  let viewMode = false;
 
   const flipDurationMs = 200;
   let idx = 0;
@@ -63,11 +63,15 @@
   }));
 
   let canvasItems: CanvasItem[] = [
-    {
-      id: idx++,
-      paletteType: "date",
-      data: undefined!,
-    },
+    // {
+    //   id: idx++,
+    //   paletteType: "location",
+    //   data: {
+    //     filter: "location",
+    //     options: ["Stedelijk gelegen", "Aan het water" ],
+    //     selected: [],
+    //   },
+    // },
   ];
 
   function handlePaletteConsider(e: DndEventParameter) {

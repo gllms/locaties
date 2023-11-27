@@ -2,6 +2,7 @@ interface Filter {
   name: string;
   icon: string;
   options: string[];
+  icons?: string[];
 }
 
 const filters: Record<string, Filter> = {
@@ -9,6 +10,7 @@ const filters: Record<string, Filter> = {
     name: "Ligging en omgeving",
     icon: "castle",
     options: [ "Stedelijk gelegen", "Aan het water", "Bosrijke omgeving", "Midden in de natuur", "Landelijk gelegen", "Industrieel gebied", "In het park", "Aan de gracht" ],
+    icons: [ "location_city", "water", "forest", "nature", "agriculture", "factory", "park", "water" ],
   },
   appeal: {
     name: "Wat spreekt je aan?",
