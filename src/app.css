@@ -2,8 +2,7 @@
 
 .material-icons,
 .icon-button {
-  font-family: var(--font-family-material-outlined);
-  font-size: 2rem;
+  @apply font-material-outlined font-size-8 select-none;
 }
 
 dialog {

@@ -119,7 +119,7 @@
   function handlePointerdown(e: MouseEvent) {
     if ((e.target as HTMLElement)?.closest("dialog")) {
       dragDisabled = true;
-      setTimeout(() => dragDisabled = false, 100);
+      setTimeout(() => (dragDisabled = false), 100);
     }
   }
 </script>
@@ -193,7 +193,7 @@
       </div>
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
-        class="flex flex-col rd-3 m-3 mb-6 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
+        class="flex flex-col rd-3 m-3 mb-4 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
         style:outline-width={canvasItems.length === 0 && !viewMode
           ? "2px"
           : undefined}
@@ -241,7 +241,7 @@
         {/each}
       </div>
       {#if viewMode}
-        <Button icon="send" text="Verzenden" class="ml-auto mr-6" />
+        <Button icon="send" text="Verzenden" class="ml-auto mr-6 mb-6" />
       {/if}
     </div>
   </div>
@@ -250,23 +250,12 @@
 <ShareDialog bind:element={dialog} />
 
 <style>
-  :global(div[class^="styles_contentWrapper"]) {
-    display: none;
-  }
-
-  :global(
-      div[class^="styles_bannerInner"] div[class^="styles_contentWrapper"]
-    ) {
-    display: block;
-  }
-
-  :global(
-      head:has(meta[property="og:url"][content="/form"])
-        + body
-        div[class^="styles_pageWrapper"]
-        + footer
-    ) {
-    display: none;
+  :global(head:has(meta[property="og:url"][content="/form"]) + body) {
+    & div[class^="styles_searchButtonWrapper"],
+    & div[class^="styles_contentWrapper"],
+    & footer {
+      display: none;
+    }
   }
 
   :global(div[class^="styles_pageWrapper"]) {

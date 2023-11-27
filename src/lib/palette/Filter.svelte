@@ -19,12 +19,6 @@
 
   let dialog: HTMLDialogElement;
   let dialogSelection: string[] = [];
-
-  function showModal() {
-    dialogSelection = data.options;
-
-    dialog.showModal();
-  }
 </script>
 
 <ol
@@ -51,7 +45,14 @@
 </ol>
 
 {#if !viewMode}
-  <Button secondary icon="edit" text="Bepaal selectie" on:click={showModal} />
+  <Button
+    secondary
+    icon="edit"
+    text="Bepaal selectie"
+    on:click={() => {
+      dialogSelection = data.options;
+      dialog.showModal();
+    }} />
 {/if}
 
 <dialog bind:this={dialog} class="pb-4 cursor-default">
