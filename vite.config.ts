@@ -60,6 +60,9 @@ function userScriptPlugin(): Plugin {
 // @description  ${description}
 // @run-at       document-idle
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=locaties.nl
+// @downloadURL  https://github.com/gllms/locaties/releases/latest/download/locaties.user.js
+// @supportURL   https://github.com/gllms/locaties/issues
+// @homepageURL  https://github.com/gllms/locaties
 // ==/UserScript==
 
 GM_addStyle(\`${styleText.toString().replace(/\\/g, "\\\\")}\`);
