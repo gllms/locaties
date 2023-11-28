@@ -2,5 +2,5 @@
 
 ## Installatie
 
-1. Installeer [Violentmonkey](https://violentmonkey.github.io/get-it/)
-2. Klik [hier](https://github.com/gllms/locaties/releases/latest/download/locaties.user.js) om de laatste versie te installeren
+1. Installeer <a href="https://violentmonkey.github.io/get-it/" target="_blank">Violentmonkey</a>
+2. Klik <a href="https://github.com/gllms/locaties/releases/latest/download/locaties.user.js" target="_blank">hier</a> om de laatste versie van het userscript te installeren
