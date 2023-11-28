@@ -43,7 +43,7 @@ function apply() {
   addComponent(
     FormBuilder,
     document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
-    "/form"
+    "/form/edit"
   );
 
   addComponent(SecretMenu, document.body);
@@ -51,12 +51,17 @@ function apply() {
   addComponent(FormBuilder, testElement);
 }
 
-function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string) {
+function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp) {
   if (!target)
     return;
 
-  if (path && !location.pathname.startsWith(path))
-    return;
+  if (path) {
+    if (typeof path === "string") {
+      if (!location.pathname.startsWith(path))
+        return;
+    } else if (!path.test(location.pathname))
+      return;
+  }
 
   components.push(new component({
     target,

@@ -8,7 +8,7 @@
     <p class="m-0">Deel je favorieten met anderen en beslis samen!</p>
   </div>
   <Button
-    on:click={() => (location.href = "/form")}
+    on:click={() => (location.href = "/form/edit")}
     icon="speaker_notes"
     text="Start deelformulier" />
 </div>
