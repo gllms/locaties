@@ -1,12 +1,15 @@
 <script lang="ts">
   import filters from "../../filters";
+  import { secretOptions } from "../../stores";
   import Button from "../Button.svelte";
 
   export let data: {
+    description: string;
     filter: string;
     options: string[];
     selected: string[];
   } = {
+    description: "",
     filter: "location",
     options: [],
     selected: [],
@@ -18,24 +21,32 @@
   $: data.filter = filter;
 
   const icons = filters[filter].icons;
+  const images = filters[filter].images;
 
   let dialog: HTMLDialogElement;
   let dialogSelection: string[] = [];
 </script>
 
 {#if viewMode}
+  {#if data.description}
+    <p class="m-0">{data.description}</p>
+  {/if}
   <div
     class:pointer-events-none={!viewMode}
-    class="grid grid-cols-4 grid-items-stretch gap-2 p-0">
+    class="grid grid-cols-2 md:grid-cols-4 grid-items-stretch gap-2 p-0
+           [&>label]:(flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) rd-1 cursor-pointer select-none)">
     {#each data.options as option}
-      <label
-        class="flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) cursor-pointer select-none">
-        <div class="flex justify-between w-full">
-          {#if icons}
+      <label>
+        <div
+          class="flex justify-between gap-2 w-full
+                 [&_p]:(m-0 font-500)">
+          {#if images}
+            <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
+          {:else if icons}
             <span class="material-icons"
               >{icons[filters[filter].options.indexOf(option)]}</span>
           {:else}
-            <p class="m-0">{option}</p>
+            <p>{option}</p>
           {/if}
           <input
             type="checkbox"
@@ -45,24 +56,54 @@
             style="accent-color: var(--color-primary-900)"
             disabled={!viewMode} />
         </div>
-        {#if icons}
-          <p class="m-0">{option}</p>
+        {#if images}
+          <img
+            src={"https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/" +
+              images[filters[filter].options.indexOf(option)]}
+            alt="filter option"
+            class="rd-1 aspect-[4/3]"
+            draggable="false" />
+        {:else if icons}
+          <p>{option}</p>
         {/if}
       </label>
     {/each}
+
+    <label
+      style:grid-column={$secretOptions.no_preference_pos === "inline"
+        ? undefined
+        : "1 / -1"}>
+      <div
+        class="flex justify-between gap-2 w-full
+                 [&_p]:(m-0 font-500)">
+        <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
+        <input
+          type="radio"
+          bind:group={data.selected}
+          value="Geen voorkeur"
+          class="flex-shrink w-8 h-8 cursor-pointer"
+          style="accent-color: var(--color-primary-900)"
+          disabled={!viewMode} />
+      </div>
+    </label>
   </div>
-{:else}
-  {#if data.options.length}
-  <ul class:pointer-events-none={!viewMode} class="flex flex-col gap-2 list-circle">
+{:else if data.options.length}
+  <input
+    type="text"
+    bind:value={data.description}
+    placeholder="Omschrijving"
+    class="py-3 b-none b-b-(1 solid grey-400)" />
+  <ul
+    class:pointer-events-none={!viewMode}
+    class="flex flex-col gap-2 list-circle">
     {#each data.options as option}
       <li class="">
         {option}
       </li>
     {/each}
   </ul>
-  {:else}
-    <p>Geen opties geselecteerd</p>
-  {/if}
+{:else}
+  <p>Geen opties geselecteerd</p>
 {/if}
 
 {#if !viewMode}

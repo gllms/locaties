@@ -1,11 +1,14 @@
 <script lang="ts">
   import { secretOptions } from "../../stores";
   import Button from "../Button.svelte";
+  import Filter from "./Filter.svelte";
 
   export let data: {
+    description: string;
     dates: string[];
     values: (boolean | undefined)[];
   } = {
+    description: "",
     dates: [new Date().toISOString().slice(0, 10)],
     values: [],
   };
@@ -30,8 +33,11 @@
   }
 </script>
 
-<div class="[&>ol]:(flex flex-col gap-2 m-0 mb-2 p-0 list-none)">
+<div class="flex flex-col gap-4 [&>ol]:(flex flex-col gap-2 m-0 p-0 list-none)">
   {#if viewMode}
+    {#if data.description}
+      <p class="m-0">{data.description}</p>
+    {/if}
     <ol>
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
@@ -64,6 +70,11 @@
       {/each}
     </ol>
   {:else}
+    <input
+      type="text"
+      bind:value={data.description}
+      placeholder="Omschrijving"
+      class="py-3 b-none b-b-(1 solid grey-400)" />
     <ol class="w-fit">
       {#each data.dates ?? [] as date, i}
         <li class="flex">

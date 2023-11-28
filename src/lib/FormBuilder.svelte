@@ -62,17 +62,7 @@
     data: undefined!,
   }));
 
-  let canvasItems: CanvasItem[] = [
-    // {
-    //   id: idx++,
-    //   paletteType: "location",
-    //   data: {
-    //     filter: "location",
-    //     options: ["Stedelijk gelegen", "Aan het water" ],
-    //     selected: [],
-    //   },
-    // },
-  ];
+  let canvasItems: CanvasItem[] = [];
 
   function handlePaletteConsider(e: DndEventParameter) {
     const { trigger, id } = e.detail.info;
@@ -139,7 +129,7 @@
     {/if}
   </div>
 
-  <div class="flex gap-3 w-full">
+  <div class="flex gap-3 w-full pb-6">
     <div
       class="flex flex-col gap-6 w-42rem"
       style:display={viewMode ? "none" : undefined}
@@ -183,7 +173,7 @@
         </div>
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-          class="flex flex-col rd-3 m-3 mb-4 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
+          class="flex flex-col rd-3 m-3 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
           style:outline-width={canvasItems.length === 0 ? "2px" : undefined}
           use:dndzone={{
             items: canvasItems,

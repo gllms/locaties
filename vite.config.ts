@@ -32,9 +32,6 @@ export default defineConfig({
   },
 })
 
-/**
- * This plugin generates a user script from the bundle by prepending the script with a header and incorporating style using GM_addStyle.
- */
 function userScriptPlugin(): Plugin {
   return {
     name: "user-script",
