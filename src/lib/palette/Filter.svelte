@@ -2,6 +2,7 @@
   import filters from "../../filters";
   import { secretOptions } from "../../stores";
   import Button from "../Button.svelte";
+  import Dialog from "../Dialog.svelte";
 
   export let data: {
     description: string;
@@ -117,17 +118,8 @@
     }} />
 {/if}
 
-<dialog bind:this={dialog} class="pb-4 cursor-default">
-  <div class="flex items-center justify-between p-4">
-    <h5 class="m-0">Zichtbare opties:</h5>
-    <button
-      class="icon-button absolute top-8 right-8"
-      style:margin-left="auto"
-      on:click={() => dialog.close()}>
-      close
-    </button>
-  </div>
-  <ol class="-my-2 p-0 columns-2">
+<Dialog bind:element={dialog} title="Zichtbare opties">
+  <ol slot="content" class="-my-2 p-0 columns-2">
     {#each filters[filter].options as option}
       {@const selected = dialogSelection.includes(option)}
       <li class="flex items-center gap-2">
@@ -148,7 +140,7 @@
       </li>
     {/each}
   </ol>
-  <div class="flex items-center justify-end gap-4 p-4">
+  <svelte:fragment slot="footer">
     <Button secondary text="Annuleren" on:click={() => dialog.close()} />
     <Button
       icon="check"
@@ -157,5 +149,5 @@
         data.options = dialogSelection;
         dialog.close();
       }} />
-  </div>
-</dialog>
+  </svelte:fragment>
+</Dialog>

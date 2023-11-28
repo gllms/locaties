@@ -5,14 +5,6 @@
   @apply font-material-outlined font-size-8 select-none;
 }
 
-dialog {
-  @apply w-[60.8rem] b-none rd-4 p-8 pt-12;
-}
-
-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.44);
-}
-
 .icon-button {
   @apply bg-transparent b-none cursor-pointer select-none;
 }
