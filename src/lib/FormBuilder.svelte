@@ -14,6 +14,8 @@
   import ShareDialog from "./ShareDialog.svelte";
   import filters from "../filters";
   import ViewMode from "./ViewMode.svelte";
+  import Drawer from "./Drawer.svelte";
+  import Palette from "./Palette.svelte";
 
   let viewMode = false;
 
@@ -32,6 +34,7 @@
     filterTypes[key] = {
       name: filter.name,
       icon: filter.icon,
+      category: "filters",
       component: Filter,
       args: { filter: key },
     };
@@ -42,16 +45,19 @@
     date: {
       name: "Datum",
       icon: "date_range",
+      category: "filters",
       component: Date,
     },
     shortText: {
       name: "Korte tekst",
       icon: "short_text",
+      category: "open",
       component: Short,
     },
     longText: {
       name: "Lange tekst",
       icon: "notes",
+      category: "open",
       component: Long,
     },
   };
@@ -63,31 +69,6 @@
   }));
 
   let canvasItems: CanvasItem[] = [];
-
-  function handlePaletteConsider(e: DndEventParameter) {
-    const { trigger, id } = e.detail.info;
-
-    if (trigger === TRIGGERS.DRAG_STARTED) {
-      // the line below was added in order to be compatible with version svelte-dnd-action 0.7.4 and above
-      e.detail.items = e.detail.items.filter(
-        // @ts-ignore
-        (item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]
-      );
-      const index = paletteItems.findIndex(
-        (item) => item.id.toString() === id.toString()
-      );
-
-      e.detail.items.splice(index, 0, { ...paletteItems[index], id: idx++ });
-
-      paletteItems = e.detail.items;
-    } else {
-      paletteItems = [...paletteItems];
-    }
-  }
-
-  function handlePaletteFinalize(e: DndEventParameter) {
-    paletteItems = [...paletteItems];
-  }
 
   function handleCanvasConsider(e: DndEventParameter) {
     canvasItems = e.detail.items;
@@ -130,29 +111,21 @@
   </div>
 
   <div class="flex gap-3 w-full pb-6">
-    <div
-      class="flex flex-col gap-6 w-42rem"
-      style:display={viewMode ? "none" : undefined}
-      use:dndzone={{
-        items: paletteItems,
-        flipDurationMs,
-        dropTargetStyle: {},
-        dropFromOthersDisabled: true,
-      }}
-      on:consider={handlePaletteConsider}
-      on:finalize={handlePaletteFinalize}>
-      {#each paletteItems as item (item.id)}
-        {@const paletteType = paletteTypes[item.paletteType]}
-        <div
-          class="flex items-center gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3"
-          animate:flip={{ duration: flipDurationMs }}>
-          <span class="material-icons">drag_indicator</span>
-          <div class="flex items-center gap-2">
-            <span class="material-icons">{paletteType.icon}</span>
-            <span class="font-bold">{paletteType.name}</span>
-          </div>
-        </div>
-      {/each}
+    <div class="w-42rem">
+      <Palette
+        title="Filters"
+        icon="filter_alt"
+        items={paletteItems.filter(
+          (e) => paletteTypes[e.paletteType].category === "filters"
+        )}
+        {paletteTypes} />
+      <Palette
+        title="Open"
+        icon="short_text"
+        items={paletteItems.filter(
+          (e) => paletteTypes[e.paletteType].category === "open"
+        )}
+        {paletteTypes} />
     </div>
     <div class="flex flex-col w-full">
       {#if viewMode}

@@ -10,6 +10,7 @@ declare namespace svelteHTML {
 interface PaletteItem {
   name: string;
   icon: string;
+  category: "filters" | "open";
   component: new (...args: any[]) => SvelteComponent;
   args?: object;
 }

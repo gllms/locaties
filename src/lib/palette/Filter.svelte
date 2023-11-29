@@ -35,12 +35,12 @@
   <div
     class:pointer-events-none={!viewMode}
     class="grid grid-cols-2 md:grid-cols-4 grid-items-stretch gap-2 p-0
-           [&>label]:(flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) rd-1 cursor-pointer select-none)">
+           [&>label]:(flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) rd-1 cursor-pointer select-none)
+           [&_p]:(m-0 font-500)">
     {#each data.options as option}
       <label>
         <div
-          class="flex justify-between gap-2 w-full
-                 [&_p]:(m-0 font-500)">
+          class="flex justify-between gap-2 w-full">
           {#if images}
             <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
           {:else if icons}
@@ -77,7 +77,11 @@
       <div
         class="flex justify-between gap-2 w-full
                  [&_p]:(m-0 font-500)">
-        <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
+        {#if icons}
+          <span class="material-icons">remove</span>
+        {:else}
+          <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
+        {/if}
         <input
           type="radio"
           bind:group={data.selected}
@@ -86,6 +90,9 @@
           style="accent-color: var(--color-primary-900)"
           disabled={!viewMode} />
       </div>
+      {#if icons}
+        <p>Geen voorkeur</p>
+      {/if}
     </label>
   </div>
 {:else if data.options.length}
