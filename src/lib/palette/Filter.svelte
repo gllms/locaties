@@ -53,7 +53,7 @@
             type="checkbox"
             bind:group={data.selected}
             value={option}
-            class="flex-shrink w-8 h-8 cursor-pointer"
+            class="flex-shrink w-8 h-8 min-w-8 cursor-pointer"
             style="accent-color: var(--color-primary-900)"
             disabled={!viewMode} />
         </div>

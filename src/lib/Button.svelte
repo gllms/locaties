@@ -10,7 +10,7 @@
 <button
   class:secondary
   on:click
-  class={`inline-flex justify-center items-center
+  class={`inline-flex items-center
           min-h-16 w-fit px-[1.8rem] py-[0.8rem]
           b-(1 solid primary-900) c-white
           bg-primary-900 hover:bg-primary-800 active:bg-primary-900

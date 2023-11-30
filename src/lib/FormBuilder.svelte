@@ -1,21 +1,16 @@
 <script lang="ts">
   import { flip } from "svelte/animate";
-  import {
-    dndzone,
-    TRIGGERS,
-    SHADOW_ITEM_MARKER_PROPERTY_NAME,
-  } from "svelte-dnd-action";
+  import { SHADOW_ITEM_MARKER_PROPERTY_NAME, dndzone } from "svelte-dnd-action";
   import Button from "./Button.svelte";
+  import ShareDialog from "./ShareDialog.svelte";
+  import filters from "../filters";
+  import ViewMode from "./ViewMode.svelte";
+  import Palette from "./Palette.svelte";
 
   import Date from "./palette/Date.svelte";
   import Filter from "./palette/Filter.svelte";
   import Long from "./palette/Long.svelte";
   import Short from "./palette/Short.svelte";
-  import ShareDialog from "./ShareDialog.svelte";
-  import filters from "../filters";
-  import ViewMode from "./ViewMode.svelte";
-  import Drawer from "./Drawer.svelte";
-  import Palette from "./Palette.svelte";
 
   let viewMode = false;
 
@@ -41,13 +36,13 @@
   }
 
   const paletteTypes: Record<string, PaletteItem> = {
-    ...filterTypes,
     date: {
       name: "Datum",
       icon: "date_range",
       category: "filters",
       component: Date,
     },
+    ...filterTypes,
     shortText: {
       name: "Korte tekst",
       icon: "short_text",
@@ -70,14 +65,6 @@
 
   let canvasItems: CanvasItem[] = [];
 
-  function handleCanvasConsider(e: DndEventParameter) {
-    canvasItems = e.detail.items;
-  }
-
-  function handleCanvasFinalize(e: DndEventParameter) {
-    canvasItems = e.detail.items;
-  }
-
   function handlePointerdown(e: MouseEvent) {
     if ((e.target as HTMLElement)?.closest("dialog")) {
       dragDisabled = true;
@@ -90,28 +77,18 @@
   <title>Deelformulier</title>
 </svelte:head>
 
-<div class="w-full px-2 lg:px-20 xl:px-[16rem] xxl:px-[32rem]">
-  <div class="flex gap-6 w-full pt-12 mb-6 px-6">
-    {#if viewMode}
-      <Button
-        secondary
-        icon="chevron_left"
-        on:click={() => (viewMode = false)}
-        class="b-none"
-        text="Terug" />
-    {:else}
-      <Button
-        secondary
-        icon="visibility"
-        on:click={() => (viewMode = true)}
-        class="b-none ml-auto"
-        text="Voorbeeld" />
-      <Button icon="share" on:click={() => dialog.showModal()} text="Delen" />
-    {/if}
-  </div>
+<div class="w-full mt-8 px-8 xl:px-20 xxl:px-[16rem]">
+  {#if viewMode}
+    <Button
+      secondary
+      icon="chevron_left"
+      on:click={() => (viewMode = false)}
+      class="b-none ml-4 mb-4"
+      text="Terug" />
+  {/if}
 
   <div class="flex gap-3 w-full pb-6">
-    <div class="w-42rem">
+    <div class="w-72rem" style:display={viewMode ? "none" : "block"}>
       <Palette
         title="Filters"
         icon="filter_alt"
@@ -125,29 +102,46 @@
         items={paletteItems.filter(
           (e) => paletteTypes[e.paletteType].category === "open"
         )}
-        {paletteTypes} />
+        {paletteTypes}
+        open={false} />
     </div>
-    <div class="flex flex-col w-full">
+    <div class="flex flex-col w-full mx-4">
       {#if viewMode}
         <ViewMode {title} {description} {paletteTypes} {canvasItems} />
       {:else}
-        <div
-          class="flex flex-col mx-6 px-6 py-4 bg-primary-200 b-(2 solid primary-400) rd-3 placeholder:c-grey-400">
-          <input
-            type="text"
-            bind:value={title}
-            placeholder="Naamloos"
-            class="font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none" />
-          <textarea
-            rows="2"
-            bind:value={description}
-            placeholder="Formulierbeschrijving"
-            class="mt-4 bg-transparent c-grey-500 b-none resize-y" />
+        <div class="flex gap-4">
+          <div
+            class="grow-1 flex flex-col px-6 py-4 bg-primary-200 b-(2 solid primary-400) rd-3 placeholder:c-grey-400">
+            <input
+              type="text"
+              bind:value={title}
+              placeholder="Naamloos"
+              class="font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none" />
+            <textarea
+              rows="2"
+              bind:value={description}
+              placeholder="Formulierbeschrijving"
+              class="mt-4 bg-transparent c-grey-500 b-none resize-y" />
+          </div>
+          <div class="flex flex-col gap-4 [&>button]:h-5">
+            <Button
+              secondary
+              icon="visibility"
+              on:click={() => (viewMode = true)}
+              class="!h-20"
+              text="Voorbeeld" />
+            <Button
+              icon="share"
+              on:click={() => dialog.showModal()}
+              class="!h-20 w-unset"
+              text="Delen" />
+          </div>
         </div>
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-          class="flex flex-col rd-3 m-3 outline-(0 dashed grey-300) [&.dropTarget]:outline-2"
+          class="relative flex flex-col gap-6 min-h-13rem my-6 rd-3 outline-(0 dashed grey-300) [&.dropTarget]:(outline-2 outline-offset-[1rem])"
           style:outline-width={canvasItems.length === 0 ? "2px" : undefined}
+          style:transition={"outline-offset .3s ease-in-out, outline-width .3s ease-in-out"}
           use:dndzone={{
             items: canvasItems,
             flipDurationMs,
@@ -156,13 +150,13 @@
             dropTargetStyle: {},
             morphDisabled: true,
           }}
-          on:consider={handleCanvasConsider}
-          on:finalize={handleCanvasFinalize}
+          on:consider={(e) => (canvasItems = e.detail.items)}
+          on:finalize={(e) => (canvasItems = e.detail.items)}
           on:pointerdown={handlePointerdown}>
           {#each canvasItems as item (item.id)}
             {@const paletteType = paletteTypes[item.paletteType]}
             <div
-              class="flex flex-col gap-3 m-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3"
+              class="flex flex-col gap-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3"
               animate:flip={{ duration: flipDurationMs }}>
               <div class="flex items-center gap-2">
                 <span class="material-icons">{paletteType.icon}</span>
@@ -180,13 +174,14 @@
                 {...paletteType.args}
                 bind:data={item.data} />
             </div>
-          {:else}
-            <div
-              class="flex flex-col items-center gap-3 m-3 p-6 c-primary-900 rd-3">
+          {/each}
+          {#if canvasItems.length === 0 || canvasItems.length === 1 && canvasItems[0][SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+          <div
+              class="absolute flex flex-col items-center w-full gap-3 m-3 p-6 c-primary-900 rd-3">
               <span class="font-bold">Sleep hier een item naartoe</span>
               <span class="material-icons" style:font-size="3rem">mouse</span>
             </div>
-          {/each}
+            {/if}
         </div>
       {/if}
     </div>

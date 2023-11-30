@@ -4,7 +4,7 @@
   export let title = "";
   export let icon = "";
 
-  let open = true;
+  export let open = true;
 </script>
 
 <div class="b-b-(1 solid grey-300)">

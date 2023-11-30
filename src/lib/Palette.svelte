@@ -9,6 +9,8 @@
 
   export let title = "";
   export let icon = "";
+  export let open = true;
+
   export let items: CanvasItem[] = [];
   export let paletteTypes: Record<string, PaletteItem> = {};
 
@@ -35,15 +37,11 @@
       items = [...items];
     }
   }
-
-  function handleFinalize(e: DndEventParameter) {
-    items = [...items];
-  }
 </script>
 
-<Drawer {title} {icon}>
+<Drawer {title} {icon} {open}>
   <div
-    class="flex flex-col gap-6 mb-6"
+    class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6"
     use:dndzone={{
       items,
       flipDurationMs,
@@ -51,7 +49,7 @@
       dropFromOthersDisabled: true,
     }}
     on:consider={handleConsider}
-    on:finalize={handleFinalize}>
+    on:finalize={() => (items = [...items])}>
     {#each items as item (item.id)}
       {@const paletteType = paletteTypes[item.paletteType]}
       <div

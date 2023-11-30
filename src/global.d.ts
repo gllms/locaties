@@ -19,4 +19,5 @@ interface CanvasItem {
   id: number;
   paletteType: string;
   data: object;
+  isDndShadowItem?: boolean;
 }
