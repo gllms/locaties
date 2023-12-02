@@ -36,6 +36,7 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - name: Use Node.js 14.x
         uses: actions/setup-node@v4
       - name: Install dependencies
