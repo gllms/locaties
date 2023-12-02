@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { secretOptions } from "../stores";
+  import { secretOptions, title, description, canvasItems } from "../stores";
+  import Button from "./Button.svelte";
   import Dialog from "./Dialog.svelte";
+  import sample from "../sample";
 
   const secretMenu: Record<string, string[]> = {
     date_buttons: ["fill", "fixed"],
@@ -8,6 +10,12 @@
   };
 
   let dialog: HTMLDialogElement;
+
+  function fillIn() {
+    $title = sample.title;
+    $description = sample.description;
+    $canvasItems = sample.canvasItems;
+  }
 </script>
 
 <svelte:window
@@ -20,6 +28,9 @@
 
 <Dialog bind:element={dialog} title="Secret options" subtitle="Super secret">
   <div slot="content" class="grid grid-cols-2 items-center gap-4 w-fit">
+    <span class="[grid-column:1/-1]">
+      <Button icon="view_agenda" text="vul in" on:click={fillIn} />
+    </span>
     {#each Object.keys(secretMenu) as key}
       {@const options = secretMenu[key]}
       <span>{key}</span>

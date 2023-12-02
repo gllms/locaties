@@ -24,3 +24,7 @@ function createSecretOptions() {
 }
 
 export const secretOptions = createSecretOptions();
+
+export const title = writable("");
+export const description = writable("");
+export const canvasItems = writable<CanvasItem[]>([]);

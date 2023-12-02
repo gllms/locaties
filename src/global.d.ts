@@ -7,6 +7,12 @@ declare namespace svelteHTML {
   }
 }
 
+interface State {
+  title: string;
+  description: string;
+  canvasItems: CanvasItem[];
+}
+
 interface PaletteItem {
   name: string;
   icon: string;

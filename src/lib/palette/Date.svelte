@@ -42,30 +42,34 @@
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
         <li
-          class="flex items-center gap-2 w-full font-500
-                 [&>button]:(flex-1 flex items-center gap-2 min-h-16 bg-white b-(1 solid grey-300 rd-1) cursor-pointer rd-2)">
+          class="flex flex-col md:(flex-row items-center) gap-2 w-full font-500">
           <span class="mr-2"
             >{new Date(date).toLocaleDateString("nl-NL", {
               day: "numeric",
               month: "long",
               year: "numeric",
             })}</span>
-          {#each buttons as { value, icon, text }}
-            <button
-              class="[&[data-active]]:(bg-primary-200 b-primary-200)"
-              data-active={val === value || undefined}
-              style:max-width={$secretOptions.date_buttons === "fixed"
-                ? "23rem"
-                : undefined}
-              on:click={() =>
-                (data.values[i] = val === value ? undefined : value)}>
-              <span class="material-icons">{icon}</span>
-              {text}
+          <div
+            class="flex flex-1 gap-2 [&>button]:(flex-1 flex items-center gap-2 min-h-16 bg-white b-(1 solid grey-300 rd-1) cursor-pointer rd-2)">
+            {#each buttons as { value, icon, text }}
+              <button
+                class="[&[data-active]]:(bg-primary-200 b-primary-600)"
+                data-active={val === value || undefined}
+                style:max-width={$secretOptions.date_buttons === "fixed"
+                  ? "23rem"
+                  : undefined}
+                on:click={() =>
+                  (data.values[i] = val === value ? undefined : value)}>
+                <span class="material-icons">{icon}</span>
+                {text}
 
-              <span class="material-icons ml-auto"
-                >{`radio_button_${val === value ? "" : "un"}checked`}</span>
-            </button>
-          {/each}
+                <span
+                  class="material-icons ml-auto"
+                  class:c-primary-600={val === value}
+                  >{`radio_button_${val === value ? "" : "un"}checked`}</span>
+              </button>
+            {/each}
+          </div>
         </li>
       {/each}
     </ol>

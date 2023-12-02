@@ -19,7 +19,7 @@
       >expand_more</span>
   </button>
   {#if open}
-    <div transition:slide={{ duration: 200 }}>
+    <div transition:slide={{ duration: 300 }} class="pb-6">
       <slot />
     </div>
   {/if}

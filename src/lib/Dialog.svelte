@@ -10,7 +10,11 @@
 
 <dialog
   bind:this={element}
-  class="[&[open]]:flex flex-col p-none w-[60.8rem] b-none rd-4 overflow-hidden cursor-auto backdrop:bg-[rgba(0,0,0,.44)]">
+  class="[&[open]]:flex flex-col p-none
+         w-full h-full md:(w-[60.8rem] h-revert) max-w-full max-h-full
+         m-0 md:m-revert
+         b-none md:rd-4 overflow-hidden cursor-auto
+         backdrop:bg-[rgba(0,0,0,.44)]">
   <button
     class="icon-button absolute top-8 right-8 z-1"
     style:margin-left="auto"
@@ -60,7 +64,7 @@
     <div class="h-16"></div>
   {/if}
 
-  <div class="p-10 overflow-y-auto">
+  <div class="grow-1 p-10 overflow-y-auto">
     <slot name="content" />
   </div>
   {#if $$slots.footer}

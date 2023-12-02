@@ -6,13 +6,13 @@
   } from "svelte-dnd-action";
   import Drawer from "./Drawer.svelte";
   import { flip } from "svelte/animate";
+  import paletteTypes from "../paletteTypes";
 
   export let title = "";
   export let icon = "";
   export let open = true;
 
   export let items: CanvasItem[] = [];
-  export let paletteTypes: Record<string, PaletteItem> = {};
 
   const flipDurationMs = 200;
 
@@ -41,7 +41,7 @@
 
 <Drawer {title} {icon} {open}>
   <div
-    class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6"
+    class="grid grid-cols-1 lg:grid-cols-2 gap-4"
     use:dndzone={{
       items,
       flipDurationMs,
@@ -53,12 +53,12 @@
     {#each items as item (item.id)}
       {@const paletteType = paletteTypes[item.paletteType]}
       <div
-        class="flex items-center gap-3 p-4 bg-grey-100 c-primary-900 b-(2 solid grey-300) rd-3"
+        class="flex items-center gap-3 p-4 bg-grey-100 b-(1 solid grey-300) rd-3"
         animate:flip={{ duration: flipDurationMs }}>
-        <span class="material-icons">drag_indicator</span>
+        <span class="material-icons c-primary-900">drag_indicator</span>
         <div class="flex items-center gap-2">
           <span class="material-icons">{paletteType.icon}</span>
-          <span class="font-bold">{paletteType.name}</span>
+          <span class="font-500">{paletteType.name}</span>
         </div>
       </div>
     {/each}

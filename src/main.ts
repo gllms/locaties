@@ -1,9 +1,14 @@
-import type { SvelteComponent } from "svelte";
 import "./app.css";
+import "uno.css";
+
+import type { SvelteComponent } from "svelte";
+
 import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
-import "uno.css";
+import ViewMode from "./lib/ViewMode.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
+
+import sample from "./sample";
 
 const components: SvelteComponent[] = [];
 
@@ -46,12 +51,19 @@ function apply() {
     "/form/edit"
   );
 
+  addComponent(
+    ViewMode,
+    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    "/form/view",
+    sample,
+  )
+
   addComponent(SecretMenu, document.body);
 
   addComponent(FormBuilder, testElement);
 }
 
-function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp) {
+function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>) {
   if (!target)
     return;
 
@@ -65,5 +77,6 @@ function addComponent(component: new (...args: any[]) => SvelteComponent, target
 
   components.push(new component({
     target,
+    props,
   }));
 }

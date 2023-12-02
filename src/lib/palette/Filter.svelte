@@ -8,7 +8,7 @@
     description: string;
     filter: string;
     options: string[];
-    selected: string[];
+    selected: string[] | string;
   } = {
     description: "",
     filter: "location",
@@ -34,13 +34,14 @@
   {/if}
   <div
     class:pointer-events-none={!viewMode}
-    class="grid grid-cols-2 md:grid-cols-4 grid-items-stretch gap-2 p-0
+    class="grid grid-cols-2 md:grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
            [&>label]:(flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) rd-1 cursor-pointer select-none)
+           [&>label:has(:checked)]:(bg-primary-200 b-primary-600) 
            [&_p]:(m-0 font-500)">
     {#each data.options as option}
+      {@const checked = data.selected.includes(option)}
       <label>
-        <div
-          class="flex justify-between gap-2 w-full">
+        <div class="flex justify-between gap-2 w-full">
           {#if images}
             <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
           {:else if icons}
@@ -53,9 +54,12 @@
             type="checkbox"
             bind:group={data.selected}
             value={option}
-            class="flex-shrink w-8 h-8 min-w-8 cursor-pointer"
-            style="accent-color: var(--color-primary-900)"
-            disabled={!viewMode} />
+            class="hidden" />
+          <span
+            class="material-icons"
+            class:font-material-filled={checked}
+            class:c-primary-600={checked}
+            >{`check_box${!checked ? "_outline_blank" : ""}`}</span>
         </div>
         {#if images}
           <img
@@ -86,9 +90,13 @@
           type="radio"
           bind:group={data.selected}
           value="Geen voorkeur"
-          class="flex-shrink w-8 h-8 cursor-pointer"
-          style="accent-color: var(--color-primary-900)"
-          disabled={!viewMode} />
+          class="hidden" />
+        <span
+          class="material-icons ml-auto"
+          class:c-primary-600={data.selected === "Geen voorkeur"}
+          >{`radio_button_${
+            data.selected === "Geen voorkeur" ? "" : "un"
+          }checked`}</span>
       </div>
       {#if icons}
         <p>Geen voorkeur</p>
