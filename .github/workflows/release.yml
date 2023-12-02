@@ -1,0 +1,42 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build --if-present
+      - name: Set version
+        id: set-version
+        run: |
+          JSON=$(cat package.json | jq '.version')
+          echo "version=${JSON//\"/}" >> $GITHUB_OUTPUT
+      - name: Release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.set-version.outputs.version }}
+          release_name: Release v${{ steps.set-version.outputs.version }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./dist/locaties.user.js
+          asset_name: locaties.user.js
+          asset_content_type: text/javascript

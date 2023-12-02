@@ -1,8 +1,8 @@
 {
-  "name": "locaties.nl userscript",
+  "name": "locaties",
   "description": "locaties.nl userscript",
   "private": true,
-  "version": "0.2",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "start": "vite",
