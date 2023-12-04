@@ -11,10 +11,10 @@
 <dialog
   bind:this={element}
   class="[&[open]]:flex flex-col p-none
-         w-full h-full md:(w-[60.8rem] h-revert) max-w-full max-h-full
+         w-full h-full md:(w-60.8rem h-revert) max-w-full max-h-full
          m-0 md:m-revert
          b-none md:rd-4 overflow-hidden cursor-auto
-         backdrop:bg-[rgba(0,0,0,.44)]">
+         backdrop:bg-black/44">
   <button
     class="icon-button absolute top-8 right-8 z-1"
     style:margin-left="auto"
@@ -27,7 +27,7 @@
       class="relative pt-8 pr-20 pb-6 pl-10 bg-primary-200 b-b-(1 solid grey-300)"
       class:pb-10={steps > 1}>
       <h5
-        class="c-grey-700 font-size-[1.2rem] font-400 line-height-[1.8rem] min-h-[1.8rem] mb-2">
+        class="c-grey-700 font-size-1.2rem font-400 line-height-1.8rem min-h-1.8rem mb-2">
         {subtitle}
       </h5>
       {#if title}
@@ -36,10 +36,10 @@
 
       {#if steps > 1}
         <ol
-          class="absolute flex justify-between m-0 p-0 px-10 w-full left-0 -bottom-[.4rem] list-none">
+          class="absolute flex justify-between m-0 p-0 px-10 w-full left-0 -bottom-.4rem list-none">
           {#each Array.from({ length: steps }) as _, i}
             <li
-              class="w-[.8rem] h-[.8rem] c-primary-900 bg-grey-500 rd-2"
+              class="w-.8rem h-.8rem c-primary-900 bg-grey-500 rd-2"
               class:bg-quinary-500={i < currentStep}
               class:bg-primary-900={i === currentStep}>
               {#if i === currentStep}

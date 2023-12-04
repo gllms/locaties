@@ -23,9 +23,9 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            const latestRelease = releases[0].tag_name.replace('v', '');
-            core.setOutput('is-latest', latestRelease === version);
-            core.setOutput('package-version', version);
+            const latestRelease = releases[0].tag_name.replace("v", "");
+            core.setOutput("is-latest", latestRelease === version);
+            core.setOutput("package-version", version);
     outputs:
       is-latest: ${{ steps.version.outputs.is-latest }}
       package-version: ${{ steps.version.outputs.package-version }}
@@ -37,7 +37,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 14.x
+      - name: Use Node.js
         uses: actions/setup-node@v4
       - name: Install dependencies
         run: npm install

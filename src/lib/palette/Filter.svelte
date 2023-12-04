@@ -66,7 +66,7 @@
             src={"https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/" +
               images[filters[filter].options.indexOf(option)]}
             alt="filter option"
-            class="rd-1 aspect-[4/3]"
+            class="rd-1 aspect-4/3"
             draggable="false" />
         {:else if icons}
           <p>{option}</p>

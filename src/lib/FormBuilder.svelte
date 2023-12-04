@@ -36,7 +36,7 @@
   <title>Deelformulier</title>
 </svelte:head>
 
-<div class="w-full pt-8 px-8 xl:px-20 xxl:px-[16rem]">
+<div class="w-full pt-8 px-8 xl:px-20 xxl:px-16rem">
   {#if viewMode}
     <Button
       secondary
@@ -74,7 +74,7 @@
               type="text"
               bind:value={$title}
               placeholder="Naamloos"
-              class="font-size-[1.8rem] font-bold line-height-unset bg-transparent b-none" />
+              class="font-size-1.8rem font-bold line-height-unset bg-transparent b-none" />
             <textarea
               rows="2"
               bind:value={$description}
@@ -90,7 +90,7 @@
               text="Voorbeeld" />
             <Button
               icon="share"
-              on:click={() => console.log($canvasItems)}
+              on:click={() => dialog.showModal()}
               class="!h-20 w-unset"
               text="Delen" />
           </div>
