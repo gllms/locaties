@@ -17,7 +17,7 @@
           [&.secondary]:(bg-transparent hover:bg-grey-400 active:bg-#fcfcf7 b-grey-900 c-black)
           font-primary font-size-1.4rem font-500
           line-height-1 [letter-spacing:0.024rem]
-          rd-1 cursor-pointer whitespace-nowrap ${classProp}`}
+          rd-1 cursor-pointer whitespace-nowrap select-none ${classProp}`}
   style:padding-inline={text ? "1.8rem" : "0.8rem"}>
   {#if icon}
     <span

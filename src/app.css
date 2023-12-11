@@ -8,3 +8,7 @@
 .icon-button {
   @apply bg-transparent b-none cursor-pointer select-none;
 }
+
+body:has(.handle:hover) {
+  @apply cursor-grab;
+}

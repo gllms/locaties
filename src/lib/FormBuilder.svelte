@@ -16,7 +16,7 @@
   let idx = 0;
 
   let dialog: HTMLDialogElement;
-  let dragDisabled = false;
+  let dragDisabled = true;
 
   let paletteItems: CanvasItem[] = Object.keys(paletteTypes).map((key) => ({
     id: idx++,
@@ -25,16 +25,21 @@
   }));
 
   function handlePointerdown(e: MouseEvent) {
-    if ((e.target as HTMLElement)?.closest("dialog")) {
-      dragDisabled = true;
-      setTimeout(() => (dragDisabled = false), 100);
+    if ((e.target as HTMLElement)?.closest(".handle")) {
+      dragDisabled = false;
     }
+  }
+
+  function handlePointerup() {
+    dragDisabled = true;
   }
 </script>
 
 <svelte:head>
   <title>Deelformulier</title>
 </svelte:head>
+
+<svelte:document on:pointerup={handlePointerup} />
 
 <div class="w-full pt-8 px-8 xl:px-20 xxl:px-16rem">
   {#if viewMode}
@@ -43,7 +48,8 @@
       icon="chevron_left"
       on:click={() => (viewMode = false)}
       class="b-none ml-4 mb-4"
-      text="Terug" />
+      text="Terug"
+    />
   {/if}
 
   <div class="flex gap-3 w-full pb-6">
@@ -52,34 +58,41 @@
         title="Filters"
         icon="filter_alt"
         items={paletteItems.filter(
-          (e) => paletteTypes[e.paletteType].category === "filters"
+          (e) => paletteTypes[e.paletteType].category === "filters",
         )}
-         />
+      />
       <Palette
         title="Open"
         icon="quiz"
         items={paletteItems.filter(
-          (e) => paletteTypes[e.paletteType].category === "open"
+          (e) => paletteTypes[e.paletteType].category === "open",
         )}
-        />
+      />
     </div>
     <div class="flex flex-col gap-4 w-full mx-4">
       {#if viewMode}
-        <ViewMode title={$title} description={$description} canvasItems={$canvasItems} />
+        <ViewMode
+          title={$title}
+          description={$description}
+          canvasItems={$canvasItems}
+        />
       {:else}
         <div class="flex gap-4">
           <div
-            class="grow-1 flex flex-col px-6 py-4 bg-primary-200 b-(1 solid primary-400) rd-3 placeholder:c-grey-400">
+            class="grow-1 flex flex-col px-6 py-4 bg-primary-200 b-(1 solid primary-400) rd-3 placeholder:c-grey-400"
+          >
             <input
               type="text"
               bind:value={$title}
               placeholder="Naamloos"
-              class="font-size-1.8rem font-bold line-height-unset bg-transparent b-none" />
+              class="font-size-1.8rem font-bold line-height-unset bg-transparent b-none"
+            />
             <textarea
               rows="2"
               bind:value={$description}
               placeholder="Formulierbeschrijving"
-              class="mt-4 bg-transparent c-grey-600 b-none resize-y placeholder:c-grey-400" />
+              class="mt-4 bg-transparent c-grey-600 b-none resize-y placeholder:c-grey-400"
+            />
           </div>
           <div class="flex flex-col gap-4 [&>button]:h-5">
             <Button
@@ -87,15 +100,17 @@
               icon="visibility"
               on:click={() => (viewMode = true)}
               class="!h-20"
-              text="Voorbeeld" />
+              text="Voorbeeld"
+            />
             <Button
               icon="share"
               on:click={() => dialog.showModal()}
               class="!h-20 w-unset"
-              text="Delen" />
+              text="Delen"
+            />
           </div>
         </div>
-        <hr class="w-full stroke-(1 solid grey-600)" />  
+        <hr class="w-full stroke-(1 solid grey-600)" />
         <div
           class="relative flex flex-col gap-6 min-h-13rem rd-3 outline-(1 dashed transparent) [&.dropTarget]:(outline-(1 primary-900 offset-1rem))"
           class:!outline-primary-900={$canvasItems.length === 0}
@@ -110,32 +125,40 @@
           }}
           on:consider={(e) => ($canvasItems = e.detail.items)}
           on:finalize={(e) => ($canvasItems = e.detail.items)}
-          on:pointerdown={handlePointerdown}>
+          on:pointerdown={handlePointerdown}
+        >
           {#each $canvasItems as item (item.id)}
             {@const paletteType = paletteTypes[item.paletteType]}
             <div
-              class="flex flex-col gap-3 px-6 py-4 bg-white b-(1 solid grey-900) rd-3"
-              animate:flip={{ duration: flipDurationMs }}>
-              <div class="flex items-center gap-2">
-                <span class="material-icons">{paletteType.icon}</span>
-                <span class="name">{paletteType.name}</span>
-                <button
-                  class="icon-button ml-auto"
-                  on:click={() =>
-                    ($canvasItems = $canvasItems.filter((e) => e !== item))}>
-                  highlight_off
-                </button>
+              class="flex flex-row items-center pl-6 bg-white b-(1 solid grey-900) rd-3"
+              animate:flip={{ duration: flipDurationMs }}
+            >
+              <div class="flex-1 py-4">
+                <div class="flex items-center gap-2">
+                  <span class="material-icons">{paletteType.icon}</span>
+                  <span class="select-none">{paletteType.name}</span>
+                  <button
+                    class="icon-button ml-auto"
+                    on:click={() =>
+                      ($canvasItems = $canvasItems.filter((e) => e !== item))}
+                  >
+                    highlight_off
+                  </button>
+                </div>
+                <svelte:component
+                  this={paletteType.component}
+                  viewMode={false}
+                  {...paletteType.args}
+                  bind:data={item.data}
+                />
               </div>
-              <svelte:component
-                this={paletteType.component}
-                viewMode={false}
-                {...paletteType.args}
-                bind:data={item.data} />
+              <span class="handle material-icons flex items-center h-full px-2">drag_indicator</span>
             </div>
           {/each}
           {#if $canvasItems.length === 0 || ($canvasItems.length === 1 && $canvasItems[0][SHADOW_ITEM_MARKER_PROPERTY_NAME])}
             <div
-              class="absolute flex flex-col items-center w-full gap-3 m-3 p-6 c-primary-900 rd-3">
+              class="absolute flex flex-col items-center w-full gap-3 m-3 p-6 c-primary-900 rd-3"
+            >
               <span class="font-bold">Sleep hier een item naartoe</span>
               <span class="material-icons" style:font-size="3rem">mouse</span>
             </div>
