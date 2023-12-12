@@ -139,8 +139,8 @@
               class:pr-6={$secretOptions.drag_handle === "border"}
               animate:flip={{ duration: flipDurationMs }}
             >
-              <div class="flex-1 py-4">
-                <div class="flex items-center gap-2">
+              <div class="flex-1 py-4 z-1">
+                <div class="flex items-center gap-2" class:-mr-9={$secretOptions.drag_handle !== "border"}>
                   <span class="material-icons">{paletteType.icon}</span>
                   <span class="select-none">{paletteType.name}</span>
                   <button
@@ -175,7 +175,7 @@
                 </div>
               {:else}
                 <span
-                  class="handle material-icons flex items-center h-full px-2"
+                  class="handle material-icons flex items-center h-full px-4 c-grey-600"
                   >drag_indicator</span
                 >
               {/if}

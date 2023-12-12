@@ -6,7 +6,7 @@
 }
 
 .icon-button {
-  @apply bg-transparent b-none cursor-pointer select-none;
+  @apply w-2rem h-2rem p-0 bg-transparent b-none cursor-pointer select-none;
 }
 
 body:has(.handle:hover) {
