@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { title, description, canvasItems } from "../stores";
+  import { title, description, canvasItems, secretOptions } from "../stores";
 
   import { flip } from "svelte/animate";
   import { SHADOW_ITEM_MARKER_PROPERTY_NAME, dndzone } from "svelte-dnd-action";
@@ -30,8 +30,13 @@
     }
   }
 
-  function handlePointerup() {
-    dragDisabled = true;
+  function swap(i: number, j: number) {
+    if ($canvasItems.length <= 1 || j < 0 || j >= $canvasItems.length) {
+      return;
+    }
+    const temp = $canvasItems[i];
+    $canvasItems[i] = $canvasItems[j];
+    $canvasItems[j] = temp;
   }
 </script>
 
@@ -39,7 +44,7 @@
   <title>Deelformulier</title>
 </svelte:head>
 
-<svelte:document on:pointerup={handlePointerup} />
+<svelte:document on:pointerup={() => (dragDisabled = true)} />
 
 <div class="w-full pt-8 px-8 xl:px-20 xxl:px-16rem">
   {#if viewMode}
@@ -127,10 +132,11 @@
           on:finalize={(e) => ($canvasItems = e.detail.items)}
           on:pointerdown={handlePointerdown}
         >
-          {#each $canvasItems as item (item.id)}
+          {#each $canvasItems as item, i (item.id)}
             {@const paletteType = paletteTypes[item.paletteType]}
             <div
-              class="flex flex-row items-center pl-6 bg-white b-(1 solid grey-900) rd-3"
+              class="flex flex-row items-center pl-6 bg-white b-(1 solid grey-900) rd-3 [&:hover_.border-handle]:opacity-100"
+              class:pr-6={$secretOptions.drag_handle === "border"}
               animate:flip={{ duration: flipDurationMs }}
             >
               <div class="flex-1 py-4">
@@ -152,7 +158,27 @@
                   bind:data={item.data}
                 />
               </div>
-              <span class="handle material-icons flex items-center h-full px-2">drag_indicator</span>
+              {#if $secretOptions.drag_handle === "border"}
+                <div
+                  class="border-handle absolute -right-4 flex flex-col items-center gap-2 py-2 bg-white b-(1 solid black) rd-1 opacity-0"
+                >
+                  <button class="icon-button" on:click={() => swap(i, i - 1)}
+                    >arrow_upward</button
+                  >
+                  <span
+                    class="handle material-icons flex items-center h-full px-2"
+                    >drag_indicator</span
+                  >
+                  <button class="icon-button" on:click={() => swap(i, i + 1)}
+                    >arrow_downward</button
+                  >
+                </div>
+              {:else}
+                <span
+                  class="handle material-icons flex items-center h-full px-2"
+                  >drag_indicator</span
+                >
+              {/if}
             </div>
           {/each}
           {#if $canvasItems.length === 0 || ($canvasItems.length === 1 && $canvasItems[0][SHADOW_ITEM_MARKER_PROPERTY_NAME])}

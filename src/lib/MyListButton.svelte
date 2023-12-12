@@ -2,7 +2,7 @@
   import Button from "./Button.svelte";
 </script>
 
-<div class="fixed bottom-0 flex items-center justify-between w-full px-8 py-4 bg-primary-400 gap-2 z-4">
+<div class="fixed bottom-0 flex items-center justify-between w-full px-8 py-4 bg-primary-200 gap-2 z-4">
   <div class="flex gap-2 shrink-1">
     <span class="c-secondary-900 font-bold">NIEUW</span>
     <p class="m-0">Deel je favorieten met anderen en beslis samen!</p>

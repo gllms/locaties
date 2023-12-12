@@ -7,6 +7,7 @@
   const secretMenu: Record<string, string[]> = {
     date_buttons: ["fill", "fixed"],
     no_preference_pos: ["under", "inline"],
+    drag_handle: ["inside", "border"],
   };
 
   let dialog: HTMLDialogElement;
