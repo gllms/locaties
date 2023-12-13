@@ -14,7 +14,7 @@ const components: SvelteComponent[] = [];
 
 const originalPushState = history.pushState;
 
-history.pushState = function () {
+history.pushState = function() {
   originalPushState.apply(this, arguments as any);
 
   for (const component of components)
@@ -60,7 +60,8 @@ function apply() {
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(FormBuilder, testElement);
+  // addComponent(FormBuilder, testElement);
+  addComponent(ViewMode, testElement, undefined, sample);
 }
 
 function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>) {
