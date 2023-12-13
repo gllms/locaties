@@ -13,10 +13,5 @@
   {/if}
   <textarea rows="3" bind:value={data.value} />
 {:else}
-  <input
-    type="text"
-    bind:value={data.description}
-    placeholder="Omschrijving"
-    class="py-3 b-0 b-b-(1 solid grey-400)" />
-  <textarea disabled rows="3" class="pointer-events-none" />
+  <textarea disabled rows="3" class="w-full pointer-events-none" />
 {/if}

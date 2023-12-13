@@ -9,6 +9,7 @@
   import ViewMode from "./ViewMode.svelte";
   import Palette from "./Palette.svelte";
   import paletteTypes from "../paletteTypes";
+  import Onboarding from "../Onboarding.svelte";
 
   let viewMode = false;
 
@@ -109,7 +110,7 @@
             />
             <Button
               icon="share"
-              on:click={() => dialog.showModal()}
+              on:click={() => console.log($canvasItems)}
               class="!h-20 w-unset"
               text="Delen"
             />
@@ -140,7 +141,10 @@
               animate:flip={{ duration: flipDurationMs }}
             >
               <div class="flex-1 py-4 z-1">
-                <div class="flex items-center gap-2" class:-mr-9={$secretOptions.drag_handle !== "border"}>
+                <div
+                  class="flex items-center gap-2"
+                  class:-mr-9={$secretOptions.drag_handle !== "border"}
+                >
                   <span class="material-icons">{paletteType.icon}</span>
                   <span class="select-none">{paletteType.name}</span>
                   <button
@@ -151,6 +155,13 @@
                     highlight_off
                   </button>
                 </div>
+                <input
+                  type="text"
+                  value={item.data?.description ?? ""}
+                  on:change={e => item.data.description = e.currentTarget.value}
+                  placeholder="Typ hier een eventuele beschrijving"
+                  class="w-full my-4 py-4 b-none b-b-(1 solid grey-400)"
+                />
                 <svelte:component
                   this={paletteType.component}
                   viewMode={false}
@@ -196,6 +207,8 @@
 </div>
 
 <ShareDialog bind:element={dialog} />
+
+<Onboarding />
 
 <style>
   :global(head:has(meta[property="og:url"][content^="/form"]) + body) {

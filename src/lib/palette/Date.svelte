@@ -74,11 +74,6 @@
       {/each}
     </ol>
   {:else}
-    <input
-      type="text"
-      bind:value={data.description}
-      placeholder="Omschrijving"
-      class="py-3 b-none b-b-(1 solid grey-400)" />
     <ol class="w-fit">
       {#each data.dates ?? [] as date, i}
         <li class="flex">

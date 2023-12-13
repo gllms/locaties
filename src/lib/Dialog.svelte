@@ -27,7 +27,8 @@
       class="relative pt-8 pr-20 pb-6 pl-10 bg-primary-200 b-b-(1 solid grey-300)"
       class:pb-10={steps > 1}>
       <h5
-        class="c-grey-700 font-size-1.2rem font-400 line-height-1.8rem min-h-1.8rem mb-2">
+        class="c-grey-700 font-size-1.2rem font-400 line-height-1.8rem min-h-1.8rem mb-2"
+        class:text-new={subtitle === "NIEUW"}>
         {subtitle}
       </h5>
       {#if title}

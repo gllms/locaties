@@ -9,6 +9,10 @@
   @apply w-2rem h-2rem p-0 bg-transparent b-none cursor-pointer select-none;
 }
 
+.text-new {
+  @apply font-size-2 !font-bold case-upper !c-tertiary-800;
+}
+
 body:has(.handle:hover) {
   @apply cursor-grab;
 }

@@ -61,7 +61,7 @@ function apply() {
   addComponent(SecretMenu, document.body);
 
   // addComponent(FormBuilder, testElement);
-  addComponent(ViewMode, testElement, undefined, sample);
+  addComponent(FormBuilder, testElement, undefined, sample);
 }
 
 function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>) {

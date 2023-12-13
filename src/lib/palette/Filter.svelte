@@ -104,11 +104,6 @@
     </label>
   </div>
 {:else if data.options.length}
-  <input
-    type="text"
-    bind:value={data.description}
-    placeholder="Omschrijving"
-    class="py-3 b-none b-b-(1 solid grey-400)" />
   <ul
     class:pointer-events-none={!viewMode}
     class="flex flex-col gap-2 list-circle">

@@ -9,7 +9,7 @@
 
   let currentStep = 0;
   $: item = canvasItems[Math.max(currentStep - 1, 0)];
-  $: paletteType = paletteTypes[item.paletteType];
+  $: paletteType = paletteTypes[item?.paletteType];
 </script>
 
 <div class="backdrop absolute flex w-full min-h-full left-0">

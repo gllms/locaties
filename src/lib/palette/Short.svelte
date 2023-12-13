@@ -13,10 +13,5 @@
   {/if}
   <input type="text" bind:value={data.value} />
 {:else}
-  <input
-    type="text"
-    bind:value={data.description}
-    placeholder="Omschrijving"
-    class="py-3 b-none b-b-(1 solid grey-400)" />
-  <input disabled class="pointer-events-none" />
+  <input disabled class="pointer-events-none w-full" />
 {/if}
