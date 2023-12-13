@@ -10,7 +10,7 @@
 }
 
 .text-new {
-  @apply font-size-2 !font-bold case-upper !c-tertiary-800;
+  @apply font-size-1.6rem !font-bold case-upper !c-tertiary-800;
 }
 
 body:has(.handle:hover) {

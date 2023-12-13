@@ -7,6 +7,7 @@ import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
 import ViewMode from "./lib/ViewMode.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
+import Banner from "./lib/Banner.svelte";
 
 import sample from "./sample";
 
@@ -58,13 +59,28 @@ function apply() {
     sample,
   )
 
+  addComponent(
+    Banner,
+    document.querySelector(".locaties [class^=styles_pageContent]"),
+    "/",
+    undefined,
+    document.querySelector(".locaties [class^=styles_pageContent] > div:nth-child(18)"),
+  );
+
+  addComponent(
+    Banner,
+    document.querySelector(".locaties [class^=styles_pageWrapper] > div:nth-child(7) > div"),
+    "/locatie/",
+    undefined,
+    document.querySelector(".locaties [class^=styles_pageWrapper] > div:nth-child(7) > div > div:nth-child(3)"),
+  );
+
   addComponent(SecretMenu, document.body);
 
-  // addComponent(FormBuilder, testElement);
-  addComponent(FormBuilder, testElement, undefined, sample);
+  addComponent(FormBuilder, testElement);
 }
 
-function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>) {
+function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>, anchor?: Element | null) {
   if (!target)
     return;
 
@@ -78,6 +94,7 @@ function addComponent(component: new (...args: any[]) => SvelteComponent, target
 
   components.push(new component({
     target,
+    anchor,
     props,
   }));
 }

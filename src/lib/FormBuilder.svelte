@@ -110,7 +110,7 @@
             />
             <Button
               icon="share"
-              on:click={() => console.log($canvasItems)}
+              on:click={() => dialog.showModal()}
               class="!h-20 w-unset"
               text="Delen"
             />

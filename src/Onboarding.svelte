@@ -41,7 +41,7 @@
         Welkom bij Involve, jouw gids voor het vinden van de perfecte match
         tussen de behoeften van jouw bedrijf en de wensen van je team!
       </span>
-      <img src="https://i.imgur.com/68ZMLCB.png" />
+      <img src="https://i.imgur.com/68ZMLCB.png" alt="screenshot" class="b-(1 solid grey-400) rd-2" />
       <span>
         Om van start te gaan stellen we je enkele vragen om het deelformulier
         geschikt voor jou te maken.

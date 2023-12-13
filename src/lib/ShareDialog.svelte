@@ -30,7 +30,6 @@
     <p class="c-grey-600 text-center">of deel via</p>
     <div
       class="text-center [&>a]:(decoration-none c-grey-600 font-size-10 select-none)">
-      <!-- mail, facebook and generic share -->
       <a
         class="icon-button"
         target="_blank"
