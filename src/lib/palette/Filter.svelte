@@ -74,10 +74,7 @@
       </label>
     {/each}
 
-    <label
-      style:grid-column={$secretOptions.no_preference_pos === "inline"
-        ? undefined
-        : "1 / -1"}>
+    <label>
       <div
         class="flex justify-between gap-2 w-full
                  [&_p]:(m-0 font-500)">

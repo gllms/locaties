@@ -6,7 +6,6 @@
 
   const secretMenu: Record<string, string[]> = {
     date_buttons: ["fill", "fixed"],
-    no_preference_pos: ["under", "inline"],
     drag_handle: ["inside", "border"],
   };
 
@@ -29,6 +28,11 @@
 
 <Dialog bind:element={dialog} title="Secret options" subtitle="Super secret">
   <div slot="content" class="grid grid-cols-2 items-center gap-4 w-fit">
+    <span class="[grid-column:1/-1] flex gap-4">
+      <a href="/form/edit">Editor</a>
+      <a href="/form/view">Invullen</a>
+      <a href="/form/results">Resultaten</a>
+    </span>
     <span class="[grid-column:1/-1]">
       <Button icon="view_agenda" text="vul in" on:click={fillIn} />
     </span>

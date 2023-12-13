@@ -1,34 +1,36 @@
 <script>
   import Button from "./Button.svelte";
   import cards from "../cards";
-    import ResultsSidebar from "./ResultsSidebar.svelte";
+  import ResultsSidebar from "./ResultsSidebar.svelte";
+
+  let range = 50;
 </script>
 
-<div class="flex gap-12 mx-96">
-  <div class="w-64rem">
+<div class="flex gap-12 mx-96 pb-12">
+  <div class="w-48rem">
     <ResultsSidebar />
   </div>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-4">
     <h6>Bepaal je plaats of regio</h6>
     <div class="flex items-center gap-6">
       <input
         type="search"
         placeholder="Zoek een plaats of regio"
-        class="px-4 py-3 w-28rem"
+        class="px-2 py-3 w-32rem"
       />
       <label class="flex gap-2">
         Straal
-        <input type="range" min="0" max="100" value="50" class="accent-primary-600" />
+        <input type="range" bind:value={range} min="0" max="100" class="accent-primary-600" />
       </label>
-      <input type="number" value="50" class="w-20 py-3" />
+      <input type="number" bind:value={range} class="w-20 py-3" />
       <Button secondary icon="map" text="Toon kaart" class="ml-auto" />
     </div>
     <div class="grid grid-cols-3 gap-6">
-      {#each cards as card}
+      {#each cards.slice(0, 12) as card}
         <div class="flex gap-6 overflow-hidden">
           <div class="max-w-full flex-grow-1 font-size-6">
             <img
-              class="aspect-4/3 object-cover rd-2"
+              class="w-full aspect-4/3 object-cover rd-2"
               src={card.image}
               alt="location pic"
               loading="lazy"

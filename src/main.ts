@@ -8,6 +8,7 @@ import FormBuilder from "./lib/FormBuilder.svelte";
 import ViewMode from "./lib/ViewMode.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
 import Banner from "./lib/Banner.svelte";
+import Results from "./lib/Results.svelte";
 
 import sample from "./sample";
 
@@ -57,6 +58,12 @@ function apply() {
     document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
     "/form/view",
     sample,
+  );
+
+  addComponent(
+    Results,
+    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    "/form/results",
   )
 
   addComponent(
@@ -77,7 +84,7 @@ function apply() {
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(FormBuilder, testElement);
+  addComponent(Results, testElement);
 }
 
 function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>, anchor?: Element | null) {
