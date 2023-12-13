@@ -59,9 +59,9 @@ export default defineConfig({
       },
       quinary: {
         500: "#3fb9a3",
+        800: "#776294",
       },
       septenary: {
-        800: "#776294",
         600: "#cabce1",
       },
     },
