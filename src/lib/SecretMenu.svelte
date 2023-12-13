@@ -30,7 +30,7 @@
   <div slot="content" class="grid grid-cols-2 items-center gap-4 w-fit">
     <span class="[grid-column:1/-1] flex gap-4">
       <a href="/form/edit">Editor</a>
-      <a href="/form/view">Invullen</a>
+      <a href="/form/dQw4w9WgXcQ">Invullen</a>
       <a href="/form/results">Resultaten</a>
     </span>
     <span class="[grid-column:1/-1]">

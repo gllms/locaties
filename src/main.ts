@@ -56,7 +56,7 @@ function apply() {
   addComponent(
     ViewMode,
     document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
-    "/form/view",
+    "/form/dQw4w9WgXcQ",
     sample,
   );
 
