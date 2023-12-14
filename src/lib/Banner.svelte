@@ -2,7 +2,7 @@
   import Button from "./Button.svelte";
 </script>
 
-<div class="banner flex gap-24rem mb-6rem px-36 py-16 bg-primary-200">
+<div class="banner flex flex-col gap-8 md:(flex-row gap-24rem) mb-6rem px-36 py-16 bg-primary-200">
   <div class="flex flex-col gap-4">
     <span class="text-new">Nieuw</span>
     <h3>Involve</h3>

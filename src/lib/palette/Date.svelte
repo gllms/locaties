@@ -50,9 +50,6 @@
     >
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
-        <!--li
-          class="flex flex-col md:(flex-row items-center) gap-2 w-full font-500"
-        -->
         <span class="mr-2 font-500"
           >{new Date(date).toLocaleDateString("nl-NL", {
             day: "numeric",
@@ -80,26 +77,40 @@
             </button>
           {/each}
         </div>
-        <!--/li-->
       {/each}
     </div>
   {:else}
     <ol class="w-fit">
       {#each data.dates ?? [] as date, i}
-        <li class="flex">
-          <input type="date" bind:value={date} class="p-2 b b-grey-500 rd-2" />
-          {#if i > 0}
-            <button
-              class="flex items-center bg-transparent c-grey-700 b-none cursor-pointer"
-              on:click={() =>
-                (data.dates = data.dates.filter((_, j) => j !== i))}
-            >
-              <span class="material-icons">delete</span>
-            </button>
-          {/if}
-        </li>
+        <label
+          class="relative flex items-center gap-4 p-2 b-b-(1 solid grey-400) font-bold"
+          on:click={(e) => e.currentTarget.querySelector("input")?.showPicker()}
+        >
+          <input
+            type="date"
+            bind:value={date}
+            class="w-0 b-none -ml-4 outline-none"
+          />
+          {@html new Date(date).toLocaleDateString("nl-NL", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+          <span class="material-icons ml-auto c-primary-900"
+            >insert_invitation</span
+          >
+          <button
+            class="icon-button c-grey-700"
+            class:opacity-0={i === 0}
+            class:pointer-events-none={i === 0}
+            on:click|stopPropagation={() =>
+              (data.dates = data.dates.filter((_, j) => j !== i))}
+          >
+            delete
+          </button>
+        </label>
       {/each}
     </ol>
-    <Button secondary on:click={addDate} icon="add" text="Meer" />
+    <Button tertiary on:click={addDate} icon="add" text="Meer" />
   {/if}
 </div>
