@@ -9,7 +9,7 @@
   import ViewMode from "./ViewMode.svelte";
   import Palette from "./Palette.svelte";
   import paletteTypes from "../paletteTypes";
-  import Onboarding from "../Onboarding.svelte";
+  import Onboarding from "../lib/Onboarding.svelte";
 
   let viewMode = false;
 

@@ -27,4 +27,8 @@ export const secretOptions = createSecretOptions();
 
 export const title = writable("");
 export const description = writable("");
-export const canvasItems = writable<CanvasItem[]>([]);
+export const canvasItems = writable<CanvasItem[]>([{
+  id: 0,
+  paletteType: "date",
+  data: undefined!,
+}]);

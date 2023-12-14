@@ -14,7 +14,7 @@
 
 <div class="backdrop absolute flex w-full min-h-full left-0">
   <div
-    class="mt-30 bg-white rd-2 rd-b-0 of-hidden z-1
+    class="mt-30 w-full bg-white rd-2 rd-b-0 of-hidden z-1
               sm:(mx-4 mb-6 rd-b-2) lg:(mx-auto w-92rem)"
   >
     <div
@@ -63,7 +63,7 @@
       {:else}
         <div class="flex flex-col gap-6 mb-6">
           <div
-            class="flex flex-col gap-3 px-6 py-4 bg-white b-(2 solid grey-300) rd-3"
+            class="flex flex-col gap-3 px-6 py-4"
           >
             <div class="flex items-center gap-2">
               <span class="material-icons">{paletteType.icon}</span>

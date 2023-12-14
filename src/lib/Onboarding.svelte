@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import Dialog from "./lib/Dialog.svelte";
-  import Button from "./lib/Button.svelte";
+  import Dialog from "./Dialog.svelte";
+  import Button from "./Button.svelte";
 
   let currentStep = 0;
 
