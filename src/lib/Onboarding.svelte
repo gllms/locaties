@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import sample from "../sample";
+  import { title, description, canvasItems } from "../stores";
   import Dialog from "./Dialog.svelte";
   import Button from "./Button.svelte";
 
@@ -23,6 +25,15 @@
 
   let element: HTMLDialogElement;
 
+  function done() {
+    if (useTemplate) {
+      $title = sample.title;
+      $description = sample.description;
+      $canvasItems = sample.canvasItems;
+    }
+    element.close();
+  }
+
   onMount(() => {
     element.showModal();
   });
@@ -41,7 +52,11 @@
         Welkom bij Involve, jouw gids voor het vinden van de perfecte match
         tussen de behoeften van jouw bedrijf en de wensen van je team!
       </span>
-      <img src="https://i.imgur.com/68ZMLCB.png" alt="screenshot" class="b-(1 solid grey-400) rd-2" />
+      <img
+        src="https://i.imgur.com/68ZMLCB.png"
+        alt="screenshot"
+        class="b-(1 solid grey-400) rd-2"
+      />
       <span>
         Om van start te gaan stellen we je enkele vragen om het deelformulier
         geschikt voor jou te maken.
@@ -128,7 +143,7 @@
     {:else}
       <Button
         disabled={location === ""}
-        on:click={() => element.close()}
+        on:click={done}
         class="ml-auto"
         text="Beginnen"
       />

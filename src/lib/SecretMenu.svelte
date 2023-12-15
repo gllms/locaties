@@ -33,7 +33,7 @@
       <a href="/form/results">Resultaten</a>
     </span>
     <span class="[grid-column:1/-1]">
-      <Button icon="view_agenda" text="vul in" on:click={fillIn} />
+      <Button icon="view_agenda" text="zet voorbeeldblokken neer" on:click={fillIn} />
     </span>
     {#each Object.keys(secretMenu) as key}
       {@const options = secretMenu[key]}

@@ -93,7 +93,7 @@
             text="Voorbeeld"
           />
           <Button
-            icon="share"
+            icon="mail"
             on:click={() => dialog.showModal()}
             class="!h-20 w-unset"
             text="Delen"
@@ -195,6 +195,18 @@
 <Onboarding />
 
 <Overlay bind:element={overlay}>
+  <svelte:fragment slot="header">
+    <div class="flex gap-4">
+      <button class="icon-button h-16 font-material-filled">smartphone</button>
+      <button class="icon-button h-16 font-material-filled">stay_primary_landscape</button>
+      <button class="icon-button h-16 font-material-filled b-b-(1 solid primary-600)">laptop</button>
+    </div>
+    <Button
+      icon="mail"
+      on:click={() => dialog.showModal()}
+      text="Delen"
+    />
+  </svelte:fragment>
   <ViewMode
     title={$title}
     description={$description}
