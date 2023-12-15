@@ -5,7 +5,6 @@
   import sample from "../sample";
 
   const secretMenu: Record<string, string[]> = {
-    date_buttons: ["fill", "fixed"],
     drag_handle: ["inside", "border"],
   };
 

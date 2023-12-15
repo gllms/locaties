@@ -140,7 +140,7 @@
               class:pr-6={$secretOptions.drag_handle === "border"}
               animate:flip={{ duration: flipDurationMs }}
             >
-              <div class="flex-1 py-4 z-1">
+              <div class="flex-1 w-0 py-4 z-1">
                 <div
                   class="flex items-center gap-2"
                   class:-mr-9={$secretOptions.drag_handle !== "border"}

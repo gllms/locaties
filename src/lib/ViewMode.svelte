@@ -8,13 +8,15 @@
   export let canvasItems: CanvasItem[] = [];
 
   let currentStep = 0;
+  $: lastQuestion = currentStep === canvasItems.length;
+
   $: item = canvasItems[Math.max(currentStep - 1, 0)];
   $: paletteType = paletteTypes[item?.paletteType];
 </script>
 
 <div class="backdrop absolute flex w-full min-h-full left-0">
   <div
-    class="mt-30 w-full bg-white rd-2 rd-b-0 of-hidden z-1
+    class="relative flex flex-col mt-30 w-full bg-white rd-2 rd-b-0 of-hidden z-1
               sm:(mx-4 mb-6 rd-b-2) lg:(mx-auto w-92rem)"
   >
     <div
@@ -26,7 +28,7 @@
       <ol
         class="absolute flex justify-between m-0 p-0 px-10 w-full left-0 -bottom-.4rem list-none"
       >
-        {#each Array.from({ length: canvasItems.length + 1 }) as _, i}
+        {#each Array.from({ length: canvasItems.length + 2 }) as _, i}
           <li
             class="w-.8rem h-.8rem c-primary-900 bg-grey-500 rd-2"
             class:bg-quinary-500={i < currentStep}
@@ -51,7 +53,7 @@
       </ol>
     </div>
 
-    <div class="flex flex-col m-10 mt-0 mb-6">
+    <div class="flex-1 flex flex-col m-10 mt-0 mb-18 sm:mb-6">
       {#if currentStep === 0}
         <p class="mt-0 mb-6 ws-pre text-wrap">
           {#if description}
@@ -60,11 +62,12 @@
             Geen beschrijving
           {/if}
         </p>
+      {:else if currentStep === canvasItems.length + 1}
+        <h1 class="text-center">Bedankt</h1>
+        <p class="text-center">Je kunt nu de pagina sluiten.</p>
       {:else}
         <div class="flex flex-col gap-6 mb-6">
-          <div
-            class="flex flex-col gap-3 px-6 py-4"
-          >
+          <div class="flex flex-col gap-3 px-6 py-4">
             <div class="flex items-center gap-2">
               <span class="material-icons">{paletteType.icon}</span>
               <span class="name">{paletteType.name}</span>
@@ -78,28 +81,23 @@
           </div>
         </div>
       {/if}
+    </div>
+    <div class="fixed sm:static flex gap-2 w-full bottom-0 p-6 bg-white b-t-(1 solid grey-300) justify-between">
+      {#if currentStep > 0 && currentStep < canvasItems.length + 1}
+        <Button
+          secondary
+          text="Vorige"
+          on:click={() => (currentStep -= 1)}
+        />
+      {/if}
 
-      <div class="flex gap-2 justify-between">
-        {#if currentStep > 0}
-          <Button
-            secondary
-            icon="arrow_back"
-            text="Vorige"
-            on:click={() => (currentStep -= 1)}
-          />
-        {/if}
-
-        {#if currentStep === canvasItems.length}
-          <Button icon="send" text="Verzenden" class="ml-auto" />
-        {:else}
-          <Button
-            icon="arrow_forward"
-            text="Volgende"
-            class="ml-auto"
-            on:click={() => (currentStep += 1)}
-          />
-        {/if}
-      </div>
+      {#if currentStep < canvasItems.length + 1}
+        <Button
+          text={lastQuestion ? "Verzenden" : "Volgende"}
+          class="ml-auto"
+          on:click={() => (currentStep += 1)}
+        />
+      {/if}
     </div>
   </div>
 </div>
@@ -111,4 +109,3 @@
     background-attachment: fixed;
   }
 </style>
-
