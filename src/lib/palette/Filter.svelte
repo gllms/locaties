@@ -31,60 +31,66 @@
   <div
     class:pointer-events-none={!viewMode}
     class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
-           [&>label]:(flex flex-col gap-2 p-4 bg-grey-100 b-(1 solid grey-300) rd-1 cursor-pointer select-none)
+           [&>label]:(rd-2 bg-cover b-(1 solid grey-400))
            [&>label:has(:checked)]:(bg-primary-200 b-primary-600)
            [&_p]:(m-0 font-500)"
+    class:lg:!grid-cols-3={!images}
   >
     {#each data.options as option}
       {@const checked = data.selected.includes(option)}
-      <label>
-        <div class="flex justify-between gap-2 w-full">
-          {#if images}
-            <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
-          {:else if icons}
-            <span class="material-icons"
-              >{icons[filters[filter].options.indexOf(option)]}</span
-            >
-          {:else}
-            <p>{option}</p>
-          {/if}
+      <label
+        style:background-image={images
+          ? `linear-gradient(transparent,transparent,rgba(0,0,0,.8)),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
+              images[filters[filter].options.indexOf(option)]
+            }`
+          : undefined}
+        class:c-white={images}
+        class:!b-0={images}
+      >
+        {#if icons}
+          <span class="material-icons m-2"
+            >{icons[filters[filter].options.indexOf(option)]}</span
+          >
+        {/if}
+        <div
+          class="relative flex items-end justify-between gap-2 p-3
+                 [&_p]:(m-0 font-500)"
+          class:h-[16rem]={images}
+        >
+          <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
             type="checkbox"
             bind:group={data.selected}
             value={option}
             class="hidden"
           />
-          <span
-            class="material-icons"
-            class:font-material-filled={checked}
-            class:c-primary-600={checked}
-            >{`check_box${!checked ? "_outline_blank" : ""}`}</span
-          >
+          <div class="relative h-2rem">
+            {#if data.selected.includes(option)}
+              <div
+                class="absolute w-12px h-12px left-4px top-4px bg-white"
+              ></div>
+            {/if}
+            <span
+              class="relative material-icons font-material-filled"
+              class:c-primary-600={data.selected.includes(option)}
+              >{`check_box${
+                data.selected.includes(option) ? "" : "_outline_blank"
+              }`}</span
+            >
+          </div>
         </div>
-        {#if images}
-          <img
-            src={"https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/" +
-              images[filters[filter].options.indexOf(option)]}
-            alt="filter option"
-            class="rd-1 aspect-4/3"
-            draggable="false"
-          />
-        {:else if icons}
-          <p>{option}</p>
-        {/if}
       </label>
     {/each}
 
-    <label>
+    <label class="flex flex-col items-start">
+      {#if icons}
+        <span class="material-icons m-2">remove</span>
+      {/if}
       <div
-        class="flex justify-between gap-2 w-full
+        class="flex justify-between items-center gap-2 w-full p-3
                  [&_p]:(m-0 font-500)"
       >
-        {#if icons}
-          <span class="material-icons">remove</span>
-        {:else}
-          <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
-        {/if}
+        <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
         <input
           type="radio"
           bind:group={data.selected}
@@ -99,9 +105,6 @@
           }checked`}</span
         >
       </div>
-      {#if icons}
-        <p>Geen voorkeur</p>
-      {/if}
     </label>
   </div>
 {:else}
