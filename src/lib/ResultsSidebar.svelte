@@ -155,7 +155,7 @@
 
 {#if !inOverlay}
   <Overlay bind:element={overlay}>
-    <div class="flex gap-12 mx-72 pb-12">
+    <div class="flex gap-12 mt-12rem mx-72 pb-12">
       <div class="w-48rem">
         <svelte:self inOverlay />
       </div>

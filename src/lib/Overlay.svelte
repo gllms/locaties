@@ -8,7 +8,7 @@
   <div class="fixed w-full px-12 py-6 bg-white b-b-(1 solid grey-200) z-1">
     <Button tertiary icon="keyboard_arrow_left" text="Terug" on:click={() => element.close()} />
   </div>
-  <div class="mt-12rem mx-12">
+  <div class="mt-9rem mx-12">
     <slot />
   </div>
 </dialog>
