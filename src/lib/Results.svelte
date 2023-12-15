@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Button from "./Button.svelte";
   import cards from "../cards";
   import ResultsSidebar from "./ResultsSidebar.svelte";
@@ -6,7 +6,7 @@
   let range = 50;
 </script>
 
-<div class="flex gap-12 mx-96 pb-12">
+<div class="flex gap-12 mx-72 mt-8 pb-12">
   <div class="w-48rem">
     <ResultsSidebar />
   </div>
@@ -20,7 +20,13 @@
       />
       <label class="flex gap-2">
         Straal
-        <input type="range" bind:value={range} min="0" max="100" class="accent-primary-600" />
+        <input
+          type="range"
+          bind:value={range}
+          min="0"
+          max="100"
+          class="accent-primary-600"
+        />
       </label>
       <input type="number" bind:value={range} class="w-20 py-3" />
       <Button secondary icon="map" text="Toon kaart" class="ml-auto" />
@@ -35,7 +41,11 @@
               alt="location pic"
               loading="lazy"
             />
-            <p class="my-1 font-600 overflow-hidden ws-nowrap overflow-hidden text-ellipsis">{card.name}</p>
+            <p
+              class="my-1 font-600 overflow-hidden ws-nowrap overflow-hidden text-ellipsis"
+            >
+              {card.name}
+            </p>
             <div class="flex items-center gap-1">
               <span class="material-icons">food_bank</span><span
                 class="ws-nowrap overflow-hidden text-ellipsis"
