@@ -6,6 +6,10 @@
   let range = 50;
 </script>
 
+<svelte:head>
+  <title>Resultaten</title>
+</svelte:head>
+
 <div class="flex gap-12 mx-72 mt-8 pb-12">
   <div class="w-48rem">
     <ResultsSidebar />

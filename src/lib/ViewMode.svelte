@@ -14,6 +14,10 @@
   $: paletteType = paletteTypes[item?.paletteType];
 </script>
 
+<svelte:head>
+  <title>Deelformulier</title>
+</svelte:head>
+
 <div class="backdrop absolute flex w-full min-h-full left-0">
   <div
     class="relative flex flex-col mt-30 w-full bg-white rd-2 rd-b-0 of-hidden z-1

@@ -46,7 +46,7 @@
       <p class="m-0">{data.description}</p>
     {/if}
     <div
-      class="grid grid-cols-1 md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem]"
+      class="grid grid-cols-1 md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] md:[row-gap:1.2rem]"
     >
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
