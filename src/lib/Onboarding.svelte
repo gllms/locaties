@@ -106,7 +106,7 @@
     {/if}
 
     {#if currentStep === 2}
-      <h6>Bepaal je plaats of regio<sup>*</sup></h6>
+      <h6>Bepaal je plaats of regio</h6>
 
       <input
         type="search"
@@ -125,7 +125,6 @@
         />
         <input type="number" min="0" max="100" bind:value={range} />
       </div>
-      <span class="c-grey-600">* Vul in om door te gaan</span>
     {/if}
   </div>
   <svelte:fragment slot="footer">
@@ -142,7 +141,6 @@
       />
     {:else}
       <Button
-        disabled={location === ""}
         on:click={done}
         class="ml-auto"
         text="Beginnen"

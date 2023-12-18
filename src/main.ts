@@ -64,7 +64,7 @@ function apply() {
     Results,
     document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
     "/form/results",
-  )
+  );
 
   addComponent(
     Banner,
