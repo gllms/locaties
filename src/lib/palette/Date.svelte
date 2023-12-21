@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Button from "../Button.svelte";
-
   export let data: {
     description: string;
     dates: string[];
@@ -35,12 +33,15 @@
     },
   ];
 
-  function addDate() {
-    data.dates = [...data.dates, new Date().toISOString().slice(0, 10)];
+  function addDate(
+    e: Event & { currentTarget: EventTarget & HTMLInputElement },
+  ) {
+    data.dates = [...data.dates, e.currentTarget.value];
+    e.currentTarget.value = "";
   }
 </script>
 
-<div class="flex flex-col gap-4 [&>ol]:(flex flex-col gap-2 m-0 p-0 list-none)">
+<div class="flex flex-col gap-4">
   {#if viewMode}
     {#if data.description}
       <p class="m-0">{data.description}</p>
@@ -80,37 +81,49 @@
       {/each}
     </div>
   {:else}
-    <ol class="w-fit">
+    <div>
+      <p class="text-caption m-0 mb-2 c-grey-700">Kies een datum</p>
+      <button
+        class="flex items-center gap-4 w-40rem p-4 c-grey-400 bg-transparent b-none b-(1 solid grey-400) rd-1"
+        on:click={(e) => e.currentTarget.querySelector("input")?.showPicker()}
+      >
+        <input
+          type="date"
+          class="w-0 b-none -ml-4 outline-none"
+          on:change={(e) => addDate(e)}
+          value=""
+        />
+        {new Date().toISOString().slice(0, 10)}
+        <span class="material-icons ml-auto c-primary-900"
+          >insert_invitation</span
+        >
+      </button>
+    </div>
+    <div class="grid gap-4 w-fit">
       {#each data.dates ?? [] as date, i}
-        <label
-          class="relative flex items-center gap-4 p-2 b-b-(1 solid grey-400) font-bold"
+        <button
+          class="grid grid-cols-subgrid items-center col-span-4 p-2 bg-transparent b-none b-b-(1 solid grey-400) font-bold text-left"
           on:click={(e) => e.currentTarget.querySelector("input")?.showPicker()}
         >
-          <input
-            type="date"
-            bind:value={date}
-            class="w-0 b-none -ml-4 outline-none"
-          />
-          {@html new Date(date).toLocaleDateString("nl-NL", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-          <span class="material-icons ml-auto c-primary-900"
-            >insert_invitation</span
-          >
+          {#each new Date(date)
+            .toLocaleDateString( "nl-NL", { day: "numeric", month: "long", year: "numeric" }, )
+            .split(" ") as word}
+            <span>{word}</span>
+          {/each}
           <button
             class="icon-button c-grey-700"
-            class:opacity-0={i === 0}
-            class:pointer-events-none={i === 0}
             on:click|stopPropagation={() =>
               (data.dates = data.dates.filter((_, j) => j !== i))}
           >
             delete
           </button>
-        </label>
+          <input
+            type="date"
+            bind:value={date}
+            class="w-0 h-0 b-none outline-none"
+          />
+        </button>
       {/each}
-    </ol>
-    <Button tertiary on:click={addDate} icon="add" text="Meer" />
+    </div>
   {/if}
 </div>

@@ -35,7 +35,7 @@
   }
 
   onMount(() => {
-    element.showModal();
+    // element.showModal();
   });
 </script>
 

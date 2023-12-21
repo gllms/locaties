@@ -41,7 +41,7 @@
 
 <Drawer {title} {icon} {open}>
   <div
-    class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+    class="flex flex-col gap-4"
     use:dndzone={{
       items,
       flipDurationMs,
@@ -53,9 +53,9 @@
     {#each items as item (item.id)}
       {@const paletteType = paletteTypes[item.paletteType]}
       <div
-        class="flex items-center gap-3 p-4 bg-grey-100 b-(1 solid grey-300) rd-3"
+        class="flex items-center gap-3 p-4 bg-grey-100 c-primary-900 b-(1 solid grey-300) rd-3"
         animate:flip={{ duration: flipDurationMs }}>
-        <span class="material-icons c-primary-900">drag_indicator</span>
+        <span class="material-icons">drag_indicator</span>
         <div class="flex items-center gap-2">
           <span class="material-icons">{paletteType.icon}</span>
           <span class="font-500">{paletteType.name}</span>

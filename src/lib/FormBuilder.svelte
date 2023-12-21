@@ -11,12 +11,16 @@
   import paletteTypes from "../paletteTypes";
   import Onboarding from "../lib/Onboarding.svelte";
   import Overlay from "./Overlay.svelte";
+  import ThemeDialog from "./ThemeDialog.svelte";
 
   const flipDurationMs = 200;
   let idx = 0;
 
+  let starred = false;
+
   let dialog: HTMLDialogElement;
   let overlay: HTMLDialogElement;
+  let themeDialog: HTMLDialogElement;
 
   let dragDisabled = true;
 
@@ -48,9 +52,49 @@
 
 <svelte:document on:pointerup={() => (dragDisabled = true)} />
 
-<div class="w-full pt-8 px-8 xl:px-20 xxl:px-16rem">
-  <div class="flex gap-3 w-full pb-6">
-    <div class="w-72rem">
+<div class="flex flex-col gap-2 w-full pt-8 px-8 xl:px-20 xxl:px-16rem">
+  <div
+    class="flex justify-between px-6 py-2 bg-primary-200 b-(1 solid primary-400) rd-1 [&>div]:(flex items-center gap-4)"
+  >
+    <div>
+      <h6
+        contenteditable="plaintext-only"
+        on:input={(e) => {
+          const val = e.currentTarget.innerText;
+          if (val.includes("\n")) {
+            e.currentTarget.innerText = val.replace("\n", "");
+          }
+        }}
+      >
+        Bestandsnaam
+      </h6>
+      <button class="icon-button">save</button>
+      <button
+        class="icon-button font-material-filled"
+        on:click={() => (starred = !starred)}
+      >
+        {starred ? "star" : "star_outline"}
+      </button>
+    </div>
+
+    <div>
+      <button class="icon-button">undo</button>
+      <button class="icon-button">redo</button>
+      <button on:click={() => themeDialog.showModal()} class="icon-button"
+        >color_lens</button
+      >
+      <Button
+        tertiary
+        icon="visibility"
+        on:click={() => overlay.showModal()}
+        text="Voorbeeld"
+      />
+      <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
+    </div>
+  </div>
+  <hr class="mx-12 b-(1 solid grey-300)" />
+  <div class="flex gap-16 w-full pb-6">
+    <div class="top-0 w-72rem">
       <Palette
         title="Filters"
         icon="filter_alt"
@@ -66,10 +110,10 @@
         )}
       />
     </div>
-    <div class="flex flex-col gap-4 w-full mx-4">
+    <div class="flex flex-col gap-6 w-full">
       <div class="flex gap-4">
         <div
-          class="grow-1 flex flex-col px-6 py-4 bg-primary-200 b-(1 solid primary-400) rd-3 placeholder:c-grey-400"
+          class="grow-1 flex flex-col px-6 py-4 bg-primary-200 b-(1 solid primary-400) rd-2 placeholder:c-grey-400"
         >
           <input
             type="text"
@@ -77,30 +121,14 @@
             placeholder="Naamloos"
             class="font-size-1.8rem font-bold line-height-unset bg-transparent b-none"
           />
-          <textarea
-            rows="2"
-            bind:value={$description}
-            placeholder="Formulierbeschrijving"
-            class="mt-4 bg-transparent c-grey-600 b-none resize-y placeholder:c-grey-400"
-          />
-        </div>
-        <div class="flex flex-col gap-4 [&>button]:h-5">
-          <Button
-            secondary
-            icon="visibility"
-            on:click={() => overlay.showModal()}
-            class="!h-20"
-            text="Voorbeeld"
-          />
-          <Button
-            icon="mail"
-            on:click={() => dialog.showModal()}
-            class="!h-20 w-unset"
-            text="Delen"
-          />
+          <div
+            contenteditable="plaintext-only"
+            bind:innerText={$description}
+            data-placeholder="Formulierbeschrijving"
+            class="min-h-4.5rem mt-4 bg-transparent b-none placeholder:c-grey-400"
+          ></div>
         </div>
       </div>
-      <hr class="w-full stroke-(1 solid grey-600)" />
       <div
         class="relative flex flex-col gap-6 min-h-13rem rd-3 outline-(1 dashed transparent) [&.dropTarget]:(outline-(1 primary-900 offset-1rem))"
         class:!outline-primary-900={$canvasItems.length === 0}
@@ -186,13 +214,21 @@
           </div>
         {/if}
       </div>
+      <div
+        class="flex items-center justify-center p-2 c-primary-900 b-(1 dashed primary-900) rd-2 opacity-0 [.dropTarget~&]:(opacity-0)"
+        class:opacity-100={$canvasItems.length > 0 ||
+          ($canvasItems.length === 1 &&
+            $canvasItems[0][SHADOW_ITEM_MARKER_PROPERTY_NAME])}
+      >
+        <span class="material-icons">add</span>
+      </div>
     </div>
   </div>
 </div>
 
-<ShareDialog bind:element={dialog} />
-
 <Onboarding />
+
+<ThemeDialog bind:element={themeDialog} />
 
 <Overlay bind:element={overlay}>
   <svelte:fragment slot="header">
@@ -213,6 +249,8 @@
     canvasItems={$canvasItems}
   />
 </Overlay>
+
+<ShareDialog bind:element={dialog} />
 
 <style>
   :global(head:has(meta[property="og:url"][content^="/form"]) + body) {
