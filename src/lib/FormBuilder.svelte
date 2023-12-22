@@ -6,7 +6,6 @@
 
   import Button from "./Button.svelte";
   import ShareDialog from "./ShareDialog.svelte";
-  import ViewMode from "./ViewMode.svelte";
   import Palette from "./Palette.svelte";
   import paletteTypes from "../paletteTypes";
   import Onboarding from "../lib/Onboarding.svelte";
@@ -43,6 +42,21 @@
     const temp = $canvasItems[i];
     $canvasItems[i] = $canvasItems[j];
     $canvasItems[j] = temp;
+  }
+
+  let previewIframe: HTMLIFrameElement;
+
+  let previewWidth = "100%";
+
+  function showPreview() {
+    previewIframe.contentWindow?.postMessage({
+      title: $title,
+      description: $description,
+      canvasItems: $canvasItems,
+      secretOptions: $secretOptions,
+    });
+
+    overlay.showModal();
   }
 </script>
 
@@ -86,7 +100,7 @@
       <Button
         tertiary
         icon="visibility"
-        on:click={() => overlay.showModal()}
+        on:click={showPreview}
         text="Voorbeeld"
       />
       <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
@@ -232,22 +246,33 @@
 
 <Overlay bind:element={overlay}>
   <svelte:fragment slot="header">
-    <div class="flex gap-4">
-      <button class="icon-button h-16 font-material-filled">smartphone</button>
-      <button class="icon-button h-16 font-material-filled">stay_primary_landscape</button>
-      <button class="icon-button h-16 font-material-filled b-b-(1 solid primary-600)">laptop</button>
+    <div class="flex gap-4 [&>button]:b-b-(1 solid transparent)">
+      <button
+        class="icon-button h-16 font-material-filled"
+        class:!b-primary-600={previewWidth === "420px"}
+        on:click={() => (previewWidth = "420px")}>smartphone</button
+      >
+      <button
+        class="icon-button h-16 font-material-filled"
+        class:!b-primary-600={previewWidth === "1023px"}
+        on:click={() => (previewWidth = "1023px")}>tablet</button
+      >
+      <button
+        class="icon-button h-16 font-material-filled"
+        class:!b-primary-600={previewWidth === "100%"}
+        on:click={() => (previewWidth = "100%")}
+        >laptop</button
+      >
     </div>
-    <Button
-      icon="mail"
-      on:click={() => dialog.showModal()}
-      text="Delen"
-    />
+    <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
   </svelte:fragment>
-  <ViewMode
-    title={$title}
-    description={$description}
-    canvasItems={$canvasItems}
-  />
+  <iframe
+    bind:this={previewIframe}
+    style:width={previewWidth}
+    src="/form/preview"
+    title="preview"
+    class="w-full h-full b-none mx-auto rd-4"
+  ></iframe>
 </Overlay>
 
 <ShareDialog bind:element={dialog} />

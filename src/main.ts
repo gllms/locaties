@@ -9,6 +9,7 @@ import ViewMode from "./lib/ViewMode.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
 import Banner from "./lib/Banner.svelte";
 import Results from "./lib/Results.svelte";
+import Preview from "./lib/Preview.svelte";
 
 import sample from "./sample";
 
@@ -80,6 +81,12 @@ function apply() {
     "/locatie/",
     undefined,
     document.querySelector(".locaties [class^=styles_pageWrapper] > div:nth-child(7) > div > div:nth-child(3)"),
+  );
+
+  addComponent(
+    Preview,
+    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    "/form/preview",
   );
 
   addComponent(SecretMenu, document.body);
