@@ -28,3 +28,12 @@ body:has(.handle:hover) {
 [data-placeholder]:empty::before {
   @apply content-[attr(data-placeholder)] c-gray-400 pointer-events-none;
 }
+
+input[type=range] {
+  @apply accent-primary-900 h-2px;
+
+  &::-webkit-slider-thumb {
+    width: 2rem;
+    margin-top: -1px;
+  }
+}
