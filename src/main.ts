@@ -10,6 +10,7 @@ import SecretMenu from "./lib/SecretMenu.svelte";
 import Banner from "./lib/Banner.svelte";
 import Results from "./lib/Results.svelte";
 import Preview from "./lib/Preview.svelte";
+import BannerButton from "./lib/BannerButton.svelte";
 
 import sample from "./sample";
 
@@ -20,8 +21,9 @@ const originalPushState = history.pushState;
 history.pushState = function() {
   originalPushState.apply(this, arguments as any);
 
-  for (const component of components)
+  for (const component of components) {
     component.$destroy();
+  }
 
   components.length = 0;
 
@@ -36,7 +38,8 @@ function apply() {
   if (!testElement) {
     if (
       !document.querySelector(".main > div")?.hasChildNodes() ||
-      (document.querySelector("meta[property='og:url']") as HTMLMetaElement)?.content !== location.pathname
+      (document.querySelector("meta[property='og:url']") as HTMLMetaElement)
+        ?.content !== location.pathname
     ) {
       setTimeout(apply, 500);
       return;
@@ -45,25 +48,31 @@ function apply() {
 
   addComponent(
     MyListButton,
-    document.querySelector("div[data-testid=drawerMyList]")
+    document.querySelector("div[data-testid=drawerMyList]"),
   );
 
   addComponent(
     FormBuilder,
-    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
-    "/form/edit"
+    document.querySelector(
+      "div:has(> div > div > button[title='Opnieuw zoeken'])",
+    ),
+    "/form/edit",
   );
 
   addComponent(
     ViewMode,
-    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    document.querySelector(
+      "div:has(> div > div > button[title='Opnieuw zoeken'])",
+    ),
     "/form/dQw4w9WgXcQ",
     sample,
   );
 
   addComponent(
     Results,
-    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    document.querySelector(
+      "div:has(> div > div > button[title='Opnieuw zoeken'])",
+    ),
     "/form/results",
   );
 
@@ -72,43 +81,66 @@ function apply() {
     document.querySelector(".locaties [class^=styles_pageContent]"),
     "/",
     undefined,
-    document.querySelector(".locaties [class^=styles_pageContent] > div:nth-child(18)"),
+    document.querySelector(
+      ".locaties [class^=styles_pageContent] > div:nth-child(18)",
+    ),
   );
 
   addComponent(
     Banner,
-    document.querySelector(".locaties [class^=styles_pageWrapper] > div:nth-child(7) > div"),
+    document.querySelector("div:has(>div>#faq)"),
     "/locatie/",
-    undefined,
-    document.querySelector(".locaties [class^=styles_pageWrapper] > div:nth-child(7) > div > div:nth-child(3)"),
+    {
+      inDetailPage: true,
+    },
+    document.querySelector("div:has(>#faq)"),
   );
 
   addComponent(
     Preview,
-    document.querySelector("div:has(> div > div > button[title='Opnieuw zoeken'])"),
+    document.querySelector(
+      "div:has(> div > div > button[title='Opnieuw zoeken'])",
+    ),
     "/form/preview",
+  );
+
+  addComponent(
+    BannerButton,
+    document.querySelector("[class*=bannerInner] [class*=content]"),
+    "/categorie/teambuilding",
   );
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(FormBuilder, testElement);
+  addComponent(Banner, testElement);
 }
 
-function addComponent(component: new (...args: any[]) => SvelteComponent, target: Element | null, path?: string | RegExp, props?: Record<string, any>, anchor?: Element | null) {
-  if (!target)
+function addComponent(
+  component: new (...args: any[]) => SvelteComponent,
+  target: Element | null,
+  path?: string | RegExp,
+  props?: Record<string, any>,
+  anchor?: Element | null,
+) {
+  if (!target) {
     return;
+  }
 
   if (path) {
     if (typeof path === "string") {
-      if (!location.pathname.startsWith(path))
+      if (!location.pathname.startsWith(path)) {
         return;
-    } else if (!path.test(location.pathname))
+      }
+    } else if (!path.test(location.pathname)) {
       return;
+    }
   }
 
-  components.push(new component({
-    target,
-    anchor,
-    props,
-  }));
+  components.push(
+    new component({
+      target,
+      anchor,
+      props,
+    }),
+  );
 }
