@@ -29,5 +29,9 @@
     & [class^="styles_pageWrapper"] {
       padding-top: 0;
     }
+
+    & .backdrop {
+      min-height: 100%;
+    }
   }
 </style>

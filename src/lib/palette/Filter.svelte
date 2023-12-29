@@ -25,16 +25,14 @@
 </script>
 
 {#if viewMode}
-  {#if data.description}
-    <p class="m-0">{data.description}</p>
-  {/if}
   <div
     class:pointer-events-none={!viewMode}
-    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
            [&>label]:(rd-2 bg-cover b-(1 solid grey-400))
            [&>label:has(:checked)]:(bg-primary-200 b-primary-600)
            [&_p]:(m-0 font-500)"
     class:lg:!grid-cols-3={!images}
+    class:grid-cols-2={images}
   >
     {#each data.options as option}
       {@const checked = data.selected.includes(option)}
@@ -82,7 +80,7 @@
       </label>
     {/each}
 
-    <label class="flex flex-col items-start">
+    <label class="flex flex-col items-start justify-end">
       {#if icons}
         <span class="material-icons m-2">remove</span>
       {/if}

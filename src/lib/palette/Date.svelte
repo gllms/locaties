@@ -24,7 +24,7 @@
     {
       value: "maybe",
       icon: "show_chart",
-      text: "Uhm",
+      text: "Misschien",
     },
     {
       value: "no",
@@ -43,11 +43,8 @@
 
 <div class="flex flex-col gap-4">
   {#if viewMode}
-    {#if data.description}
-      <p class="m-0">{data.description}</p>
-    {/if}
     <div
-      class="grid grid-cols-1 md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] md:[row-gap:1.2rem]"
+      class="grid grid-cols-1 md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] md:[row-gap:1.2rem] font-size-14px"
     >
       {#each data.dates ?? [] as date, i}
         {@const val = data.values[i]}
@@ -71,7 +68,7 @@
               {text}
 
               <span
-                class="material-icons ml-auto"
+                class="material-icons ml-auto hidden md:block"
                 class:c-primary-600={val === value}
                 >{`radio_button_${val === value ? "" : "un"}checked`}</span
               >

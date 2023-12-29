@@ -8,10 +8,13 @@
 </script>
 
 {#if viewMode}
-  {#if data.description}
-    <p class="m-0">{data.description}</p>
-  {/if}
-  <textarea rows="3" bind:value={data.value} />
+  <textarea rows="3" bind:value={data.value} placeholder="Typ hier uw antwoord" class="resize-y" />
 {:else}
-  <textarea disabled rows="3" class="w-full pointer-events-none" />
+  <textarea disabled rows="3" placeholder="Typ hier uw antwoord" class="opacity-50 pointer-events-none" />
 {/if}
+
+<style>
+  textarea {
+    --at-apply: "p-4 w-full b-(1 solid grey-400) rd-1";
+  }
+</style>
