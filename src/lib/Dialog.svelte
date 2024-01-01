@@ -28,8 +28,7 @@
 >
   {#if !drawer}
     <button
-      class="icon-button absolute top-8 right-8 z-1"
-      style:margin-left="auto"
+      class="icon-button absolute top-8 right-8 ml-auto z-1"
       on:click={() => element.close()}
     >
       close

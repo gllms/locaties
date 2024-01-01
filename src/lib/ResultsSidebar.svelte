@@ -175,7 +175,7 @@
                 <div class="flex-1 flex items-center gap-2">
                   <div
                     class="h-12px bg-primary-900 rd-full"
-                    style:width={`${(votes / 23) * 100}%`}
+                    style="width: { (votes / 23) * 100 }%"
                   ></div>
                   <p class="m-0">
                     {votes} ({((votes / 22) * 100).toFixed(0)}%)

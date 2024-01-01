@@ -32,10 +32,9 @@
   {#if icon}
     <span
       class="material-icons"
+      class:c-grey-900={secondary}
+      class:c-primary-400={tertiary}
       style:margin-right={text ? "var(--spacing-2x)" : "0"}
-      style:color={secondary || tertiary
-        ? "var(--color-grey-900)"
-        : "var(--color-primary-400"}
     >
       {icon}</span
     >

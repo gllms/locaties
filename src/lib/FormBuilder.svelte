@@ -146,7 +146,7 @@
       <div
         class="relative flex flex-col gap-6 min-h-13rem rd-3 outline-(1 dashed transparent) [&.dropTarget]:(outline-(1 primary-900 offset-1rem))"
         class:!outline-primary-900={$canvasItems.length === 0}
-        style:transition={"outline-offset .3s ease-in-out, outline-color .3s ease-in-out"}
+        style:transition="outline-offset .3s ease-in-out, outline-color .3s ease-in-out"
         use:dndzone={{
           items: $canvasItems,
           flipDurationMs,
@@ -224,7 +224,7 @@
             class="absolute flex flex-col items-center w-full gap-3 m-3 p-6 c-primary-900 rd-3"
           >
             <span class="font-bold">Sleep hier een item naartoe</span>
-            <span class="material-icons" style:font-size="3rem">mouse</span>
+            <span class="material-icons font-size-3rem">mouse</span>
           </div>
         {/if}
       </div>
