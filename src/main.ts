@@ -112,7 +112,7 @@ function apply() {
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(Banner, testElement);
+  addComponent(FormBuilder, testElement);
 }
 
 function addComponent(

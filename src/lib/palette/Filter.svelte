@@ -21,7 +21,7 @@
   $: icons = filters[filter].icons;
   $: images = filters[filter].images;
 
-  $: allChecked = data.options.length === filters[filter].options.length;
+  $: allChecked = data.options?.length === filters[filter].options?.length;
 </script>
 
 {#if viewMode}
@@ -35,10 +35,10 @@
     class:grid-cols-2={images}
   >
     {#each data.options as option}
-      {@const checked = data.selected.includes(option)}
+      {@const checked = data.selected?.includes(option)}
       <label
         style:background-image={images
-          ? `linear-gradient(transparent,transparent,rgba(0,0,0,.8)),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
+          ? `linear-gradient(transparent,transparent,${data.selected?.includes(option) ? "var(--color-primary-600)" : "rgba(0,0,0,.8)"}),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
               images[filters[filter].options.indexOf(option)]
             }`
           : undefined}
@@ -63,16 +63,16 @@
             class="hidden"
           />
           <div class="relative h-2rem">
-            {#if data.selected.includes(option)}
+            {#if data.selected?.includes(option)}
               <div
                 class="absolute w-12px h-12px left-4px top-4px bg-white"
               ></div>
             {/if}
             <span
               class="relative material-icons font-material-filled"
-              class:c-primary-600={data.selected.includes(option)}
+              class:c-primary-600={data.selected?.includes(option)}
               >{`check_box${
-                data.selected.includes(option) ? "" : "_outline_blank"
+                data.selected?.includes(option) ? "" : "_outline_blank"
               }`}</span
             >
           </div>
@@ -110,7 +110,7 @@
     {#each filters[filter].options as option}
       <label
         style:background-image={images
-          ? `linear-gradient(transparent,transparent,rgba(0,0,0,.8)),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
+          ? `linear-gradient(transparent,transparent,${data.options?.includes(option) ? "var(--color-primary-600)" : "rgba(0,0,0,.8)"}),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
               images[filters[filter].options.indexOf(option)]
             }`
           : undefined}
@@ -137,16 +137,15 @@
             class="hidden"
           />
           <div class="relative h-2rem">
-            {#if data.options.includes(option)}
+            {#if data.options?.includes(option)}
               <div
-                class="absolute w-12px h-12px left-4px top-4px bg-white"
+                class="absolute w-12px h-12px left-4px top-4px bg-primary-600"
               ></div>
             {/if}
             <span
               class="relative material-icons font-material-filled"
-              class:c-primary-600={data.options.includes(option)}
               >{`check_box${
-                data.options.includes(option) ? "" : "_outline_blank"
+                data.options?.includes(option) ? "" : "_outline_blank"
               }`}</span
             >
           </div>
@@ -161,7 +160,7 @@
     <input
       type="checkbox"
       on:change={() => {
-        if (data.options.length === filters[filter].options.length) {
+        if (data.options?.length === filters[filter].options?.length) {
           data.options = [];
         } else {
           data.options = filters[filter].options.slice();

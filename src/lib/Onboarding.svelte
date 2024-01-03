@@ -53,7 +53,7 @@
         jouw bedrijf en de wensen van je team.
       </span>
       <img
-        src="https://i.imgur.com/tQHyYzm.png"
+        src="https://i.imgur.com/R75jcLZ.png"
         alt="screenshot"
         class="b-(1 solid grey-400) rd-2"
       />

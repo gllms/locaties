@@ -36,7 +36,7 @@
   function addDate(
     e: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
-    data.dates = [...data.dates, e.currentTarget.value];
+    data.dates = [...(data.dates ?? []), e.currentTarget.value];
     e.currentTarget.value = "";
   }
 </script>

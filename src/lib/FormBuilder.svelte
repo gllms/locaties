@@ -11,6 +11,7 @@
   import Onboarding from "../lib/Onboarding.svelte";
   import Overlay from "./Overlay.svelte";
   import ThemeDialog from "./ThemeDialog.svelte";
+  import RichText from "./RichText.svelte";
 
   const flipDurationMs = 200;
   let idx = 0;
@@ -26,7 +27,9 @@
   let paletteItems: CanvasItem[] = Object.keys(paletteTypes).map((key) => ({
     id: idx++,
     paletteType: key,
-    data: undefined!,
+    data: {
+      description: "",
+    },
   }));
 
   function handlePointerdown(e: MouseEvent) {
@@ -135,18 +138,18 @@
             placeholder="Naamloos"
             class="font-size-1.8rem font-bold line-height-unset bg-transparent b-none"
           />
-          <div
-            contenteditable="plaintext-only"
-            bind:innerText={$description}
-            data-placeholder="Formulierbeschrijving"
-            class="min-h-4.5rem mt-4 bg-transparent b-none placeholder:c-grey-400"
-          ></div>
+          <RichText
+            bind:value={$description}
+            placeholder="Formulierbeschrijving"
+            border={false}
+          />
         </div>
       </div>
       <div
         class="relative flex flex-col gap-6 min-h-13rem rd-3 outline-(1 dashed transparent) [&.dropTarget]:(outline-(1 primary-900 offset-1rem))"
         class:!outline-primary-900={$canvasItems.length === 0}
-        style:transition="outline-offset .3s ease-in-out, outline-color .3s ease-in-out"
+        style:transition="outline-offset .3s ease-in-out, outline-color .3s
+        ease-in-out"
         use:dndzone={{
           items: $canvasItems,
           flipDurationMs,
@@ -181,20 +184,18 @@
                   highlight_off
                 </button>
               </div>
-              <input
-                type="text"
-                value={item.data?.description ?? ""}
-                on:change={(e) =>
-                  (item.data.description = e.currentTarget.value)}
+              <RichText
+                bind:value={item.data.description}
                 placeholder="Typ hier een eventuele beschrijving"
-                class="w-full my-4 py-4 b-none b-b-(1 solid grey-400)"
               />
-              <svelte:component
-                this={paletteType.component}
-                viewMode={false}
-                {...paletteType.args}
-                bind:data={item.data}
-              />
+              <div class="mt-4">
+                <svelte:component
+                  this={paletteType.component}
+                  viewMode={false}
+                  {...paletteType.args}
+                  bind:data={item.data}
+                />
+              </div>
             </div>
             {#if $secretOptions.drag_handle === "border"}
               <div
@@ -260,8 +261,7 @@
       <button
         class="icon-button h-16 font-material-filled"
         class:!b-primary-600={previewWidth === "100%"}
-        on:click={() => (previewWidth = "100%")}
-        >laptop</button
+        on:click={() => (previewWidth = "100%")}>laptop</button
       >
     </div>
     <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
