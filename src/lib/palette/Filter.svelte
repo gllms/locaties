@@ -16,6 +16,14 @@
   export let viewMode = false;
   export let filter: keyof typeof filters = "location";
 
+  let currentPage = 0;
+  $: itemsPerPage = images ? 8 : 4;
+
+  $: pageOptions = filters[filter].options.slice(
+    currentPage * itemsPerPage,
+    currentPage * itemsPerPage + itemsPerPage,
+  );
+
   $: data.filter = filter;
 
   $: icons = filters[filter].icons;
@@ -38,7 +46,11 @@
       {@const checked = data.selected?.includes(option)}
       <label
         style:background-image={images
-          ? `linear-gradient(transparent,transparent,${data.selected?.includes(option) ? "var(--color-primary-600)" : "rgba(0,0,0,.8)"}),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
+          ? `linear-gradient(transparent,transparent,${
+              data.selected?.includes(option)
+                ? "var(--color-primary-600)"
+                : "rgba(0,0,0,.8)"
+            }),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
               images[filters[filter].options.indexOf(option)]
             }`
           : undefined}
@@ -106,17 +118,30 @@
     </label>
   </div>
 {:else}
-  <div class="carousel flex gap-4 pb-2 overflow-x-scroll">
+  <label class="flex items-center mb-4">
+    <span class="material-icons absolute ml-3 font-size-2.5rem">search</span>
+    <input
+      type="search"
+      placeholder="Zoek een filteroptie"
+      class="p-4 pl-11 w-full b-(1 solid grey-400) rd-1 [&::placeholder]:c-grey-400"
+    />
+  </label>
+  <div class="grid grid-cols-2 gap-4 pb-2" class:grid-cols-4={images}>
     {#each filters[filter].options as option}
       <label
         style:background-image={images
-          ? `linear-gradient(transparent,transparent,${data.options?.includes(option) ? "var(--color-primary-600)" : "rgba(0,0,0,.8)"}),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
+          ? `linear-gradient(transparent,transparent,${
+              data.options?.includes(option)
+                ? "var(--color-primary-600)"
+                : "rgba(0,0,0,.8)"
+            }),url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/media/${
               images[filters[filter].options.indexOf(option)]
             }`
           : undefined}
         class="rd-2 bg-cover b-(1 solid grey-400)"
         class:c-white={images}
         class:b-0={images}
+        class:hidden={pageOptions.indexOf(option) === -1}
       >
         {#if icons}
           <span class="material-icons m-2"
@@ -124,10 +149,9 @@
           >
         {/if}
         <div
-          class="relative flex items-end justify-between w-max gap-2 p-2
+          class="relative flex items-end justify-between gap-2 p-2
                  [&_p]:(m-0 font-500)"
           class:h-[16rem]={images}
-          class:!w-[16rem]={images}
         >
           <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
@@ -139,11 +163,13 @@
           <div class="relative h-2rem">
             {#if data.options?.includes(option)}
               <div
-                class="absolute w-12px h-12px left-4px top-4px bg-primary-600"
+                class="absolute w-12px h-12px left-4px top-4px bg-white"
+                class:bg-primary-600={images}
               ></div>
             {/if}
             <span
               class="relative material-icons font-material-filled"
+              class:c-primary-600={!images && data.options?.includes(option)}
               >{`check_box${
                 data.options?.includes(option) ? "" : "_outline_blank"
               }`}</span
@@ -153,8 +179,35 @@
       </label>
     {/each}
   </div>
+  <div class="flex items-center w-fit mx-auto mt-2">
+    <button
+      class="icon-button"
+      on:click={() => (currentPage = Math.max(0, currentPage - 1))}
+    >
+      chevron_left
+    </button>
+    {#each Array(Math.ceil(filters[filter].options.length / itemsPerPage)) as _, n}
+      <button
+        class="bg-transparent b-none cursor-pointer underline font-500"
+        class:c-primary-600={currentPage === n}
+        on:click={() => (currentPage = n)}
+      >
+        {n + 1}
+      </button>
+    {/each}
+    <button
+      class="icon-button"
+      on:click={() => {
+        if (currentPage < filters[filter].options.length / itemsPerPage - 1) {
+          currentPage += 1;
+        }
+      }}
+    >
+      chevron_right
+    </button>
+  </div>
   <label
-    class="flex items-center gap-2 float-right p-2
+    class="absolute right-12 bottom-6 flex items-center gap-2 float-right p-2
            [&_p]:(m-0 font-500)"
   >
     <input
@@ -173,25 +226,6 @@
       class:c-primary-600={allChecked}
       >{`check_box${allChecked ? "" : "_outline_blank"}`}</span
     >
-    Selecteer alles
+    Selecteer alles ({filters[filter].options.length})
   </label>
 {/if}
-
-<style>
-  .carousel::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  .carousel::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .carousel::-webkit-scrollbar-thumb {
-    background: var(--color-grey-300);
-    border-radius: 8px;
-  }
-
-  .carousel::-webkit-scrollbar-thumb:hover {
-    background: var(--color-grey-500);
-  }
-</style>

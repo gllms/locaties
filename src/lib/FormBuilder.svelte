@@ -109,7 +109,7 @@
       <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
     </div>
   </div>
-  <hr class="mx-12" />
+  <hr class="mx-12 w-initial" />
   <div class="flex gap-16 w-full pb-6">
     <div class="top-0 w-72rem">
       <Palette
@@ -169,7 +169,7 @@
             class:pr-6={$secretOptions.drag_handle === "border"}
             animate:flip={{ duration: flipDurationMs }}
           >
-            <div class="flex-1 w-0 py-4 z-1">
+            <div class="flex-1 w-0 pt-4 pb-8 z-1">
               <div
                 class="flex items-center gap-2"
                 class:-mr-9={$secretOptions.drag_handle !== "border"}
