@@ -26,7 +26,7 @@
 ></div>
 {#if active}
   <button
-    class="flex gap-2 items-center w-full b-none bg-transparent"
+    class="flex gap-2 items-end w-full b-none bg-transparent [&>button]:my-2"
     transition:slide
     on:pointerup={() => {
       clearTimeout(blurTimeout);
@@ -37,6 +37,6 @@
     <button class="icon-button">format_italic</button>
     <button class="icon-button">format_list_numbered</button>
     <button class="icon-button">format_list_bulleted</button>
-    <Button tertiary icon="delete" text="Opmaak verwijderen" class="ml-auto" />
+    <Button tertiary icon="delete" text="Opmaak verwijderen" class="!m-0 !ml-auto" />
   </button>
 {/if}
