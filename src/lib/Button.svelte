@@ -34,6 +34,7 @@
       class="material-icons"
       class:c-grey-900={secondary}
       class:c-primary-400={tertiary}
+      class:c-inherit={tertiary}
       style:margin-right={text ? "var(--spacing-2x)" : "0"}
     >
       {icon}</span

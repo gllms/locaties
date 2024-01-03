@@ -19,19 +19,3 @@
   description={$description}
   canvasItems={$canvasItems}
 />
-
-<style>
-  :global(head:has(meta[property="og:url"][content^="/form/preview"]) + body) {
-    & header {
-      display: none;
-    }
-
-    & [class^="styles_pageWrapper"] {
-      padding-top: 0;
-    }
-
-    & .backdrop {
-      min-height: 100%;
-    }
-  }
-</style>

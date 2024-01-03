@@ -22,7 +22,7 @@
         </Select>
       </div>
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Tekst</p>
       <div class="flex gap-4">
@@ -37,7 +37,7 @@
         </Select>
       </div>
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Vragen</p>
       <div class="flex gap-4">
@@ -52,22 +52,22 @@
         </Select>
       </div>
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Logo</p>
       <Button secondary icon="add" text="Afbeelding toevoegen" />
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Banner</p>
       <Button secondary icon="add" text="Afbeelding toevoegen" />
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Achtergrond</p>
       <Button secondary icon="add" text="Afbeelding toevoegen" />
     </div>
-    <hr class="w-full b-(1 solid grey-300)" />
+    <hr />
     <div>
       <p class="text-subtitle-2">Kleuren</p>
       <div class="flex gap-2">

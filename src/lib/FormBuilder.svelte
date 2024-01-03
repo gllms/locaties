@@ -106,7 +106,7 @@
       <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
     </div>
   </div>
-  <hr class="mx-12 b-(1 solid grey-300)" />
+  <hr class="mx-12" />
   <div class="flex gap-16 w-full pb-6">
     <div class="top-0 w-72rem">
       <Palette

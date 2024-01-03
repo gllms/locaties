@@ -9,18 +9,6 @@
   @apply w-2rem h-2rem p-0 bg-transparent b-none cursor-pointer select-none;
 }
 
-.text-new {
-  @apply font-size-1.6rem !font-bold case-upper !c-tertiary-800;
-}
-
-.text-caption {
-  @apply font-primary font-400 font-size-1.2rem line-height-1.8rem;
-}
-
-.text-subtitle-2 {
-  @apply font-primary font-600 font-size-1.6rem line-height-2.4rem;
-}
-
 body:has(.handle:hover) {
   @apply cursor-grab;
 }
@@ -35,5 +23,31 @@ input[type=range] {
   &::-webkit-slider-thumb {
     width: 2rem;
     margin-top: -1px;
+  }
+}
+
+hr {
+  @apply w-full b-(1 solid grey-300);
+}
+
+[class*="bannerInner"] [class*="content"] button {
+  @apply mt-4rem -mb-8rem c-white b-white;
+
+  &>.material-icons {
+    color: white !important;
+  }
+}
+
+head:has(meta[property="og:url"][content^="/form/preview"]) + body {
+  & header {
+    display: none;
+  }
+
+  & [class^="styles_pageWrapper"] {
+    padding-top: 0;
+  }
+
+  & .backdrop {
+    min-height: 100%;
   }
 }

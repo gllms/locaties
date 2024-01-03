@@ -82,7 +82,7 @@
             {#if item.data.description}
               <p class="m-0 mt-2">{item.data.description}</p>
             {/if}
-            <hr class="mb-4 w-full b-(1 solid grey-400)" />
+            <hr class="mb-4" />
             <svelte:component
               this={paletteType.component}
               viewMode={true}

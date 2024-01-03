@@ -14,6 +14,12 @@ export default defineConfig({
       num: "(05|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|26|28|30)",
     },
   },
+  shortcuts: {
+    "text-new": "c-tertiary-800 font-size-1.6rem font-bold uppercase",
+    "text-caption": "c-grey-700 font-primary font-400 font-size-1.2rem line-height-1.8rem",
+    "text-subtitle-2": "font-primary font-600 font-size-1.6rem line-height-2.4rem",
+    "text-subtitle-3": "font-primary font-600 font-size-1.4rem line-height-140% uppercase",
+  },
   theme: {
     breakpoints: {
       sm: "640px",
