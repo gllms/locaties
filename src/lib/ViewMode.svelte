@@ -1,6 +1,7 @@
 <script lang="ts">
   import paletteTypes from "../paletteTypes";
   import Button from "./Button.svelte";
+    import Toast from "./Toast.svelte";
 
   export let title = "Naamloos";
   export let description = "";
@@ -67,13 +68,20 @@
           {/if}
         </p>
       {:else if currentStep === canvasItems.length + 1}
-        <div class="flex w-fit mx-auto mt-20 mb-10 p-4 aspect-1/1 b-(3 solid black) rd-full">
+        <div
+          class="flex w-fit mx-auto mt-20 md:mt-4 mb-10 p-4 aspect-1/1 b-(3 solid black) rd-full"
+        >
           <span class="material-icons font-size-6rem">check</span>
         </div>
         <h2 class="text-center">Bedankt</h2>
         <p class="m-2 text-center">Voor het invullen van het deelformulier!</p>
+        <p class="c-grey-700 font-500 text-center">Je kan nu het venster sluiten</p>
       {:else}
-        <div class="flex-1 flex flex-col gap-6 mb-6 sm:mb-0" class:!mb-22={lastQuestion} class:sm:!mb-12={lastQuestion}>
+        <div
+          class="flex-1 flex flex-col gap-6 mb-6 sm:mb-0"
+          class:!mb-22={lastQuestion}
+          class:sm:!mb-12={lastQuestion}
+        >
           <div class="flex-1 flex flex-col">
             <div class="flex items-center gap-2">
               <span class="material-icons">{paletteType.icon}</span>
@@ -93,39 +101,27 @@
         </div>
       {/if}
     </div>
-    <div class="fixed sm:static flex gap-2 w-full bottom-0 p-6 bg-white b-t-(1 solid grey-300) justify-between">
-      {#if lastQuestion}
-        <div class="absolute left-0 bottom-26 w-full pointer-events-none">
-          <div class="mx-auto px-4 py-2 w-fit bg-white c-grey-700 b-(1 solid grey-700) font-500 rd-1">
-            Je bent bij de laatste vraag
-          </div>
-        </div>
-      {/if}
+    {#if currentStep < canvasItems.length + 1}
+      <div
+        class="fixed sm:static flex gap-2 w-full bottom-0 p-6 bg-white b-t-(1 solid grey-300) justify-between"
+      >
+        {#if lastQuestion}
+          <Toast text="Je bent bij de laatste vraag" />
+        {/if}
 
-      {#if currentStep > 0 && currentStep < canvasItems.length + 1}
-        <Button
-          secondary
-          text="Vorige"
-          on:click={() => (currentStep -= 1)}
-        />
-      {/if}
+        {#if currentStep > 0 && currentStep < canvasItems.length + 1}
+          <Button secondary text="Vorige" on:click={() => (currentStep -= 1)} />
+        {/if}
 
-      {#if currentStep < canvasItems.length + 1}
-        <Button
-          text={lastQuestion ? "Afronden" : "Volgende"}
-          class="ml-auto"
-          on:click={() => (currentStep += 1)}
-        />
-      {/if}
-
-      {#if currentStep === canvasItems.length + 1}
-        <Button
-          text="Verzenden"
-          class="m-auto"
-          on:click={() => window.close()}
-        />
-      {/if}
-    </div>
+        {#if currentStep < canvasItems.length + 1}
+          <Button
+            text={lastQuestion ? "Verzenden" : "Volgende"}
+            class="ml-auto"
+            on:click={() => (currentStep += 1)}
+          />
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
 
