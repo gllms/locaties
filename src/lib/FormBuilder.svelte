@@ -188,7 +188,7 @@
                 bind:value={item.data.description}
                 placeholder="Typ hier een eventuele beschrijving"
               />
-              <div class="mt-4">
+              <div class="relative mt-4">
                 <svelte:component
                   this={paletteType.component}
                   viewMode={false}

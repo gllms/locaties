@@ -44,7 +44,7 @@
   ];
 </script>
 
-<Overlay bind:element={element}>
+<Overlay bind:element>
   <div class="flex flex-col gap-4 w-full py-12">
     <h3 class="c-primary-900">Resultaten</h3>
     <div
@@ -52,53 +52,69 @@
                [&>hr]:[grid-column:1/-1]"
     >
       <Result title="Ligging en omgeving" answers={23}>
-        {#each locationData as [location, votes]}
-          <div class="flex items-center p-2 b-(1 solid grey-400) rd-2">
-            <p class="w-72 m-0">{location}</p>
-            <div class="flex-1 flex items-center gap-2">
-              <div
-                class="h-12px bg-primary-900 rd-full"
-                style="width: {(votes / 23) * 100}%"
-              ></div>
-              <p class="m-0">
-                {votes} ({((votes / 22) * 100).toFixed(0)}%)
-              </p>
+        <div class="flex flex-col gap-2 w-full">
+          {#each locationData as [location, votes]}
+            <div class="flex items-center p-2 b-(1 solid grey-400) rd-2">
+              <p class="w-72 m-0">{location}</p>
+              <div class="flex-1 flex items-center gap-2">
+                <div
+                  class="h-12px bg-primary-900 rd-full"
+                  style="width: {(votes / 23) * 100}%"
+                ></div>
+                <p class="m-0">
+                  {votes} ({((votes / 22) * 100).toFixed(0)}%)
+                </p>
+              </div>
             </div>
-          </div>
-        {/each}
+          {/each}
+        </div>
       </Result>
       <hr />
       <Result title="Stijl" answers={23} multiple={true}>
-        {#each styleData as [style, votes]}
-          <div class="flex items-center p-2 b-(1 solid grey-400) rd-2">
-            <p class="w-72 m-0">{style}</p>
-            <div class="flex-1 flex items-center gap-2">
-              <div
-                class="h-12px bg-primary-900 rd-full"
-                style="width: {(votes / 23) * 100}%"
-              ></div>
-              <p class="m-0">
-                {votes} ({((votes / 22) * 100).toFixed(0)}%)
-              </p>
+        <div class="flex flex-col gap-2 w-full">
+          {#each styleData as [style, votes]}
+            <div class="flex items-center p-2 b-(1 solid grey-400) rd-2">
+              <p class="w-72 m-0">{style}</p>
+              <div class="flex-1 flex items-center gap-2">
+                <div
+                  class="h-12px bg-primary-900 rd-full"
+                  style="width: {(votes / 23) * 100}%"
+                ></div>
+                <p class="m-0">
+                  {votes} ({((votes / 22) * 100).toFixed(0)}%)
+                </p>
+              </div>
             </div>
-          </div>
-        {/each}
+          {/each}
+        </div>
       </Result>
       <hr />
-      <Result title="Kort antwoord" answers={6} description="Beschrijf in enkele zinnen de sfeer die je zou willen ervaren op de evenementlocatie.">
-        {#each shortData as text}
-          <span class="flex w-fit p-2 b-(1 solid grey-400) rd-2">
-            {text}
-          </span>
-        {/each}
+      <Result
+        title="Kort antwoord"
+        answers={6}
+        description="Beschrijf in enkele zinnen de sfeer die je zou willen ervaren op de evenementlocatie."
+      >
+        <div class="flex flex-wrap gap-2 w-full h-fit">
+          {#each shortData as text}
+            <span class="flex w-fit p-2 b-(1 solid grey-400) rd-2">
+              {text}
+            </span>
+          {/each}
+        </div>
       </Result>
       <hr />
-      <Result title="Lang antwoord" answers={10} description="Beschrijf uitgebreid de sfeer en het gevoel dat je zou willen ervaren op de evenementlocatie, inclusief specifieke elementen, kleuren en eventuele bijzondere details die hieraan bijdragen.">
-        {#each longData as text}
-          <span class="flex w-fit p-2 b-(1 solid grey-400) rd-2">
-            {text}
-          </span>
-        {/each}
+      <Result
+        title="Lang antwoord"
+        answers={10}
+        description="Beschrijf uitgebreid de sfeer en het gevoel dat je zou willen ervaren op de evenementlocatie, inclusief specifieke elementen, kleuren en eventuele bijzondere details die hieraan bijdragen."
+      >
+        <div class="flex flex-col gap-2 w-full">
+          {#each longData as text}
+            <span class="flex w-fit p-2 b-(1 solid grey-400) rd-2">
+              {text}
+            </span>
+          {/each}
+        </div>
       </Result>
     </div>
   </div>

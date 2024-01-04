@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import filters from "../../filters";
 
   export let data: {
@@ -30,6 +31,10 @@
   $: images = filters[filter].images;
 
   $: allChecked = data.options?.length === filters[filter].options?.length;
+
+  onMount(() => {
+    if (!data.options) data.options = filters[filter].options.slice();
+  });
 </script>
 
 {#if viewMode}
@@ -179,53 +184,58 @@
       </label>
     {/each}
   </div>
-  <div class="flex items-center w-fit mx-auto mt-2">
-    <button
-      class="icon-button"
-      on:click={() => (currentPage = Math.max(0, currentPage - 1))}
-    >
-      chevron_left
-    </button>
-    {#each Array(Math.ceil(filters[filter].options.length / itemsPerPage)) as _, n}
+  <div class="flex justify-between w-full my-2 [&>*]:flex-1">
+    <span></span>
+    <div class="flex items-center justify-center w-fit">
       <button
-        class="bg-transparent b-none cursor-pointer underline font-500"
-        class:c-primary-600={currentPage === n}
-        on:click={() => (currentPage = n)}
+        class="icon-button"
+        on:click={() => (currentPage = Math.max(0, currentPage - 1))}
       >
-        {n + 1}
+        chevron_left
       </button>
-    {/each}
-    <button
-      class="icon-button"
-      on:click={() => {
-        if (currentPage < filters[filter].options.length / itemsPerPage - 1) {
-          currentPage += 1;
-        }
-      }}
-    >
-      chevron_right
-    </button>
+      {#each Array(Math.ceil(filters[filter].options.length / itemsPerPage)) as _, n}
+        <button
+          class="bg-transparent b-none cursor-pointer underline font-500"
+          class:c-primary-600={currentPage === n}
+          on:click={() => (currentPage = n)}
+        >
+          {n + 1}
+        </button>
+      {/each}
+      <button
+        class="icon-button"
+        on:click={() => {
+          if (currentPage < filters[filter].options.length / itemsPerPage - 1) {
+            currentPage += 1;
+          }
+        }}
+      >
+        chevron_right
+      </button>
+    </div>
+    <div>
+      <label
+        class="flex items-center gap-2 float-right
+      [&_p]:(m-0 font-500)"
+      >
+        <input
+          type="checkbox"
+          on:change={() => {
+            if (data.options?.length === filters[filter].options?.length) {
+              data.options = [];
+            } else {
+              data.options = filters[filter].options.slice();
+            }
+          }}
+          class="hidden"
+        />
+        <span
+          class="relative material-icons font-material-filled"
+          class:c-primary-600={allChecked}
+          >{`check_box${allChecked ? "" : "_outline_blank"}`}</span
+        >
+        Selecteer alles ({filters[filter].options.length})
+      </label>
+    </div>
   </div>
-  <label
-    class="absolute right-12 bottom-6 flex items-center gap-2 float-right p-2
-           [&_p]:(m-0 font-500)"
-  >
-    <input
-      type="checkbox"
-      on:change={() => {
-        if (data.options?.length === filters[filter].options?.length) {
-          data.options = [];
-        } else {
-          data.options = filters[filter].options.slice();
-        }
-      }}
-      class="hidden"
-    />
-    <span
-      class="relative material-icons font-material-filled"
-      class:c-primary-600={allChecked}
-      >{`check_box${allChecked ? "" : "_outline_blank"}`}</span
-    >
-    Selecteer alles ({filters[filter].options.length})
-  </label>
 {/if}

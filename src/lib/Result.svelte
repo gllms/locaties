@@ -32,7 +32,7 @@
     {/if}
   </div>
   <div
-    class="relative flex flex-col gap-2 overflow-hidden"
+    class="relative overflow-hidden"
     class:max-h-38={collapsed}
     class:gradient={collapsed}
   >

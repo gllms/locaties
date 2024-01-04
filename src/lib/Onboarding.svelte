@@ -49,7 +49,7 @@
   <div class="flex flex-col gap-4" slot="content">
     {#if currentStep === 0}
       <span>
-        Jouw gids voor het vinden van de perfecte match tussen de behoeften van
+        Jouw gids voor het vinden van de ultieme match tussen de behoeften van
         jouw bedrijf en de wensen van je team.
       </span>
       <img

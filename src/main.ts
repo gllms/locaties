@@ -36,11 +36,8 @@ function apply() {
   const testElement = document.querySelector(".locaties-test");
 
   if (!testElement) {
-    if (
-      !document.querySelector(".main > div")?.hasChildNodes() ||
-      (document.querySelector("meta[property='og:url']") as HTMLMetaElement)
-        ?.content !== location.pathname
-    ) {
+    const metaPathname = new URL((document.querySelector("meta[property='og:url']") as HTMLMetaElement)?.content, location.href).pathname;
+    if (!document.querySelector(".main > div")?.hasChildNodes() || metaPathname !== location.pathname) {
       setTimeout(apply, 500);
       return;
     }

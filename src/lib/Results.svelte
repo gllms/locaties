@@ -109,7 +109,7 @@
     />
   </div>
   <div class="flex flex-col gap-3">
-    <h4 class="c-primary-900">De perfecte matches</h4>
+    <h4 class="c-primary-900">Jouw matches</h4>
     <div class="flex items-center gap-6">
       <Button
         tertiary

@@ -14,7 +14,7 @@
   <Button
     secondary
     icon="speaker_notes"
-    text="Begin enquête"
+    text="Verzamel meningen"
     on:click={() => (location.href = "/form/edit")}
   />
 </div>
