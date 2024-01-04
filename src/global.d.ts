@@ -16,6 +16,7 @@ interface State {
 interface PaletteItem {
   name: string;
   icon: string;
+  caption?: string;
   category: "filters" | "open";
   component: new (...args: any[]) => SvelteComponent;
   args?: object;

@@ -184,6 +184,7 @@
                   highlight_off
                 </button>
               </div>
+              <p class="text-caption m-0 mb-4">{paletteType.caption ?? ""}</p>
               <RichText
                 bind:value={item.data.description}
                 placeholder="Typ hier een eventuele beschrijving"

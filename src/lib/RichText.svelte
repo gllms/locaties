@@ -17,7 +17,7 @@
   contenteditable="plaintext-only"
   bind:innerText={value}
   data-placeholder={placeholder}
-  class="mt-4 py-2 bg-transparent b-none placeholder:c-grey-400"
+  class="py-2 bg-transparent b-none placeholder:c-grey-400"
   class:b-1={border}
   class:b-b-solid={border}
   class:b-b-grey-400={border}

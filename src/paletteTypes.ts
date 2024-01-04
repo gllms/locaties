@@ -11,6 +11,7 @@ for (const [key, filter] of Object.entries(filters)) {
   filterTypes[key] = {
     name: filter.name,
     icon: filter.icon,
+    caption: "Bepaal uit welke opties de betrokkenen kunnen kiezen",
     category: "filters",
     component: Filter,
     args: { filter: key },
