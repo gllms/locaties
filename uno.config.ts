@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   shortcuts: {
-    "text-new": "c-tertiary-800 font-size-1.6rem font-bold uppercase",
+    "text-new": "c-tertiary-800 font-size-1.4rem font-bold uppercase",
     "text-caption": "c-grey-700 font-primary font-400 font-size-1.2rem line-height-1.8rem",
     "text-subtitle-2": "font-primary font-600 font-size-1.6rem line-height-2.4rem",
     "text-subtitle-3": "font-primary font-600 font-size-1.4rem line-height-140% uppercase",

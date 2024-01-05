@@ -42,7 +42,7 @@
     >
       <h5
         class="c-grey-700 font-size-1.2rem font-400 line-height-1.8rem min-h-1.8rem mb-2"
-        class:text-new={subtitle === "NIEUW"}
+        class:!text-new={subtitle === "NIEUW"}
       >
         {subtitle}
       </h5>
