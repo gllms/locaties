@@ -1,6 +1,14 @@
 import { defineConfig, transformerDirectives, transformerVariantGroup } from "unocss";
 import { presetUno } from "unocss";
 
+const breakpoints = {
+  sm: "640px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1280px",
+  xxl: "1536px",
+};
+
 export default defineConfig({
   presets: [
     presetUno(),
@@ -21,13 +29,8 @@ export default defineConfig({
     "text-subtitle-3": "font-primary font-600 font-size-1.4rem line-height-140% uppercase",
   },
   theme: {
-    breakpoints: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      xxl: "1536px",
-    },
+    breakpoints: breakpoints,
+    containers: Object.fromEntries(Object.entries(breakpoints).map(([key, value]) => [key, `(min-width: ${value})`])),
     colors: {
       white: "#fff",
       grey: {

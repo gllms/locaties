@@ -109,7 +109,7 @@ function apply() {
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(FormBuilder, testElement);
+  addComponent(FormBuilder, testElement, undefined, sample);
 }
 
 function addComponent(

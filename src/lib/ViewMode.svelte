@@ -1,7 +1,7 @@
 <script lang="ts">
   import paletteTypes from "../paletteTypes";
   import Button from "./Button.svelte";
-    import Toast from "./Toast.svelte";
+  import Toast from "./Toast.svelte";
 
   export let title = "Naamloos";
   export let description = "";
@@ -19,10 +19,10 @@
   <title>Deelformulier</title>
 </svelte:head>
 
-<div class="backdrop absolute flex w-full left-0">
+<div class="@container backdrop absolute flex w-full left-0">
   <div
-    class="relative flex flex-col sm:mt-30 w-full bg-white sm:rd-2 rd-b-0 of-hidden z-1
-              sm:(mx-4 mb-6 rd-b-2) lg:(mx-auto w-92rem)"
+    class="relative flex flex-col @sm:mt-30 w-full bg-white @sm:rd-2 rd-b-0 of-hidden z-1
+              @sm:(mx-4 mb-6 rd-b-2) @lg:(!mx-auto w-92rem)"
   >
     <div
       class="relative flex flex-col mb-10 px-8 py-6 bg-primary-200 placeholder:c-grey-400"
@@ -58,7 +58,7 @@
       </ol>
     </div>
 
-    <div class="flex-1 flex flex-col m-4 sm:m-10 !mt-0 mb-18 sm:mb-6">
+    <div class="flex-1 flex flex-col m-4 @sm:m-10 !mt-0 mb-18 @sm:mb-6">
       {#if currentStep === 0}
         <p class="mt-0 mb-6 ws-pre text-wrap">
           {#if description}
@@ -69,18 +69,20 @@
         </p>
       {:else if currentStep === canvasItems.length + 1}
         <div
-          class="flex w-fit mx-auto mt-20 md:mt-4 mb-10 p-4 aspect-1/1 b-(3 solid black) rd-full"
+          class="flex w-fit mx-auto mt-20 @md:mt-4 mb-10 p-4 aspect-1/1 b-(3 solid black) rd-full"
         >
           <span class="material-icons font-size-6rem">check</span>
         </div>
         <h2 class="text-center">Bedankt</h2>
         <p class="m-2 text-center">Voor het invullen van het deelformulier!</p>
-        <p class="c-grey-700 font-500 text-center">Je kan nu het venster sluiten</p>
+        <p class="c-grey-700 font-500 text-center">
+          Je kan nu het venster sluiten
+        </p>
       {:else}
         <div
-          class="flex-1 flex flex-col gap-6 mb-6 sm:mb-0"
+          class="flex-1 flex flex-col gap-6 mb-6 @sm:mb-0"
           class:!mb-22={lastQuestion}
-          class:sm:!mb-12={lastQuestion}
+          class:@sm:!mb-12={lastQuestion}
         >
           <div class="flex-1 flex flex-col">
             <div class="flex items-center gap-2">
@@ -103,7 +105,7 @@
     </div>
     {#if currentStep < canvasItems.length + 1}
       <div
-        class="fixed sm:static flex gap-2 w-full bottom-0 p-6 bg-white b-t-(1 solid grey-300) justify-between"
+        class="fixed @sm:static flex gap-2 w-full bottom-0 p-6 bg-white b-t-(1 solid grey-300) justify-between"
       >
         {#if lastQuestion}
           <Toast text="Je bent bij de laatste vraag" />
