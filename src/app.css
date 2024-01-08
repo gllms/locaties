@@ -51,3 +51,7 @@ head:has(meta[property="og:url"][content^="/form/preview"]) + body {
     min-height: 100%;
   }
 }
+
+._hj-widget-container {
+  @apply hidden;
+}
