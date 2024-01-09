@@ -38,7 +38,7 @@ hr {
   }
 }
 
-head:has(meta[property="og:url"][content^="/form/preview"]) + body {
+head:has(meta[property="og:url"][content^="/form/dQw4w9WgXcQ"])+body {
   & header {
     display: none;
   }
@@ -46,10 +46,17 @@ head:has(meta[property="og:url"][content^="/form/preview"]) + body {
   & [class^="styles_pageWrapper"] {
     padding-top: 0;
   }
+}
 
-  & .backdrop {
-    min-height: 100%;
-  }
+._hj-widget-container {
+  @apply hidden;
+}
+
+._backdrop {
+  min-height: 100%;
+  background-image: url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/images/hero/locaties/hero.jpg");
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 ._hj-widget-container {

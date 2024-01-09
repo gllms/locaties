@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
   export let data: {
     description: string;
     dates: string[];
@@ -33,6 +35,12 @@
     },
   ];
 
+  onMount(() => {
+    if (!data.values) {
+      data.values = [];
+    }
+  });
+
   function addDate(
     e: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
@@ -44,10 +52,10 @@
 <div class="flex flex-col gap-4">
   {#if viewMode}
     <div
-      class="grid grid-cols-1 md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] md:[row-gap:1.2rem] font-size-14px"
+      class="grid grid-cols-1 @md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] @md:[row-gap:1.2rem] font-size-14px"
     >
       {#each data.dates ?? [] as date, i}
-        {@const val = data.values[i]}
+        {@const val = data.values?.[i]}
         <span class="mr-2 font-500"
           >{new Date(date).toLocaleDateString("nl-NL", {
             day: "numeric",
@@ -55,7 +63,7 @@
             year: "numeric",
           })}</span
         >
-        <div class="flex flex-1 gap-2 mb-4 md:mb-0">
+        <div class="flex flex-1 gap-2 mb-4 @md:mb-0">
           {#each buttons as { value, icon, text }}
             <button
               class="flex-1 flex items-center gap-2 min-h-16 bg-white b-(1 solid grey-300 rd-1) cursor-pointer rd-2
@@ -68,7 +76,7 @@
               {text}
 
               <span
-                class="material-icons ml-auto hidden md:block"
+                class="material-icons ml-auto hidden @md:block"
                 class:c-primary-600={val === value}
                 >{`radio_button_${val === value ? "" : "un"}checked`}</span
               >

@@ -122,7 +122,7 @@
     <p class="m-0 text-subtitle-3">112 locaties</p>
     <div class="grid grid-cols-2 xl:grid-cols-3 gap-6">
       {#each cards.slice(0, 12) as card}
-        <div class="flex gap-6 overflow-hidden cursor-pointer">
+        <div class="flex gap-6 of-hidden cursor-pointer">
           <div class="max-w-full flex-grow-1 font-size-6">
             <img
               class="w-full aspect-4/3 object-cover rd-2"
@@ -132,13 +132,13 @@
               loading="lazy"
             />
             <p
-              class="my-1 font-600 overflow-hidden ws-nowrap overflow-hidden text-ellipsis"
+              class="my-1 font-600 of-hidden ws-nowrap of-hidden text-ellipsis"
             >
               {card.name}
             </p>
             <div class="flex items-center gap-1">
               <span class="material-icons">food_bank</span><span
-                class="ws-nowrap overflow-hidden text-ellipsis"
+                class="ws-nowrap of-hidden text-ellipsis"
                 >{card.location}</span
               >
               <span class="flex items-center ml-auto">

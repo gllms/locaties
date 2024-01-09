@@ -40,11 +40,11 @@
 {#if viewMode}
   <div
     class:pointer-events-none={!viewMode}
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
+    class="grid grid-cols-1 @sm:grid-cols-2 @md:grid-cols-3 @lg:!grid-cols-4 [grid-auto-rows:1fr] grid-items-stretch gap-2 p-0
            [&>label]:(rd-2 bg-cover b-(1 solid grey-400))
            [&>label:has(:checked)]:(bg-primary-200 b-primary-600)
            [&_p]:(m-0 font-500)"
-    class:lg:!grid-cols-3={!images}
+    class:@lg:!grid-cols-3={!images}
     class:grid-cols-2={images}
   >
     {#each data.options as option}
@@ -68,11 +68,11 @@
           >
         {/if}
         <div
-          class="relative flex items-end justify-between gap-2 p-3
+          class="relative flex items-end justify-between gap-2 p-2
                  [&_p]:(m-0 font-500)"
           class:h-[16rem]={images}
         >
-          <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
+          <p class="of-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
             type="checkbox"
             bind:group={data.selected}
@@ -83,11 +83,12 @@
             {#if data.selected?.includes(option)}
               <div
                 class="absolute w-12px h-12px left-4px top-4px bg-white"
+                class:bg-primary-600={images}
               ></div>
             {/if}
             <span
               class="relative material-icons font-material-filled"
-              class:c-primary-600={data.selected?.includes(option)}
+              class:c-primary-600={!images && data.selected?.includes(option)}
               >{`check_box${
                 data.selected?.includes(option) ? "" : "_outline_blank"
               }`}</span
@@ -102,10 +103,10 @@
         <span class="material-icons m-2">remove</span>
       {/if}
       <div
-        class="flex justify-between items-center gap-2 w-full p-3
+        class="flex justify-between items-center gap-2 w-full p-2
                  [&_p]:(m-0 font-500)"
       >
-        <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
+        <p class="of-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
         <input
           type="radio"
           bind:group={data.selected}
@@ -158,7 +159,7 @@
                  [&_p]:(m-0 font-500)"
           class:h-[16rem]={images}
         >
-          <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
+          <p class="of-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
             type="checkbox"
             bind:group={data.options}

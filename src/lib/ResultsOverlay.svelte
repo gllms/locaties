@@ -45,7 +45,7 @@
 </script>
 
 <Overlay bind:element>
-  <div class="flex flex-col gap-4 w-full py-12">
+  <div class="flex flex-col gap-4 w-full px-12 py-12">
     <h3 class="c-primary-900">Resultaten</h3>
     <div
       class="grid [grid-template-columns:minmax(0,400px)_1fr] gap-4

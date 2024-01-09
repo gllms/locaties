@@ -5,7 +5,7 @@ import type { SvelteComponent } from "svelte";
 
 import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
-import ViewMode from "./lib/ViewMode.svelte";
+import FillInPage from "./lib/FillInPage.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
 import Banner from "./lib/Banner.svelte";
 import Results from "./lib/Results.svelte";
@@ -57,7 +57,7 @@ function apply() {
   );
 
   addComponent(
-    ViewMode,
+    FillInPage,
     document.querySelector(
       "div:has(> div > div > button[title='Opnieuw zoeken'])",
     ),
@@ -109,7 +109,7 @@ function apply() {
 
   addComponent(SecretMenu, document.body);
 
-  addComponent(FormBuilder, testElement);
+  addComponent(FormBuilder, testElement, undefined, sample);
 }
 
 function addComponent(

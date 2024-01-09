@@ -28,7 +28,7 @@
 {#if !hidden}
   <div class="absolute left-0 bottom-26 w-full pointer-events-none -z-1">
     <div
-      class="toast mx-auto px-4 py-2 w-fit bg-white c-grey-700 b-(1 solid grey-700) font-500 rd-1 overflow-hidden"
+      class="toast mx-auto px-4 py-2 w-fit bg-white c-grey-700 b-(1 solid grey-700) font-500 rd-1 of-hidden"
       transition:fly={{ y: 50 }}
     >
       {text}
