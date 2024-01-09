@@ -7,6 +7,10 @@
   const canvasItems = savedState.canvasItems ?? [];
 </script>
 
+<svelte:head>
+  <title>{title || "Involve"}</title>
+</svelte:head>
+
 <div class="@container _backdrop absolute block w-full h-full of-y-auto">
   <ViewMode {title} {description} {canvasItems} />
 </div>

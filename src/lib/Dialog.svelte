@@ -21,7 +21,7 @@
   data-drawer={drawer || undefined}
   class="[&[open]]:flex flex-col p-none
          md:(w-60.8rem h-revert) w-full h-full max-w-full max-h-full md:max-h-[calc(100%-3.2rem)]
-         m-0 md:my-4 md:mx-revert
+         m-0 my-auto md:mx-revert
          b-none md:rd-4 of-hidden cursor-auto
          backdrop:bg-black/44
          [&[data-drawer]]:(h-full w-40rem mr-0 rd-r-0)"
