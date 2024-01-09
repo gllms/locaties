@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
   export let data: {
     description: string;
     dates: string[];
@@ -33,6 +35,12 @@
     },
   ];
 
+  onMount(() => {
+    if (!data.values) {
+      data.values = [];
+    }
+  });
+
   function addDate(
     e: Event & { currentTarget: EventTarget & HTMLInputElement },
   ) {
@@ -47,7 +55,7 @@
       class="grid grid-cols-1 @md:![grid-template-columns:max-content_1fr] items-center [column-gap:2.4rem] @md:[row-gap:1.2rem] font-size-14px"
     >
       {#each data.dates ?? [] as date, i}
-        {@const val = data.values[i]}
+        {@const val = data.values?.[i]}
         <span class="mr-2 font-500"
           >{new Date(date).toLocaleDateString("nl-NL", {
             day: "numeric",

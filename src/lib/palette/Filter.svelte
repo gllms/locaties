@@ -72,7 +72,7 @@
                  [&_p]:(m-0 font-500)"
           class:h-[16rem]={images}
         >
-          <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
+          <p class="of-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
             type="checkbox"
             bind:group={data.selected}
@@ -106,7 +106,7 @@
         class="flex justify-between items-center gap-2 w-full p-2
                  [&_p]:(m-0 font-500)"
       >
-        <p class="overflow-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
+        <p class="of-hidden ws-nowrap text-ellipsis">Geen voorkeur</p>
         <input
           type="radio"
           bind:group={data.selected}
@@ -159,7 +159,7 @@
                  [&_p]:(m-0 font-500)"
           class:h-[16rem]={images}
         >
-          <p class="overflow-hidden ws-nowrap text-ellipsis">{option}</p>
+          <p class="of-hidden ws-nowrap text-ellipsis">{option}</p>
           <input
             type="checkbox"
             bind:group={data.options}

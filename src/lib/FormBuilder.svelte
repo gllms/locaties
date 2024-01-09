@@ -9,17 +9,17 @@
   import Palette from "./Palette.svelte";
   import paletteTypes from "../paletteTypes";
   import Onboarding from "../lib/Onboarding.svelte";
-  import Overlay from "./Overlay.svelte";
   import ThemeDialog from "./ThemeDialog.svelte";
   import RichText from "./RichText.svelte";
+  import Preview from "./Preview.svelte";
 
   const flipDurationMs = 200;
   let idx = 0;
 
   let starred = false;
 
-  let dialog: HTMLDialogElement;
-  let overlay: HTMLDialogElement;
+  let shareDialog: HTMLDialogElement;
+  let previewOverlay: HTMLDialogElement;
   let themeDialog: HTMLDialogElement;
 
   let dragDisabled = true;
@@ -31,6 +31,14 @@
       description: "",
     },
   }));
+
+  $: {
+    localStorage.setItem("formEditorState", JSON.stringify({
+      title: $title,
+      description: $description,
+      canvasItems: $canvasItems,
+    }));
+  }
 
   function handlePointerdown(e: MouseEvent) {
     if ((e.target as HTMLElement)?.closest(".handle")) {
@@ -45,21 +53,6 @@
     const temp = $canvasItems[i];
     $canvasItems[i] = $canvasItems[j];
     $canvasItems[j] = temp;
-  }
-
-  let previewIframe: HTMLIFrameElement;
-
-  let previewWidth = "100%";
-
-  function showPreview() {
-    previewIframe.contentWindow?.postMessage({
-      title: $title,
-      description: $description,
-      canvasItems: $canvasItems,
-      secretOptions: $secretOptions,
-    });
-
-    overlay.showModal();
   }
 </script>
 
@@ -103,10 +96,14 @@
       <Button
         tertiary
         icon="visibility"
-        on:click={showPreview}
+        on:click={() => previewOverlay.showModal()}
         text="Voorbeeld"
       />
-      <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
+      <Button
+        icon="mail"
+        on:click={() => shareDialog.showModal()}
+        text="Delen"
+      />
     </div>
   </div>
   <hr class="mx-12 w-initial" />
@@ -148,8 +145,7 @@
       <div
         class="relative flex flex-col gap-6 min-h-13rem rd-3 outline-(1 dashed transparent) [&.dropTarget]:(outline-(1 primary-900 offset-1rem))"
         class:!outline-primary-900={$canvasItems.length === 0}
-        style:transition="outline-offset .3s ease-in-out, outline-color .3s
-        ease-in-out"
+        style:transition="outline-offset .3s ease-in-out, outline-color .3s ease-in-out"
         use:dndzone={{
           items: $canvasItems,
           flipDurationMs,
@@ -246,37 +242,15 @@
 
 <ThemeDialog bind:element={themeDialog} />
 
-<Overlay bind:element={overlay}>
-  <svelte:fragment slot="header">
-    <div class="flex gap-4 [&>button]:b-b-(1 solid transparent)">
-      <button
-        class="icon-button h-16 font-material-filled"
-        class:!b-primary-600={previewWidth === "420px"}
-        on:click={() => (previewWidth = "420px")}>smartphone</button
-      >
-      <button
-        class="icon-button h-16 font-material-filled"
-        class:!b-primary-600={previewWidth === "1023px"}
-        on:click={() => (previewWidth = "1023px")}>tablet</button
-      >
-      <button
-        class="icon-button h-16 font-material-filled"
-        class:!b-primary-600={previewWidth === "100%"}
-        on:click={() => (previewWidth = "100%")}>laptop</button
-      >
-    </div>
-    <Button icon="mail" on:click={() => dialog.showModal()} text="Delen" />
-  </svelte:fragment>
-  <iframe
-    bind:this={previewIframe}
-    style:width={previewWidth}
-    src="/form/preview"
-    title="preview"
-    class="w-full h-full b-none mx-auto rd-4"
-  ></iframe>
-</Overlay>
+<Preview
+  bind:element={previewOverlay}
+  {shareDialog}
+  title={$title}
+  description={$description}
+  canvasItems={$canvasItems}
+/>
 
-<ShareDialog bind:element={dialog} />
+<ShareDialog bind:element={shareDialog} />
 
 <style>
   :global(head:has(meta[property="og:url"][content^="/form"]) + body) {

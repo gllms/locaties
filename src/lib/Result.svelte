@@ -7,7 +7,7 @@
   let collapsed = false;
 </script>
 
-<div class="inline-grid grid-cols-subgrid col-span-2 overflow-hidden">
+<div class="inline-grid grid-cols-subgrid col-span-2 of-hidden">
   <div class="flex flex-col gap-3" class:max-h-38={collapsed}>
     <button
       class="p-0 w-full bg-transparent b-none cursor-pointer"
@@ -32,7 +32,7 @@
     {/if}
   </div>
   <div
-    class="relative overflow-hidden"
+    class="relative of-hidden"
     class:max-h-38={collapsed}
     class:gradient={collapsed}
   >

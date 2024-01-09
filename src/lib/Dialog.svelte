@@ -20,9 +20,9 @@
   }}
   data-drawer={drawer || undefined}
   class="[&[open]]:flex flex-col p-none
-         w-full h-full md:(w-60.8rem h-revert) max-w-full max-h-full
-         m-0 md:m-revert
-         b-none md:rd-4 overflow-hidden cursor-auto
+         md:(w-60.8rem h-revert) w-full h-full max-w-full max-h-full md:max-h-[calc(100%-3.2rem)]
+         m-0 md:my-4 md:mx-revert
+         b-none md:rd-4 of-hidden cursor-auto
          backdrop:bg-black/44
          [&[data-drawer]]:(h-full w-40rem mr-0 rd-r-0)"
 >
@@ -83,7 +83,7 @@
     <div class="h-16"></div>
   {/if}
 
-  <div class="grow-1 p-10 overflow-y-auto">
+  <div class="grow-1 p-10 of-y-auto">
     <slot name="content" />
   </div>
   {#if $$slots.footer}

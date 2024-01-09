@@ -16,7 +16,7 @@
 
 <div
   class:inDetailPage
-  class="relative banner mb-12 py-16 bg-primary-200 overflow-y-hidden"
+  class="relative banner mb-12 py-16 bg-primary-200 of-y-hidden"
 >
   <span class="text-new">Nieuw</span>
   <h4 class="mt-4">Ontdek de kracht van samenwerken</h4>
