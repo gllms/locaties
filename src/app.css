@@ -54,7 +54,7 @@ head:has(meta[property="og:url"][content^="/form/dQw4w9WgXcQ"])+body {
 
 ._backdrop {
   min-height: 100%;
-  background-image: url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/images/hero/locaties/hero.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.locaties.nl/cdn-cgi/image/width=1280,format=auto/images/hero/locaties/hero.jpg");
   background-size: cover;
   background-attachment: fixed;
 }
