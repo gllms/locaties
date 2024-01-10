@@ -24,17 +24,17 @@
       dialog.showModal();
     }
 
-    if (e.altKey && e.key === "e") {
+    if (e.ctrlKey && e.key === "e") {
       e.preventDefault();
       window.open("/form/edit");
     }
 
-    if (e.altKey && e.key === "p") {
+    if (e.ctrlKey && e.key === "p") {
       e.preventDefault();
       window.open("/form/dQw4w9WgXcQ");
     }
 
-    if (e.altKey && e.key === "r") {
+    if (e.ctrlKey && e.key === "r") {
       e.preventDefault();
       window.open("/form/results");
     }

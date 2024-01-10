@@ -2,7 +2,7 @@
   "name": "locaties",
   "description": "locaties.nl userscript",
   "private": true,
-  "version": "0.8.5",
+  "version": "0.8.6",
   "type": "module",
   "scripts": {
     "start": "vite",
