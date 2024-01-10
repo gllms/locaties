@@ -14,7 +14,7 @@
 </svelte:head>
 
 <div class="_backdrop absolute flex w-full h-full of-y-auto">
-  <div class="@container w-380px mx-auto my-6 rd-4 of-hidden">
+  <div class="@container aspect-[9/19.5] mx-auto my-6 rd-4 of-hidden">
     <ViewMode {title} {description} {canvasItems} />
   </div>
 </div>
