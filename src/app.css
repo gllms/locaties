@@ -38,7 +38,7 @@ hr {
   }
 }
 
-head:has(meta[property="og:url"][content^="/form/dQw4w9WgXcQ"])+body {
+head:has(meta[property="og:url"]:where([content^="/form/dQw4w9WgXcQ"], [content^="/form/phone"]))+body {
   & header {
     display: none;
   }

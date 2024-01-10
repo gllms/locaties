@@ -16,7 +16,7 @@
 </script>
 
 <div
-  class="relative flex flex-col h-full mx-auto @sm:mt-30 bg-white @sm:rd-2 rd-b-0 of-hidden of-y-auto z-1
+  class="mobile-scrollbar relative flex flex-col h-full mx-auto @sm:mt-30 bg-white @sm:rd-2 rd-b-0 of-hidden of-y-auto z-1
          @sm:(mx-4 mb-6 h-auto rd-b-2) @lg:(!mx-auto w-92rem)"
 >
   <div
@@ -80,7 +80,7 @@
           height="30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-        ><path
+          ><path
             d="M9.47723 0H6.87169c0 4.02804-2.92863 7.30389-6.87169 7.30389v2.81191c3.8562 0 7.34763-2.53423 8.09455-5.43048h.15981c.74692 2.89625 4.23834 5.43048 8.09454 5.43048V7.30389c-3.943 0-6.87167-3.27585-6.87167-7.30389Z"
             fill="#3FB9A3"
           /><path
@@ -136,3 +136,21 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .mobile-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .mobile-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .mobile-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-grey-300);
+  }
+
+  .mobile-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-grey-500);
+  }
+</style>

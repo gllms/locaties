@@ -5,11 +5,10 @@ import type { SvelteComponent } from "svelte";
 
 import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
-import FillInPage from "./lib/FillInPage.svelte";
+import PhoneFillInPage from "./lib/PhoneFillInPage.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
 import Banner from "./lib/Banner.svelte";
 import Results from "./lib/Results.svelte";
-import Preview from "./lib/Preview.svelte";
 import BannerButton from "./lib/BannerButton.svelte";
 
 import sample from "./sample";
@@ -57,7 +56,7 @@ function apply() {
   );
 
   addComponent(
-    FillInPage,
+    PhoneFillInPage,
     document.querySelector(
       "div:has(> div > div > button[title='Opnieuw zoeken'])",
     ),
@@ -91,14 +90,6 @@ function apply() {
       inDetailPage: true,
     },
     document.querySelector("div:has(>#faq)"),
-  );
-
-  addComponent(
-    Preview,
-    document.querySelector(
-      "div:has(> div > div > button[title='Opnieuw zoeken'])",
-    ),
-    "/form/preview",
   );
 
   addComponent(

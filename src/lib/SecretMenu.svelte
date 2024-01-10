@@ -23,6 +23,21 @@
       e.preventDefault();
       dialog.showModal();
     }
+
+    if (e.altKey && e.key === "e") {
+      e.preventDefault();
+      window.open("/form/edit");
+    }
+
+    if (e.altKey && e.key === "p") {
+      e.preventDefault();
+      window.open("/form/dQw4w9WgXcQ");
+    }
+
+    if (e.altKey && e.key === "r") {
+      e.preventDefault();
+      window.open("/form/results");
+    }
   }} />
 
 <Dialog bind:element={dialog} title="Secret options" subtitle="Super secret">
