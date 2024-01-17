@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dialogCounter } from "../stores";
   import { tick } from "svelte";
   import { fly } from "svelte/transition";
 
@@ -15,12 +16,14 @@
 
   export async function open() {
     isOpen = true;
+    $dialogCounter++;
     await tick();
     element.showModal();
   }
 
   export function close() {
     isOpen = false;
+    $dialogCounter--;
   }
 </script>
 
@@ -110,7 +113,7 @@
     {#if $$slots.footer}
       <div
         class="flex justify-between gap-2 px-6 py-4 bg-white b-t-(1 solid grey-300) rd-b-4"
-        class:rd-r-0={drawer}
+        class:!rd-r-0={drawer}
       >
         <slot name="footer" />
       </div>

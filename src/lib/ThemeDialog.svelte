@@ -68,6 +68,6 @@
     {/each}
   </div>
   <svelte:fragment slot="footer">
-    <Button class="ml-auto" icon="check" text="Thema opslaan" />
+    <Button class="ml-auto" icon="check" text="Thema opslaan" on:click={dialog.close} />
   </svelte:fragment>
 </Dialog>

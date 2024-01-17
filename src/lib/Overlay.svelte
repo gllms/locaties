@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dialogCounter } from "../stores";
   import { tick } from "svelte";
   import { fly } from "svelte/transition";
 
@@ -9,12 +10,14 @@
 
   export async function open() {
     isOpen = true;
+    $dialogCounter++;
     await tick();
     element.showModal();
   }
 
   export function close() {
     isOpen = false;
+    $dialogCounter--;
   }
 </script>
 

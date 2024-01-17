@@ -23,7 +23,20 @@ function createSecretOptions() {
   };
 }
 
+function createDialogCounter() {
+  const { subscribe, update, set } = writable(0);
+
+  return {
+    subscribe,
+    set: (value: number) => {
+      set(value);
+      document.body.style.overflow = value > 0 ? "hidden" : "";
+    }
+  };
+}
+
 export const secretOptions = createSecretOptions();
+export const dialogCounter = createDialogCounter();
 
 export const title = writable("");
 export const description = writable("");
