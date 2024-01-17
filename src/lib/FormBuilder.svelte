@@ -13,14 +13,17 @@
   import RichText from "./RichText.svelte";
   import Preview from "./Preview.svelte";
 
+  import type Dialog from "./Dialog.svelte";
+  import type Overlay from "./Overlay.svelte";
+
   const flipDurationMs = 200;
   let idx = 0;
 
   let starred = false;
 
-  let shareDialog: HTMLDialogElement;
-  let previewOverlay: HTMLDialogElement;
-  let themeDialog: HTMLDialogElement;
+  let shareDialog: Dialog;
+  let previewOverlay: Overlay;
+  let themeDialog: Dialog;
 
   let dragDisabled = true;
 
@@ -90,18 +93,18 @@
     <div>
       <button class="icon-button">undo</button>
       <button class="icon-button">redo</button>
-      <button on:click={() => themeDialog.showModal()} class="icon-button"
+      <button on:click={() => themeDialog.open()} class="icon-button"
         >color_lens</button
       >
       <Button
         tertiary
         icon="visibility"
-        on:click={() => previewOverlay.showModal()}
+        on:click={() => previewOverlay.open()}
         text="Voorbeeld"
       />
       <Button
         icon="mail"
-        on:click={() => shareDialog.showModal()}
+        on:click={() => shareDialog.open()}
         text="Delen"
       />
     </div>
@@ -240,14 +243,14 @@
 
 <Onboarding />
 
-<ThemeDialog bind:element={themeDialog} />
+<ThemeDialog bind:dialog={themeDialog} />
 
 <Preview
-  bind:element={previewOverlay}
+  bind:overlay={previewOverlay}
   {shareDialog}
   title={$title}
   description={$description}
   canvasItems={$canvasItems}
 />
 
-<ShareDialog bind:element={shareDialog} />
+<ShareDialog bind:dialog={shareDialog} />

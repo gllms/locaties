@@ -4,8 +4,10 @@
   import ResultsOverlay from "./ResultsOverlay.svelte";
   import Dialog from "./Dialog.svelte";
 
-  let locationDialog: HTMLDialogElement;
-  let overlay: HTMLDialogElement;
+  import type Overlay from "./Overlay.svelte";
+
+  let locationDialog: Dialog;
+  let overlay: Overlay;
 
   let range = 50;
 </script>
@@ -105,7 +107,7 @@
     <Button
       icon="fullscreen"
       text="Alle resultaten"
-      on:click={() => overlay.showModal()}
+      on:click={() => overlay.open()}
     />
   </div>
   <div class="flex flex-col gap-3">
@@ -115,7 +117,7 @@
         tertiary
         icon="location_on"
         text="Plaats of regio"
-        on:click={() => locationDialog.showModal()}
+        on:click={() => locationDialog.open()}
       />
       <Button secondary icon="map" text="Toon kaart" class="ml-auto" />
     </div>
@@ -181,7 +183,7 @@
 </div>
 
 <Dialog
-  bind:element={locationDialog}
+  bind:this={locationDialog}
   title="Bepaal je plaats of regio"
   subtitle="Geef je voorkeur van locatie"
 >
@@ -217,4 +219,4 @@
   </svelte:fragment>
 </Dialog>
 
-<ResultsOverlay bind:element={overlay} />
+<ResultsOverlay bind:overlay />

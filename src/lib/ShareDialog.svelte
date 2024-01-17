@@ -2,14 +2,14 @@
   import Dialog from "./Dialog.svelte";
   import Button from "./Button.svelte";
 
-  export let element: HTMLDialogElement;
+  export let dialog: Dialog;
 
   function select(e: { currentTarget: HTMLInputElement }) {
     e.currentTarget.select();
   }
 </script>
 
-<Dialog bind:element title="Delen">
+<Dialog bind:this={dialog} title="Delen">
   <svelte:fragment slot="content">
     <div class="relative">
       <input

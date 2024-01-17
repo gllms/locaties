@@ -23,7 +23,7 @@
   let location = "";
   let range = 50;
 
-  let element: HTMLDialogElement;
+  let dialog: Dialog;
 
   function done() {
     if (useTemplate) {
@@ -31,16 +31,16 @@
       $description = sample.description;
       $canvasItems = sample.canvasItems;
     }
-    element.close();
+    dialog.close();
   }
 
   onMount(() => {
-    element.showModal();
+    dialog.open();
   });
 </script>
 
 <Dialog
-  bind:element
+  bind:this={dialog}
   title={titles[currentStep]}
   subtitle={subtitles[currentStep]}
   steps={3}

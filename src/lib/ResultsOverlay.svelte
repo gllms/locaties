@@ -2,7 +2,7 @@
   import Overlay from "./Overlay.svelte";
   import Result from "./Result.svelte";
 
-  export let element: HTMLDialogElement;
+  export let overlay: Overlay;
 
   const locationData: [string, number][] = [
     ["Stedelijk gelegen", 11],
@@ -44,7 +44,7 @@
   ];
 </script>
 
-<Overlay bind:element>
+<Overlay bind:this={overlay}>
   <div class="flex flex-col gap-4 w-full px-12 py-12">
     <h3 class="c-primary-900">Resultaten</h3>
     <div

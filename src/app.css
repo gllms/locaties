@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons");
 
+body {
+  display: block !important;
+}
+
 .material-icons,
 .icon-button {
   @apply font-material-outlined font-size-8 select-none;

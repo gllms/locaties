@@ -3,7 +3,7 @@
   import Button from "./Button.svelte";
   import Select from "./Select.svelte";
 
-  export let element: HTMLDialogElement;
+  export let dialog: Dialog;
 
   let colors = [
     "#FF6868",
@@ -22,7 +22,7 @@
   ];
 </script>
 
-<Dialog bind:element drawer>
+<Dialog bind:this={dialog} drawer>
   <div slot="content" class="flex flex-col gap-4">
     {#each ["Koppen", "Tekst", "Vragen"] as title}
       <div>

@@ -8,7 +8,7 @@
     drag_handle: ["inside", "border"],
   };
 
-  let dialog: HTMLDialogElement;
+  let dialog: Dialog;
 
   function fillIn() {
     $title = sample.title;
@@ -21,7 +21,7 @@
   on:keydown={(e) => {
     if (e.ctrlKey && e.key === ",") {
       e.preventDefault();
-      dialog.showModal();
+      dialog.open();
     }
 
     if (e.ctrlKey && e.key === "e") {
@@ -40,7 +40,7 @@
     }
   }} />
 
-<Dialog bind:element={dialog} title="Secret options" subtitle="Super secret">
+<Dialog bind:this={dialog} title="Secret options" subtitle="Super secret">
   <div slot="content" class="grid grid-cols-2 items-center gap-4 w-fit">
     <span class="[grid-column:1/-1] flex gap-4">
       <a href="/?form/edit">Editor</a>
