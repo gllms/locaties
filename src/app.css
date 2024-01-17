@@ -38,7 +38,53 @@ hr {
   }
 }
 
-head:has(meta[property="og:url"]:where([content^="/form/dQw4w9WgXcQ"], [content^="/form/phone"]))+body {
+head:has(meta[property="og:url"]:where([content^="/?form"]))+body {
+
+  & [class*=HomeHero_component],
+  & [class^=styles_container],
+  & [class^=styles_pageContent] {
+    display: none;
+  }
+
+  & header {
+    background-color: white;
+
+    & button {
+      color: black;
+    }
+
+    & path {
+      fill: black;
+    }
+
+    & [class*=styles_arc1] {
+      border-color: transparent var(--color-primary-900) transparent transparent;
+    }
+
+    & [class*=styles_arc2] {
+      border-color: transparent transparent transparent var(--color-primary-900);
+    }
+  }
+
+  & [class^="styles_pageWrapper"] {
+    padding-top: var(--spacing-14x);
+  }
+}
+
+head:has(meta[property="og:url"][content^="/?form"]) + body {
+
+  & div[class^="styles_searchButtonWrapper"],
+  & div[class^="styles_contentWrapper"],
+  & footer {
+    display: none;
+  }
+}
+
+div[class^="styles_pageWrapper"] {
+  justify-content: start;
+}
+
+head:has(meta[property="og:url"]:where([content^="/?form/dQw4w9WgXcQ"], [content^="/?form/phone"]))+body {
   & header {
     display: none;
   }

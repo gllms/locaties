@@ -251,17 +251,3 @@
 />
 
 <ShareDialog bind:element={shareDialog} />
-
-<style>
-  :global(head:has(meta[property="og:url"][content^="/form"]) + body) {
-    & div[class^="styles_searchButtonWrapper"],
-    & div[class^="styles_contentWrapper"],
-    & footer {
-      display: none;
-    }
-  }
-
-  :global(div[class^="styles_pageWrapper"]) {
-    justify-content: start;
-  }
-</style>

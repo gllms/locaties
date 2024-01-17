@@ -16,7 +16,7 @@
         type="text"
         on:click={select}
         on:select={select}
-        value="https://locaties.nl/form/dQw4w9WgXcQ"
+        value="https://locaties.nl/?form/dQw4w9WgXcQ"
         class="w-full p-4 pr-16 b-(2 solid grey-300) rd-2 select-all"
         readonly />
       <Button
@@ -33,12 +33,12 @@
       <a
         class="icon-button"
         target="_blank"
-        href="mailto:?subject=Locaties.nl%20formulier&body=https://locaties.nl/form/dQw4w9WgXcQ">
+        href="mailto:?subject=Locaties.nl%20formulier&body=https://locaties.nl/?form/dQw4w9WgXcQ">
         email
       </a>
       <a
         class="icon-button"
-        href={"javascript:navigator.share({url: 'https://locaties.nl/form/dQw4w9WgXcQ'})"}>
+        href={"javascript:navigator.share({url: 'https://locaties.nl/?form/dQw4w9WgXcQ'})"}>
         share
       </a>
     </div>

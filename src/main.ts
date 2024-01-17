@@ -3,7 +3,6 @@ import "uno.css";
 
 import type { SvelteComponent } from "svelte";
 
-import MyListButton from "./lib/MyListButton.svelte";
 import FormBuilder from "./lib/FormBuilder.svelte";
 import PhoneFillInPage from "./lib/PhoneFillInPage.svelte";
 import SecretMenu from "./lib/SecretMenu.svelte";
@@ -13,94 +12,90 @@ import BannerButton from "./lib/BannerButton.svelte";
 
 import sample from "./sample";
 
-const components: SvelteComponent[] = [];
-
 const originalPushState = history.pushState;
 
 history.pushState = function() {
   originalPushState.apply(this, arguments as any);
+  apply();
+};
 
+const components: SvelteComponent[] = [];
+
+apply();
+
+function apply() {
   for (const component of components) {
     component.$destroy();
   }
 
   components.length = 0;
 
-  setTimeout(apply, 500);
-};
+  setTimeout(() => {
+    const testElement = document.querySelector(".locaties-test");
 
-apply();
-
-function apply() {
-  const testElement = document.querySelector(".locaties-test");
-
-  if (!testElement) {
-    const metaPathname = new URL((document.querySelector("meta[property='og:url']") as HTMLMetaElement)?.content, location.href).pathname;
-    if (!document.querySelector(".main > div")?.hasChildNodes() || metaPathname !== location.pathname) {
-      setTimeout(apply, 500);
-      return;
+    if (!testElement) {
+      const metaPathname = new URL((document.querySelector("meta[property='og:url']") as HTMLMetaElement)?.content, location.href).pathname;
+      if (!document.querySelector(".main > div")?.hasChildNodes() || metaPathname !== location.pathname) {
+        setTimeout(apply, 500);
+        return;
+      }
     }
-  }
 
-  addComponent(
-    MyListButton,
-    document.querySelector("div[data-testid=drawerMyList]"),
-  );
+    addComponent(
+      FormBuilder,
+      document.querySelector(
+        "div[class^=styles_pageWrapper]",
+      ),
+      "/?form/edit",
+    );
 
-  addComponent(
-    FormBuilder,
-    document.querySelector(
-      "div:has(> div > div > button[title='Opnieuw zoeken'])",
-    ),
-    "/form/edit",
-  );
+    addComponent(
+      PhoneFillInPage,
+      document.querySelector(
+        "div[class^=styles_pageWrapper]",
+      ),
+      "/?form/dQw4w9WgXcQ",
+      sample,
+    );
 
-  addComponent(
-    PhoneFillInPage,
-    document.querySelector(
-      "div:has(> div > div > button[title='Opnieuw zoeken'])",
-    ),
-    "/form/dQw4w9WgXcQ",
-    sample,
-  );
+    addComponent(
+      Results,
+      document.querySelector(
+        "div[class^=styles_pageWrapper]",
+      ),
+      "/?form/results",
+    );
 
-  addComponent(
-    Results,
-    document.querySelector(
-      "div:has(> div > div > button[title='Opnieuw zoeken'])",
-    ),
-    "/form/results",
-  );
+    addComponent(
+      Banner,
+      document.querySelector(".locaties [class^=styles_pageContent]"),
+      "/",
+      undefined,
+      document.querySelector(
+        ".locaties [class^=styles_pageContent] > div:nth-child(18)",
+      ),
+    );
 
-  addComponent(
-    Banner,
-    document.querySelector(".locaties [class^=styles_pageContent]"),
-    "/",
-    undefined,
-    document.querySelector(
-      ".locaties [class^=styles_pageContent] > div:nth-child(18)",
-    ),
-  );
+    addComponent(
+      Banner,
+      document.querySelector("div:has(>div>#faq)"),
+      "/locatie/",
+      {
+        inDetailPage: true,
+      },
+      document.querySelector("div:has(>#faq)"),
+    );
 
-  addComponent(
-    Banner,
-    document.querySelector("div:has(>div>#faq)"),
-    "/locatie/",
-    {
-      inDetailPage: true,
-    },
-    document.querySelector("div:has(>#faq)"),
-  );
+    addComponent(
+      BannerButton,
+      document.querySelector("[class*=bannerInner] [class*=content]"),
+      "/categorie/teambuilding",
+    );
 
-  addComponent(
-    BannerButton,
-    document.querySelector("[class*=bannerInner] [class*=content]"),
-    "/categorie/teambuilding",
-  );
+    addComponent(SecretMenu, document.body);
 
-  addComponent(SecretMenu, document.body);
-
-  addComponent(FormBuilder, testElement, undefined, sample);
+    addComponent(FormBuilder, testElement, undefined, sample);
+  }, 500);
 }
 
 function addComponent(
@@ -115,11 +110,12 @@ function addComponent(
   }
 
   if (path) {
+    const fullPath = location.pathname + location.search;
     if (typeof path === "string") {
-      if (!location.pathname.startsWith(path)) {
+      if (!fullPath.startsWith(path)) {
         return;
       }
-    } else if (!path.test(location.pathname)) {
+    } else if (!path.test(fullPath)) {
       return;
     }
   }

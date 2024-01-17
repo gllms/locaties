@@ -26,26 +26,26 @@
 
     if (e.ctrlKey && e.key === "e") {
       e.preventDefault();
-      window.open("/form/edit");
+      window.open("/?form/edit");
     }
 
     if (e.ctrlKey && e.key === "p") {
       e.preventDefault();
-      window.open("/form/dQw4w9WgXcQ");
+      window.open("/?form/dQw4w9WgXcQ");
     }
 
     if (e.ctrlKey && e.key === "r") {
       e.preventDefault();
-      window.open("/form/results");
+      window.open("/?form/results");
     }
   }} />
 
 <Dialog bind:element={dialog} title="Secret options" subtitle="Super secret">
   <div slot="content" class="grid grid-cols-2 items-center gap-4 w-fit">
     <span class="[grid-column:1/-1] flex gap-4">
-      <a href="/form/edit">Editor</a>
-      <a href="/form/dQw4w9WgXcQ">Invullen</a>
-      <a href="/form/results">Resultaten</a>
+      <a href="/?form/edit">Editor</a>
+      <a href="/?form/dQw4w9WgXcQ">Invullen</a>
+      <a href="/?form/results">Resultaten</a>
     </span>
     <span class="[grid-column:1/-1]">
       <Button icon="view_agenda" text="zet voorbeeldblokken neer" on:click={fillIn} />

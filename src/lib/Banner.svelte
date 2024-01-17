@@ -28,7 +28,7 @@
     secondary
     icon="speaker_notes"
     text="Verzamel meningen"
-    on:click={() => (location.href = "/form/edit")}
+    on:click={() => (location.href = "/?form/edit")}
   />
 </div>
 
